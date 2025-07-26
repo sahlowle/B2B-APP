@@ -1,0 +1,15 @@
+{
+    "name": "Refund",
+    "alias": "refund",
+    "core": true,
+    "version": "1.0",
+    "description": "",
+    "keywords": [],
+    "priority": 13,
+    "providers": [],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "translationSkipped": true,
+    "homePageViewSkipped": true
+}

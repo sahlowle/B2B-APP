@@ -1,0 +1,4 @@
+ul.ui-autocomplete {
+    z-index: 1100;
+    width: 200px;
+}

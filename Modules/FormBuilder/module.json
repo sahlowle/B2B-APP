@@ -1,0 +1,16 @@
+{
+    "name": "FormBuilder",
+    "alias": "formbuilder",
+    "core": true,
+    "description": "",
+    "keywords": [],
+    "priority": 30,
+    "providers": [
+        "Modules\\FormBuilder\\Providers\\FormBuilderServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "translationSkipped": true,
+    "homePageViewSkipped": true
+}

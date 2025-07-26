@@ -1,0 +1,17 @@
+{
+    "name": "Coupon",
+    "alias": "coupon",
+    "core": true,
+    "version": "1.0",
+    "description": "",
+    "keywords": [],
+    "priority": 7,
+    "providers": [
+        "Modules\\Coupon\\Providers\\CouponServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "translationSkipped": true,
+    "homePageViewSkipped": true
+}

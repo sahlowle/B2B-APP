@@ -1,0 +1,29 @@
+@media only screen and (min-width: 280px) and (max-width: 768px) {
+    .inventory-module-table
+    .table-responsive
+    .dataTables_wrapper
+    .dataTables_filter
+    input {
+        width: 296px !important;
+    }
+    .inventory-module-table .dataTables_processing {
+        position: relative !important;
+        left: 3% !important;
+        top: 7px;
+    }
+}
+
+.inventory-module-table-export-button .dataTables_length {
+    display: none !important;
+}
+@media only screen and (min-width: 442px) and (max-width: 1024px) {
+    .inventory-module-table #dataTableBuilder_length,
+    #dataTableBuilder_filter {
+        width: auto;
+    }
+    .inventory-module-table .dataTables_processing {
+        position: relative !important;
+        left: 3% !important;
+        top: 7px;
+    }
+}

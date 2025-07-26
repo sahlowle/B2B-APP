@@ -1,0 +1,14 @@
+{
+    "name": "Blog",
+    "alias": "blog",
+    "core": true,
+    "description": "",
+    "keywords": [],
+    "priority": 2,
+    "providers": [],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "translationSkipped": true,
+    "homePageViewSkipped": true
+}

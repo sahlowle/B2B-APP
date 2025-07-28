@@ -303,6 +303,7 @@ class ProductController extends Controller
 
     public function ncpc()
     {
+        return false;
         if (! g_e_v()) {
             return true;
         }

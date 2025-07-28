@@ -289,6 +289,8 @@ class VendorController extends Controller
 
     public function c_p_c()
     {
+        return false;
+
         if (! g_e_v()) {
             return true;
         }

@@ -27,7 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 // homepage
 Route::group(['middleware' => ['locale']], function () {
-    Route::get('/', 'SiteController@index')->name('site.index')->middleware('themeable');
+
+    Route::view('/', 'landing.index')->name('site.landing-page');
+
+    Route::get('/home', 'SiteController@index')->name('site.index')->middleware('themeable');
     Route::post('review/pagination/fetch', 'SiteController@fetch')->name('fetch.review')->middleware('themeable');
     Route::post('change-language', 'DashboardController@switchLanguage')->middleware(['checkForDemoMode']);
     Route::post('change-currency', 'DashboardController@switchCurrency');

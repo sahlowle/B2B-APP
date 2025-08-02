@@ -26,5 +26,6 @@
     "BulkPayment": true,
     "Inventory": true,
     "Multilanguage": true,
-    "B2B": true
+    "B2B": true,
+    "Subscription": true
 }

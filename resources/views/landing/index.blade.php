@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التجارة B2B - ربط المصانع السعودية بالمستوردين العالميين</title>
+    <title> Exports Valley B2B - ربط المصانع السعودية بالمستوردين العالميين</title>
     <meta name="description" content="منصة رائدة تربط المصانع السعودية بالمستوردين حول العالم، توفر حلول متكاملة للتجارة الإلكترونية B2B">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,9 @@
                 <div class="nav-brand">
                     <div class="logo">
                         <div class="logo-icon">🏭</div>
-                        <span class="logo-text">منصة التجارة</span>
+                        <span class="logo-text">
+                            Exports Valley
+                        </span>
                     </div>
                 </div>
                 <div class="nav-menu">
@@ -343,7 +345,7 @@
                     <div class="footer-logo">
                         <div class="logo">
                             <div class="logo-icon">🏭</div>
-                            <span class="logo-text">منصة التجارة</span>
+                            <span class="logo-text">Exports Valley</span>
                         </div>
                     </div>
                     <p class="footer-description">
@@ -397,7 +399,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 منصة التجارة. جميع الحقوق محفوظة.</p>
+                <p>&copy; 2025 Exports Valley. جميع الحقوق محفوظة.</p>
             </div>
         </div>
     </footer>

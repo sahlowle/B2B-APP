@@ -110,7 +110,12 @@ function animateCounters() {
     const counters = document.querySelectorAll('.stat-number');
     
     counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
+        var target = parseInt(counter.getAttribute('data-target'));
+
+        if (isNaN(target)) {
+            return;
+        }
+        
         const duration = 2000; // 2 seconds
         const increment = target / (duration / 16); // 60fps
         let current = 0;

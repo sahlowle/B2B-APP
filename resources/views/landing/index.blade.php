@@ -72,7 +72,7 @@
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <div class="stat-number">500+</div>
+                        <div class="stat-number" >500+</div>
                         <div class="stat-label">مصنع سعودي</div>
                     </div>
                     <div class="stat-item">

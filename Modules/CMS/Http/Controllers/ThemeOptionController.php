@@ -114,6 +114,8 @@ class ThemeOptionController extends Controller
             $layout = $formData['layout'];
             unset($formData['layout']);
 
+            dd($formData);
+
             (new ThemeOption())->store($formData, $layout);
 
             return ['status' => 1, 'message' => __('Successfully Saved')];

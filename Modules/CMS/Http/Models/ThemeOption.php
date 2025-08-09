@@ -134,7 +134,7 @@ class ThemeOption extends Model
 
         if (! empty($data['file_id']) && is_array($data['file_id'])) {
             foreach ($images as $key => $value) {
-                if (! in_array($data[$value], $data['file_id'])) {
+                if (! isset($data[$value]) || ! in_array($data[$value], $data['file_id'])) {
                     continue;
                 }
 

@@ -63,17 +63,9 @@ class ThemeOptionController extends Controller
 
         $theme = $data['themeOption']->where('name', $layout . '_template_footer')->first();
 
-        $newLayout = 'fashion_v2';
-
-        $data['themeOption']->where('name', $newLayout . '_template_footer')->toQuery()->delete();
-
-        $theme = $theme->replicate()->fill(['name' => $newLayout . '_template_footer'])->save();
-
         $data['footer'] = is_array($theme->getTranslated('value', 'en'))
             ? $theme->getTranslated('value', 'en')
             : json_decode($theme->getTranslated('value', 'en'), true);
-
-        dd(class_basename($theme));
 
         if ($request->ajax()) {
             return response()->json([

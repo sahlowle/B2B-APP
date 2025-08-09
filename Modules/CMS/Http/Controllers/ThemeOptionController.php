@@ -65,6 +65,8 @@ class ThemeOptionController extends Controller
 
         $newLayout = 'fashion_v2';
 
+        $data['themeOption']->where('name', $newLayout . '_template_footer')->delete();
+
         $theme = $theme->replicate()->fill(['name' => $newLayout . '_template_footer'])->save();
 
         $data['footer'] = is_array($theme->getTranslated('value', 'en'))

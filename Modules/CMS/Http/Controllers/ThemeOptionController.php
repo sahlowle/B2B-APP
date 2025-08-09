@@ -97,7 +97,7 @@ class ThemeOptionController extends Controller
         $css = 'Modules/CMS/Resources/assets/css/user-custom.css';
         $js = 'Modules/CMS/Resources/assets/js/user-custom.js';
 
-        try {
+        // try {
             $responseCss = $this->handleFile($css, $formData['custom']['css']);
             $responseJs = $this->handleFile($js, $formData['custom']['js']);
 
@@ -117,9 +117,9 @@ class ThemeOptionController extends Controller
             (new ThemeOption())->store($formData, $layout);
 
             return ['status' => 1, 'message' => __('Successfully Saved')];
-        } catch (\Exception $e) {
-            return ['status' => 0, 'message' => $e->getMessage()];
-        }
+        // } catch (\Exception $e) {
+        //     return ['status' => 0, 'message' => $e->getMessage()];
+        // }
     }
 
     /**

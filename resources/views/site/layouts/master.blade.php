@@ -24,7 +24,20 @@
         [$fontFamily, $genericFamily] = explode(',', option($layout . '_template_font_family', 'DM Sans, sans-serif'));
          $multiCurrencies  = \App\Models\MultiCurrency::getAll();
          $defaultMulticurrency = defaultMulticurrencyData($multiCurrencies);
+
+         if(app()->getLocale() === 'ar'){
+            $fontFamily = 'Droid Arabic Naskh';
+            $genericFamily = 'serif';
+         }
+
     @endphp
+
+    @if(app()->getLocale() === 'ar')    
+    <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+    </style>
+    @endif
+
    <style>
     :root {
         --primary-color: {{ $primaryColor }};

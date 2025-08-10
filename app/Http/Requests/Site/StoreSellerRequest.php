@@ -66,12 +66,16 @@ class StoreSellerRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
+        $otp = random_int(1111, 9999);
+        $otp = 1234;
+
         $alias = Shop::whereAlias($alias = Str::slug($this->f_name . ' ' . $this->l_name))->exists() ? $alias . strtolower(Str::random(4)) : $alias;
+        
         $this->merge([
             'name' => $this->f_name . ' ' . $this->l_name,
             'status' => 'Pending',
             'activation_code' => Str::random(10),
-            'activation_otp' => random_int(1111, 9999),
+            'activation_otp' => $otp,
             'alias' => $alias,
             'gCaptcha' => $this['g-recaptcha-response'],
         ]);

@@ -46,7 +46,7 @@
                 </div>
             @endif
         @endforeach
-        <form method="post" action="{{ auth()->user() ? route('seller.store.request') : route('site.seller.signUpStore') }}"
+        <form method="post" id="form-registration" action="{{ auth()->user() ? route('seller.store.request') : route('site.seller.signUpStore') }}"
             class="lg:mt-8 mt-30p xl:mx-130p lg:mx-70p mx-15p" onsubmit="return formValidation()">
 
             <div id="smartwizard">
@@ -348,5 +348,21 @@
       hiddenSteps: [], // Hidden steps
       getContent: null // Callback function for content loading
     });
+
+    $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
+                // Validate only on forward movement  
+                if (stepDirection == 'forward') {
+                  let form = document.getElementById('form-registration');
+                  if (form) {
+                    if (!form.checkValidity()) {
+                      form.classList.add('was-validated');
+                      $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
+                      $("#smartwizard").smartWizard('fixHeight');
+                      return false;
+                    }
+                    $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
+                  }
+                }
+            });
     </script>
 @endsection

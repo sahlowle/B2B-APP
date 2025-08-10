@@ -40,6 +40,7 @@ class StoreSellerRequest extends FormRequest
             'country'   => ['required', 'max:100'],
             'state'     => ['nullable', 'max:100'],
             'shop_name' => ['required', 'max:100', 'unique:shops,name'],
+            'commercial_registration_number' => ['required', 'max:191', 'unique:shops,commercial_registration_number'],
             'address'   => ['required', 'max:191'],
             'gCaptcha' => isRecaptchaActive() ? 'required|captcha' : 'nullable',
         ];

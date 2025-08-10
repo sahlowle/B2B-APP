@@ -21,6 +21,10 @@ class Shop extends Model
 {
     use hasFiles;
 
+    protected $casts = [
+        'commercial_registration_verified' => 'boolean',
+    ];
+
     /**
      * timestamps
      *

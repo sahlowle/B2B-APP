@@ -102,13 +102,17 @@
                     </div>
                 @endguest
             </div>
+
             <div class="lg:mb-3 mb-3.5">
-                <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">{{ __('Shop') . ' / ' . __('Vendor Address') }}</label>
+                <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">
+                    @lang('Address')
+                </label>
                 <input class="border-gray-2 rounded-sm w-full mt-1.5 lg:mt-1p h-46p roboto-medium pl-18p font-medium text-sm text-gray-10 form-control focus:border-gray-12" type="text" name="address" required oninvalid="this.setCustomValidity('This field is required.')" value="{{ old('address') }}" placeholder="{{ __('Enter Your :x', ['x' => __('Address')]) }}">
                 @error('address')
                     <span class="password-validation-error block text-11 mt-1 text-red-500">{{ $message }}</span>
                 @enderror
             </div>
+
             @auth
                 <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">{{ __('Description') }}</label>
                 <textarea class="border-gray-2 rounded-sm w-full mt-1.5 lg:mt-1p h-46p roboto-medium pl-18p font-medium text-sm text-gray-10 form-control focus:border-gray-12" name="description" required oninvalid="this.setCustomValidity('This field is required.')" placeholder="{{ __('Enter Your :x', ['x' => __('Address')]) }}">{{ old('address') }}</textarea>
@@ -154,6 +158,7 @@
                 <div class="primary-bg-color w-2p mt-2p h-23p ltr:mr-2 rtl:ml-2"></div>
                 <p class="text-gray-12 uppercase dm-bold font-bold lg:text-lg text-base">{{ __('Shop Details') }}</p>
             </div>
+
             <div class="mb-3">
                 <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">{{ __('Shop Name') }}
                 </label>
@@ -164,6 +169,18 @@
                     <span class="password-validation-error block text-11 mt-1 text-red-500">{{ $message }}</span>
                 @enderror
             </div>
+            
+            <div class="mb-3">
+                <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">{{ __('Commercial Registration Number') }}
+                </label>
+                <input class="border-gray-2 rounded-sm w-full mt-1.5 lg:mt-1p h-46p roboto-medium pl-18p font-medium text-sm text-gray-10 form-control focus:border-gray-12" type="text" name="commercial_registration_number" maxlength="191" required
+                    oninvalid="this.setCustomValidity('This field is required.')" value="{{ old('commercial_registration_number') }}"
+                    placeholder="{{ __('Enter Your :x', ['x' => __('Commercial Registration Number')]) }}">
+                @error('commercial_registration_number')
+                    <span class="password-validation-error block text-11 mt-1 text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+
             @guest
             <div class="lg:mt-52p mt-10 mb-5 flex">
                 <div class="primary-bg-color w-2p mt-2p h-23p ltr:mr-2 rtl:ml-2">
@@ -210,7 +227,9 @@
                 </div>
             </div>
             @endguest
+
             @include('admin.auth.partial.re-captcha')
+
             <div class="flex justify-center items-center mb-8 lg:mt-10 mt-8">
                 <button class="flex xl:mr-8 md:mx-0 process-goto relative mx-auto text-base w-52 transition duration-150 ease-in-out h-50p justify-center text-center rounded-sm 2 items-center bg-gray-12 primary-bg-hover dm-bold font-bold text-white hover:text-gray-12" onclick="formValidation()" id="btnSubmits">{{ __('Register') }}
                     <svg class="ltr:ml-1.5 rtl:mr-1.5 relative" xmlns="http://www.w3.org/2000/svg" width="13" height="8"
@@ -221,6 +240,7 @@
                     </svg>
                 </button>
             </div>
+
         </form>
     </div>
 @endsection

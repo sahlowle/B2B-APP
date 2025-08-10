@@ -101,7 +101,8 @@ class RegisteredSellerController extends Controller
             $request['vendor_id'] = $vendorId;
             $alias = cleanedUrl($request->name);
             $request->merge(['alias' => $alias]);
-            (new Shop())->store($request->only('name', 'vendor_id', 'email', 'website', 'alias', 'phone', 'address', 'country', 'state', 'city', 'post_code'));
+            
+            (new Shop())->store($request->only('commercial_registration_number','name', 'vendor_id', 'email', 'website', 'alias', 'phone', 'address', 'country', 'state', 'city', 'post_code'));
 
             if (! empty($user_id)) {
                 $roleId = Role::where('slug', 'vendor-admin')->first()->id;

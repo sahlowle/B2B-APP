@@ -30,6 +30,10 @@ Route::group(['middleware' => ['locale']], function () {
 
     Route::view('/', 'landing.index')->name('site.landing-page');
 
+    Route::get('/test', function(){
+        return  __('Enter Your :x', ['x' => __('Commercial Registration Number')]);
+    })->name('site.test');
+
     Route::get('/home', 'SiteController@index')->name('site.index')->middleware('themeable');
     Route::post('review/pagination/fetch', 'SiteController@fetch')->name('fetch.review')->middleware('themeable');
     Route::post('change-language', 'DashboardController@switchLanguage')->middleware(['checkForDemoMode']);

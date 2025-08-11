@@ -58,9 +58,17 @@
                         {{ __('Basic Details') }}
                       </a>
                     </li>
+
                     <li class="nav-item">
                       <a class="nav-link" href="#step-2">
-                        <span class="num">2</span>
+                        <div class="num">2</div>
+                        {{ __('Address Details') }}
+                      </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="#step-3">
+                        <span class="num">3</span>
                         {{ __('Shop Details') }}
                       </a>
                     </li>
@@ -128,6 +136,9 @@
                                 </div>
                             @endguest
                         </div>
+                    </div>
+
+                     <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
 
                         <div class="lg:mb-3 mb-3.5">
                             <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">
@@ -180,9 +191,9 @@
                                 </div>
                             @endguest
                         </div>
-                    </div>
+                     </div>
 
-                    <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                    <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
                         <div class="flex lg:mt-52p mt-9 mb-5">
                             <div class="primary-bg-color w-2p mt-2p h-23p ltr:mr-2 rtl:ml-2"></div>
                             <p class="text-gray-12 uppercase dm-bold font-bold lg:text-lg text-base">{{ __('Shop Details') }}</p>
@@ -302,50 +313,67 @@
 
     <script>
            $('#smartwizard').smartWizard({
-             theme: 'dots',
-      selected: 0, // Initial selected step, 0 = first step
-      justified: true, // Nav menu justification. true/false
-      autoAdjustHeight: true, // Automatically adjust content height
-      backButtonSupport: true, // Enable the back button support
-      enableUrlHash: true, // Enable selection of the step based on url hash
-      transition: {
-          animation: 'slideHorizontal', // Animation effect on navigation, none|fade|slideHorizontal|slideVertical|slideSwing|css(Animation CSS class also need to specify)
-          speed: '400', // Animation speed. Not used if animation is 'css'
-          easing: '', // Animation easing. Not supported without a jQuery easing plugin. Not used if animation is 'css'
-          prefixCss: '', // Only used if animation is 'css'. Animation CSS prefix
-          fwdShowCss: '', // Only used if animation is 'css'. Step show Animation CSS on forward direction
-          fwdHideCss: '', // Only used if animation is 'css'. Step hide Animation CSS on forward direction
-          bckShowCss: '', // Only used if animation is 'css'. Step show Animation CSS on backward direction
-          bckHideCss: '', // Only used if animation is 'css'. Step hide Animation CSS on backward direction
-      },
-      toolbar: {
-          position: 'bottom', // none|top|bottom|both
-          showNextButton: true, // show/hide a Next button
-          showPreviousButton: true, // show/hide a Previous button
-          extraHtml: '' // Extra html to show on toolbar
-      },
-      anchor: {
-          enableNavigation: true, // Enable/Disable anchor navigation 
-          enableNavigationAlways: false, // Activates all anchors clickable always
-          enableDoneState: true, // Add done state on visited steps
-          markPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-          unDoneOnBackNavigation: false, // While navigate back, done state will be cleared
-          enableDoneStateNavigation: true // Enable/Disable the done state navigation
-      },
-      keyboard: {
-          keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
-          keyLeft: [37], // Left key code
-          keyRight: [39] // Right key code
-      },
-      lang: { // Language variables for button
-          next: '{{ __('Next') }}',
-          previous: '{{ __('Previous') }}'
-      },
-      disabledSteps: [], // Array Steps disabled
-      errorSteps: [], // Array Steps error
-      warningSteps: [], // Array Steps warning
-      hiddenSteps: [], // Hidden steps
-      getContent: null // Callback function for content loading
-    });
+            theme: 'dots',
+            selected: 0, // Initial selected step, 0 = first step
+            justified: true, // Nav menu justification. true/false
+            autoAdjustHeight: true, // Automatically adjust content height
+            backButtonSupport: true, // Enable the back button support
+            enableUrlHash: true, // Enable selection of the step based on url hash
+            transition: {
+                animation: 'slideHorizontal', // Animation effect on navigation, none|fade|slideHorizontal|slideVertical|slideSwing|css(Animation CSS class also need to specify)
+                speed: '400', // Animation speed. Not used if animation is 'css'
+                easing: '', // Animation easing. Not supported without a jQuery easing plugin. Not used if animation is 'css'
+                prefixCss: '', // Only used if animation is 'css'. Animation CSS prefix
+                fwdShowCss: '', // Only used if animation is 'css'. Step show Animation CSS on forward direction
+                fwdHideCss: '', // Only used if animation is 'css'. Step hide Animation CSS on forward direction
+                bckShowCss: '', // Only used if animation is 'css'. Step show Animation CSS on backward direction
+                bckHideCss: '', // Only used if animation is 'css'. Step hide Animation CSS on backward direction
+            },
+            toolbar: {
+                position: 'bottom', // none|top|bottom|both
+                showNextButton: true, // show/hide a Next button
+                showPreviousButton: true, // show/hide a Previous button
+                extraHtml: '' // Extra html to show on toolbar
+            },
+            anchor: {
+                enableNavigation: true, // Enable/Disable anchor navigation 
+                enableNavigationAlways: false, // Activates all anchors clickable always
+                enableDoneState: true, // Add done state on visited steps
+                markPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+                unDoneOnBackNavigation: false, // While navigate back, done state will be cleared
+                enableDoneStateNavigation: true // Enable/Disable the done state navigation
+            },
+            keyboard: {
+                keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+                keyLeft: [37], // Left key code
+                keyRight: [39] // Right key code
+            },
+            lang: { // Language variables for button
+                next: '{{ __('Next') }}',
+                previous: '{{ __('Previous') }}'
+            }
+        });
+
+        $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+
+            formId = "step-" + (currentStepIndex+1);
+            
+            container = document.getElementById(formId);
+            inputs = container.querySelectorAll('input, select, textarea');
+
+            console.log(inputs);
+
+            let allValid = true;
+
+            inputs.forEach(input => {
+                if (!input.reportValidity()) {
+                    allValid = false;
+                }
+            });
+
+            return allValid;
+
+        });
+
     </script>
 @endsection

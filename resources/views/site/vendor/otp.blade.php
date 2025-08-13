@@ -39,7 +39,6 @@
                                             type="text" 
                                             class="form-control form-control-lg text-center fw-bold fs-4 border-2" 
                                             style="letter-spacing: 0.5em; font-family: 'Courier New', monospace;"
-                                            value="{{ old('token') }}" 
                                             name="token" 
                                             placeholder="0000"
                                             maxlength="4"

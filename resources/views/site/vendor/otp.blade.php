@@ -2,48 +2,179 @@
 @section('page_title', __('Seller OTP'))
 @section('content')
     <div class="auth-wrapper">
-        <div>
-            <div class="card bt-yellow-5 w-450 pt-3">
-                <span class="multi-logo m-t-20 text-center">
-                    @php
-                        $logo = App\Models\Preference::getLogo('company_logo');
-                    @endphp
-                    <img class="admin-login-logo img-fluid" src="{{ $logo }}" alt="{{ trimWords(preference('company_name'), 17)}}">
-                </span>
-                <div class="card-body text-center admin-login">
-                    <form action="{{ route('site.seller.otpVerify') }}" method="post" class="admin-login-con my-0">
-                        @csrf
-                        <h3 class="mb-4">{{ __("OTP") }}</h3>
-                        
-                        <div>
-                            @include('admin.auth.partial.notification')
-                        </div>
-                        
-                        <div class="input-group mb-3">
-                            <input id="login-email" type="text" class="form-control py-2" value="{{ old('token') }}" name="token" placeholder="{{ __('Enter OTP') }}">
-                        </div>
-                        
-                        @if (isset($user) && !empty($user))
-                            <div class="login-box-body d-none">
-                                <input id="email" type="hidden" name="email" value="{{ $user->email }}">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center min-vh-100">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card shadow border-0 rounded-3 overflow-hidden">
+                        <!-- Header Section -->
+                        <div class="card-header bg-primary text-white text-center py-4 border-0">
+                            <div class="mb-3">
+                                @php
+                                    $logo = App\Models\Preference::getLogo('company_logo');
+                                @endphp
+                                <img class="img-fluid" style="max-height: 50px;" src="{{ $logo }}" alt="{{ trimWords(preference('company_name'), 17)}}">
                             </div>
-                        @endif
-                        <div class="text-center dm-sans font-medium text-sm md:text-base text-gray-10 p-2">
-                            <p class="m-0">{{ __("Didn't receive the code yet?") }}</p>
-                            <a class="underline cursor-pointer text-gray-12 resend-verification-code-seller">{{ __('Resend Code') }}</a>
+                            <h4 class="mb-2 fw-bold text-white">{{ __("Verify Your Account") }}</h4>
+                            <p class="mb-0 opacity-75 small">{{ __("Enter the verification code sent to your email") }}</p>
                         </div>
-                
-                        <button class="btn btn-sm btn-mv-primary mb-4 ltr:me-1 rtl:ms-1 loader mt-2" type="submit">
-                            {{ __("Continue") }}
-                            <svg role="status" class="anim spin" viewBox="0 0 100 101" fill="#ff0" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#000"></path>
-                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#ddd"></path>
-                            </svg>
-                        </button>
-                    </form>
+
+                        <!-- Form Section -->
+                        <div class="card-body p-4">
+                            <form action="{{ route('site.seller.otpVerify') }}" method="post">
+                                @csrf
+                                
+                                <!-- Notifications -->
+                                <div class="mb-3">
+                                    @include('admin.auth.partial.notification')
+                                </div>
+                                
+                                <!-- OTP Input -->
+                                <div class="mb-4">
+                                    <label for="login-email" class="form-label fw-semibold text-dark">
+                                        {{ __('Verification Code') }}
+                                    </label>
+                                    <div class="position-relative">
+                                        <input 
+                                            id="login-email" 
+                                            type="text" 
+                                            class="form-control form-control-lg text-center fw-bold fs-4 border-2" 
+                                            style="letter-spacing: 0.5em; font-family: 'Courier New', monospace;"
+                                            value="{{ old('token') }}" 
+                                            name="token" 
+                                            placeholder="0000"
+                                            maxlength="4"
+                                            autocomplete="one-time-code"
+                                            inputmode="numeric"
+                                            pattern="[0-9]*"
+                                        >
+                                        <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
+                                            <i class="fas fa-shield-alt text-muted"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-text text-muted small mt-2">
+                                        {{ __('Enter the 4-digit code sent to your email') }}
+                                    </div>
+                                </div>
+                                
+                                <!-- Hidden Email Field -->
+                                @if (isset($user) && !empty($user))
+                                    <div class="d-none">
+                                        <input id="email" type="hidden" name="email" value="{{ $user->email }}">
+                                    </div>
+                                @endif
+
+                                <!-- Resend Code Section -->
+                                <div class="text-center mb-4">
+                                    <p class="text-muted small mb-2">{{ __("Didn't receive the code yet?") }}</p>
+                                    <button type="button" class="btn btn-link text-decoration-none p-0 resend-verification-code-seller">
+                                        {{ __('Resend Code') }}
+                                    </button>
+                                </div>
+                        
+                                <!-- Submit Button -->
+                                <button class="btn btn-primary btn-lg w-100 mb-3 fw-semibold" type="submit">
+                                    <span class="me-2 text-white">{{ __("Verify & Continue") }}</span>
+                                    <div class="spinner-border spinner-border-sm d-none" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </button>
+                            </form>
+
+                            <!-- Back to Login Link -->
+                            <div class="text-center">
+                                <a href="{{ route('site.login') }}" class="text-decoration-none text-muted small">
+                                    <i class="fas fa-arrow-left me-1"></i>{{ __('Back to Login') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="text-center mt-4">
+                        <p class="text-muted small mb-0">
+                            {{ __('Need help?') }} 
+                            <a href="#" class="text-decoration-none">{{ __('Contact Support') }}</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .auth-wrapper {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #0d6efd, #0b5ed7);
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #0b5ed7, #0a58ca);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+        
+        .btn-link:hover {
+            color: #0d6efd !important;
+        }
+        
+        /* Loading state for button */
+        .btn.loading .spinner-border {
+            display: inline-block !important;
+        }
+        
+        .btn.loading span {
+            opacity: 0.7;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
+
+    <script>
+        // Auto-focus on OTP input
+        document.addEventListener('DOMContentLoaded', function() {
+            const otpInput = document.getElementById('login-email');
+            if (otpInput) {
+                otpInput.focus();
+            }
+            
+            // Auto-format OTP input (only allow numbers, max 4 digits)
+            otpInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 4) {
+                    value = value.substring(0, 4);
+                }
+                e.target.value = value;
+            });
+            
+            // Form submission with loading state
+            const form = document.querySelector('form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            form.addEventListener('submit', function() {
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+            });
+        });
+    </script>
 @endsection
-    

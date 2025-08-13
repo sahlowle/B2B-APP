@@ -255,6 +255,28 @@ function getThemeClass($tagName = null)
     return $cssClass;
 }
 
+if (! function_exists('lighten_color')) 
+{
+    
+function lighten_color($hex, $percent) {
+    // إزالة #
+    $hex = str_replace('#', '', $hex);
+
+    // تحويل HEX إلى RGB
+    $r = hexdec(substr($hex, 0, 2));
+    $g = hexdec(substr($hex, 2, 2));
+    $b = hexdec(substr($hex, 4, 2));
+
+    // زيادة الإضاءة
+    $r = min(255, $r + ($percent / 100) * (255 - $r));
+    $g = min(255, $g + ($percent / 100) * (255 - $g));
+    $b = min(255, $b + ($percent / 100) * (255 - $b));
+
+    // تحويل مرة ثانية إلى HEX
+    return sprintf("#%02x%02x%02x", $r, $g, $b);
+}
+}
+
 /**
  * Open Translation File
  *

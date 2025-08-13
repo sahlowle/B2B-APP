@@ -44,6 +44,7 @@
         --global-font: {{ $fontFamily . ',' . $genericFamily }};
         --semi-primary-color: {{ $primaryColor . '11' }};
         --sw-anchor-active-primary-color: {{ $primaryColor }} !important;
+        --sw-anchor-done-primary-color: {{ lighten_color($primaryColor, 50) }} !important;
     }
     </style>
     <link rel="stylesheet" href="{{ asset('public/dist/css/intl-tel-input/intlTelInput.min.css') }}">

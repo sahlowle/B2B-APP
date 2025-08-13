@@ -2,6 +2,7 @@
 @section('page_title', __('Vendor Registration'))
 @section('css')
     <link rel="stylesheet" href="{{ asset('public/datta-able/plugins/select2/css/select2.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/gh/priyashpatil/phone-input-by-country@0.0.1/cpi.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer">
         <!-- CSS -->
 <link href="https://unpkg.com/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
 @endsection
@@ -113,7 +114,23 @@
                         <div class="grid lg:grid-cols-2 grid-cols-1 lg:gap-3">
                             <div class="lg:order-none lg:mb-3 mb-3.5">
                                 <label class="text-sm dm-sans font-medium capitalize text-gray-12 require-profile">{{ __('Phone Number') }}</label>
-                                <input class="border-gray-2 mt-1.5 lg:mt-1p rounded-sm w-full h-46p roboto-medium pl-18p font-medium text-sm text-gray-10 form-control border focus:border-gray-12" type="text" name="phone" required oninvalid="this.setCustomValidity('This field is required.')" value="{{ old('phone') }}" placeholder="{{ __('Enter Your :x', ['x' => __('Phone Number')]) }}">
+                                <div class="flex mt-1.5 lg:mt-1p" style="direction: ltr;">
+                                    <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-100 border border-r-0 border-gray-300 rounded-l-sm h-46p">
+                                        🇸🇦 +966
+                                    </span>
+                                    <input class="border-gray-2 rounded-r-sm flex-1 h-46p roboto-medium pl-3 font-medium text-sm text-gray-10 form-control border focus:border-gray-12" 
+                                           type="tel" 
+                                           name="phone" 
+                                           required 
+                                           pattern="5[0-9]{8}"
+                                           maxlength="9"
+                                           
+                                           oninvalid="this.setCustomValidity('Please enter a valid Saudi phone number (5xxxxxxxx)')" 
+                                           oninput="this.setCustomValidity('')"
+                                           value="{{ old('phone') }}" 
+                                           placeholder="5xxxxxxxx">
+                                    <input type="hidden" name="country_code" value="+966">
+                                </div>
                                 @error('phone')
                                     <span class="password-validation-error block text-11 mt-1 text-red-500">{{ $message }}</span>
                                 @enderror

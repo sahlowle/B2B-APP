@@ -4,6 +4,7 @@ namespace Modules\GeoLocale\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\GeoLocale\Traits\GeoLocaleTrait;
+use App\Traits\HasTranslations;
 
 /**
  * Country
@@ -11,6 +12,9 @@ use Modules\GeoLocale\Traits\GeoLocaleTrait;
 class Country extends Model
 {
     use GeoLocaleTrait;
+    // use HasTranslations;
+
+    public $translatable = ['translated_name'];
 
     /**
      * The database table doesn't use 'created_at' and 'updated_at' so we disable it from Inserts/Updates.

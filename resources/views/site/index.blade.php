@@ -58,20 +58,22 @@
 
 @push('styles')
     <style>
-       .swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30vh !important; /* أو أي ارتفاع تريده */
-}
+       /* Desktop screens only (768px and above) */
+       @media (min-width: 768px) {
+           .swiper-slide {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               height: 70vh !important; /* أو أي ارتفاع تريده */
+           }
 
-.swiper-slide img {
-  flex-shrink: 0;
-  width: 100vw !important;     /* تملى العرض */
-  height: 100%;    /* تملى الارتفاع */
-  object-fit: cover; /* قص الأطراف بدل التشويه */
-}
-
+           .swiper-slide img {
+               flex-shrink: 0;
+               width: 100vw !important;     /* تملى العرض */
+               height: 100%;    /* تملى الارتفاع */
+               object-fit: cover; /* قص الأطراف بدل التشويه */
+           }
+       }
     </style>
 @endpush
 

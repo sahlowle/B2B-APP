@@ -60,20 +60,21 @@
     <style>
        /* Desktop screens only (768px and above) */
        @media (min-width: 768px) {
-           .swiper-slide {
-               display: flex;
-               align-items: center;
-               justify-content: center;
-               height: 70vh !important; /* أو أي ارتفاع تريده */
-           }
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70vh !important; /* ارتفاع السلايد */
+    }
 
-           .swiper-slide img {
-               flex-shrink: 0;
-               width: 100vw !important;     /* تملى العرض */
-               height: 100%;    /* تملى الارتفاع */
-               object-fit: cover; /* قص الأطراف بدل التشويه */
-           }
-       }
+    .swiper-slide img {
+        flex-shrink: 0;
+        width: 100% !important;     /* تملى عرض السلايد بالضبط */
+        height: 100% !important;    /* تملى ارتفاع السلايد */
+        object-fit: cover;          /* قص الأطراف بدون تشويه */
+    }
+}
+
     </style>
 @endpush
 

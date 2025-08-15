@@ -65,11 +65,11 @@
         }
 
         /* ضبط كل سلايد */
-        .swiper-slide {
+        /* .swiper-slide {
         display: flex;
         align-items: center;
         justify-content: center;
-        }
+        } */
 
         /* ضبط الصور داخل السلايد */
         .swiper-slide img {

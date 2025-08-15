@@ -60,8 +60,8 @@
     <style>
        /* ضبط حاوية السلايدر */
         .swiper-container {
-        /* width: 100%; */
-        /* height: 95vh; */
+        width: 100%;
+        height: 95vh;
         }
 
         /* ضبط كل سلايد */

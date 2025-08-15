@@ -1,4 +1,5 @@
 @extends('site.layouts.app')
+
 @php
     $displayPrice = preference('display_price_in_shop');
     
@@ -23,6 +24,7 @@
         }
     }
 @endphp
+
 @section('page_title', $page->name)
 
 @section('seo')
@@ -53,6 +55,31 @@
     <meta property="twitter:description" content="{{ $page->meta_description }}">
     <meta property="twitter:image" content="{{ $fileUrl }}">
 @endsection
+
+@push('styles')
+    <style>
+       /* ضبط حاوية السلايدر */
+        .swiper-container {
+        /* width: 100%; */
+        height: 95; /* 90% من ارتفاع الشاشة */
+        }
+
+        /* ضبط كل سلايد */
+        .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        /* ضبط الصور داخل السلايد */
+        .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* ملء المساحة بدون تشويه */
+        }
+
+    </style>
+@endpush
 
 
 @section('content')

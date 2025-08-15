@@ -62,12 +62,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh; /* أو أي ارتفاع تريده */
+  height: 30vh !important; /* أو أي ارتفاع تريده */
 }
 
 .swiper-slide img {
   flex-shrink: 0;
-  width: 100%;     /* تملى العرض */
+  width: 100vw !important;     /* تملى العرض */
   height: 100%;    /* تملى الارتفاع */
   object-fit: cover; /* قص الأطراف بدل التشويه */
 }

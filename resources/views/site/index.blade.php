@@ -1,5 +1,4 @@
 @extends('site.layouts.app')
-
 @php
     $displayPrice = preference('display_price_in_shop');
     
@@ -24,7 +23,6 @@
         }
     }
 @endphp
-
 @section('page_title', $page->name)
 
 @section('seo')
@@ -55,28 +53,6 @@
     <meta property="twitter:description" content="{{ $page->meta_description }}">
     <meta property="twitter:image" content="{{ $fileUrl }}">
 @endsection
-
-@push('styles')
-    <style>
-       /* Desktop screens only (768px and above) */
-       @media (min-width: 768px) {
-    .swiper-slide {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 70vh !important; /* ارتفاع السلايد */
-    }
-
-    .swiper-slide img {
-        flex-shrink: 0;
-        width: 100% !important;     /* تملى عرض السلايد بالضبط */
-        height: 100% !important;    /* تملى ارتفاع السلايد */
-        object-fit: cover;          /* قص الأطراف بدون تشويه */
-    }
-}
-
-    </style>
-@endpush
 
 
 @section('content')

@@ -50,13 +50,13 @@
                         fill="#2C2C2C" />
                 </svg>
             </div>
-            @if (isset($header['main']['show_logo']) && $header['main']['show_logo'] == 1 && $headerLogo->objectFile)
+            {{-- @if (isset($header['main']['show_logo']) && $header['main']['show_logo'] == 1 && $headerLogo->objectFile)
                 <div class="md:hidden ltr:ml-10 rtl:mr-10">
                     <a href="{{ route('site.index') }}">
                         <img class="w-36 h-11 object-contain" src="{{ $headerLogo->fileUrlQuery() }}" alt="{{ __('Image') }}">
                     </a>
                 </div>
-            @endif
+            @endif --}}
         </div>
         <div class="flex items-center">
             <div style="color: {{ $header['top']['text_color'] }}" class="hidden md:block">

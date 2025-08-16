@@ -50,6 +50,13 @@
                         fill="#2C2C2C" />
                 </svg>
             </div>
+
+            <div class="md:hidden ltr:ml-10 rtl:mr-10">
+                <a href="{{ route('site.index') }}">
+                   <h1 class="text-2xl font-bold text-white tracking-wide leading-tight">Export Valley</h1>
+                </a>
+            </div>
+
             {{-- @if (isset($header['main']['show_logo']) && $header['main']['show_logo'] == 1 && $headerLogo->objectFile)
                 <div class="md:hidden ltr:ml-10 rtl:mr-10">
                     <a href="{{ route('site.index') }}">

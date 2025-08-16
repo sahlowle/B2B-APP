@@ -53,7 +53,7 @@
 
             <div class="md:hidden ltr:ml-10 rtl:mr-10">
                 <a href="{{ route('site.index') }}">
-                   <h1 class="text-2xl font-bold text-white tracking-wide leading-tight">Export Valley</h1>
+                   <h1 class="text-2xl font-bold text-gray-900 tracking-wide leading-tight">Export Valley</h1>
                 </a>
             </div>
 

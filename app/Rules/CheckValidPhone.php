@@ -15,7 +15,7 @@ class CheckValidPhone implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^5[0-9]{8}$/', $value) || preg_match('/^[0-9]{20}$/', $value);
+        return true;
     }
 
     /**

@@ -67,7 +67,8 @@ class ProductAction
             $this->product = Product::where('code', $request->code)->first();
         } elseif (isset($request->slug)) {
 
-            $locale = config('app.locale');
+            // $locale = config('app.locale');
+            $locale = 'en';
 
             try {
                 $this->product = Product::whereRaw('JSON_VALID(slug)')

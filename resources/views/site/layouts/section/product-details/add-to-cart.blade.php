@@ -72,7 +72,7 @@
             @else
                 <a href="javascript:void(0)" class="add-to-cart cart-details-page" id="item-add-to-cart"
                     data-itemCode={{ $code }}>
-                    <button class="primary-bg-color font-bold py-2 {{ $buyNow ? 'px-7' : 'px-12' }} w-full rounded flex justify-center items-center">
+                    <button class="primary-bg-color font-bold py-2 {{ $buyNow ? 'px-5' : 'px-12' }} w-full rounded flex justify-center items-center">
                         <svg class="text-gray-12" width="20" height="19" viewBox="0 0 20 19" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"

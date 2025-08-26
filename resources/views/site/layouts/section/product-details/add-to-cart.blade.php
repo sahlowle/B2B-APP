@@ -7,7 +7,7 @@
         <div class="my-4 flex flex-col gap-3 mt-5">
             {{-- not external product --}}
             @if (!$product->isExternalProduct() && isset($meta['individual_sale']) && $meta['individual_sale'] == 0)
-                <div class=" {{ $buyNow ? 'pr-40  sm:pr-28' : '' }}">
+                <div class=" {{ $buyNow ? '' : '' }}">
                     <div class="flex justify-start items-center gap-2 lg:gap-0">
                         <p class="lg:hidden text-sm roboto-medium text-gray-12">{{ __('Quantity') }}:</p>
                         <div class="flex flex-wrap w-36 lg:w-135p h-10 lg:h-54p text-xl border rounded"
@@ -73,7 +73,7 @@
                 @else
                     <a href="javascript:void(0)" class="add-to-cart cart-details-page w-full" id="item-add-to-cart"
                         data-itemCode={{ $code }}>
-                        <button class="primary-bg-color font-bold py-2 {{ $buyNow ? 'px-5' : 'px-12' }} w-full rounded flex justify-center items-center">
+                        <button class="primary-bg-color font-bold py-2 {{ $buyNow ? '' : 'px-12' }} w-full rounded flex justify-center items-center">
                             <svg class="text-gray-12" width="20" height="19" viewBox="0 0 20 19" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -93,7 +93,7 @@
                         @if (!$product->isExternalProduct())
                             <a href="javascript:void(0)" class="buy-now-btn cart-details-page w-full" id="item-buy-now"
                                 data-itemCode={{ $code }} data-itemId="{{ $id }}">
-                                <button class="bg-gray-12 font-bold py-2 px-10 w-full rounded flex justify-center items-center">
+                                <button class="bg-gray-12 font-bold py-2 w-full rounded flex justify-center items-center">
                                     <svg class="text-white  w-5 h-5" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" height="800px"
                                         width="800px" version="1.1" id="Layer_1" viewBox="0 0 512.004 512.004"

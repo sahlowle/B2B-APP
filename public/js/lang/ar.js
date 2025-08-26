@@ -2537,7 +2537,7 @@ const translates = {
     "Resend Code": "أعد إرسال الرمز",
     "Please select some product options before adding this product to your cart.": "الرجاء تحديد بعض خيارات المنتج قبل إضافة هذا المنتج إلى سلة التسوق الخاصة بك.",
     "Please select a product first!": "الرجاء تحديد منتج أولا!",
-    "Proceed to Checkout": "باشرالخروج من الفندق",
+    "Proceed to Checkout": "إتمام الشراء",
     "Add to Cart": "أضف إلى السلة",
     "All product": "كل المنتجات",
     "has been added to cart.": "تمت إضافته إلى عربة التسوق.",

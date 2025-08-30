@@ -12,8 +12,8 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
-use Cache;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Modules\CMS\Http\Models\ThemeOption;
 
 class DashboardController extends Controller
@@ -35,11 +35,11 @@ class DashboardController extends Controller
             ThemeOption::forgetCache();
 
             if (! empty(Auth::user()->id) && isset(Auth::guard('user')->user()->id)) {
-                Cache::put(config('cache.prefix') . '-user-language-' . Auth::guard('user')->user()->id, $request->lang, 5 * 365 * 86400);
+                Cache::put(config('cache.prefix') . '-user-language-' . Auth::guard('user')->user()->id, $request->lang, now()->addYear());
                 echo 1;
                 exit;
             } else {
-                Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, 5 * 365 * 86400);
+                Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, now()->addYear());
                 echo 1;
                 exit;
             }

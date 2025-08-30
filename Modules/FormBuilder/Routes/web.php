@@ -15,6 +15,7 @@ use Modules\FormBuilder\Http\Controllers\FormController;
 use Modules\FormBuilder\Http\Controllers\KycController;
 use Modules\FormBuilder\Http\Controllers\Vendor\KycController as UserKycController;
 use Modules\FormBuilder\Http\Controllers\SubmissionController;
+use App\Http\Middleware\Locale;
 
 /**
  * Public form url
@@ -25,7 +26,7 @@ Route::as('formbuilder::form.')->namespace('Modules\FormBuilder\Http\Controllers
     Route::post('/form/{identifier}', 'RenderFormController@submit')->name('submit');
 });
 
-Route::prefix('admin')->as('formbuilder::')->namespace('Modules\FormBuilder\Http\Controllers')->middleware(['locale', 'auth', 'web'])->group(function () {
+Route::prefix('admin')->as('formbuilder::')->namespace('Modules\FormBuilder\Http\Controllers')->middleware([Locale::class, 'auth', 'web'])->group(function () {
 
     Route::get('/forms', [FormController::class, 'index'])->name('forms.index');
     Route::get('forms/submissions', [SubmissionController::class, 'index'])->name('submissions.all');

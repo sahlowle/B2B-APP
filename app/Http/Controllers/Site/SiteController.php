@@ -27,6 +27,7 @@ use Modules\CMS\Http\Models\{
 };
 use App\Services\Actions\Facades\ProductActionFacade as ProductAction;
 use App\Services\SearchService;
+use Illuminate\Support\Facades\Cache;
 use Modules\CMS\Entities\Component;
 use Modules\CMS\Service\HomepageService;
 use Modules\Coupon\Http\Models\Coupon;
@@ -40,6 +41,16 @@ class SiteController extends Controller
      */
     public function index()
     {
+        $langData = Cache::get(config('cache.prefix') . '-user-language-' . optional(Auth::guard('user')->user())->id);
+        if (!auth()->user()) {
+            $langData = Cache::get(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'));
+        }
+        if (empty($langData)) {
+            $langData = preference('dflt_lang');
+            dd(" if 2 ".$langData);
+        }
+
+        dd(" last ".$langData);
         return view('site.index');
     }
 

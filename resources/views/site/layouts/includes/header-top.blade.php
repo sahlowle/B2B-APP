@@ -152,6 +152,9 @@
                                     $langData = preference('dflt_lang');
                                 }
                             @endphp
+
+                            {{ dd($langData) }}
+
                             <div id="directionSwitch" class="dropdown rounded shadow-none relative lang-dropdown lang"
                                 data-value={{ $languages->where('short_name', $langData)->first()->direction }}>
                                 <div class="select flex justify-between items-center lang-p">

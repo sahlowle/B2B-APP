@@ -56,8 +56,6 @@
     <link rel="stylesheet" href="{{ asset('public/datta-able/fonts/fontawesome/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/dist/plugins/jQueryUI/jquery-ui.min.css') }}" type="text/css" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
     @php
         $favicon = App\Models\Preference::getFavicon();
     @endphp

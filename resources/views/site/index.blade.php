@@ -55,6 +55,11 @@
 @endsection
 
 
+@section('css')
+    <script src="https://cdn.tailwindcss.com"></script>
+@endsection
+
+
 @section('content')
     @foreach ($page->components as $component)
         @include('cms::templates.blocks.' . $component->layout->file)

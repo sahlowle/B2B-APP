@@ -48,6 +48,23 @@ class DashboardController extends Controller
         exit();
     }
 
+    public function switchLanguageForGet(Request $request)
+    {
+        if ($request->lang) {
+            Cache::forget('theme_options');
+            ThemeOption::forgetCache();
+
+            if (! empty(Auth::user()->id) && isset(Auth::guard('user')->user()->id)) {
+                Cache::put(config('cache.prefix') . '-user-language-' . Auth::guard('user')->user()->id, $request->lang, now()->addYear());
+               return redirect()->back();
+            } else {
+                Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, now()->addYear());
+                return redirect()->back();
+            }
+        }
+        return redirect()->back();
+    }
+
     /**
      * change currency
      *

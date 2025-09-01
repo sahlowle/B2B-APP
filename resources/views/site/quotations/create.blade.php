@@ -180,6 +180,34 @@
             max-width: 200px;
             object-fit: contain;
         }
+        
+        .language-switcher {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 8px 12px;
+        }
+        
+        .language-switcher select {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .language-switcher select:hover {
+            border-color: #9ca3af;
+        }
+        
+        .language-switcher select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
     </style>
     
     <?php
@@ -202,19 +230,38 @@
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
     <!-- Header Section -->
     <header class="py-8">
-        <div class="container mx-auto px-6 text-center">
-            <!-- Logo -->
-            <div class="logo-container">
-                <img src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" 
-                     alt="Company Logo" 
-                     class="logo">
+        <div class="container mx-auto px-6">
+            <!-- Language Switcher -->
+            <div class="flex justify-end mb-6">
+                <div class="language-switcher">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-medium text-gray-700">{{ __("Language") }}:</span>
+                        <select id="languageSelect" onchange="changeLanguage(this.value)">
+                            @foreach(config('app.available_locales', ['en' => 'English', 'ar' => 'العربية']) as $locale => $name)
+                                <option value="{{ $locale }}" {{ app()->getLocale() == $locale ? 'selected' : '' }}>
+                                    {{ $name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
-            <h1 class="text-4xl font-bold mb-2 text-gray-800">
-                {{ __("Create Quotation") }}
-            </h1>
-            <p class="text-xl text-gray-600">
-                {{ __("Fill out the form below to submit your quotation request") }}
-            </p>
+            
+            <!-- Logo and Title -->
+            <div class="text-center">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <img src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" 
+                         alt="Company Logo" 
+                         class="logo">
+                </div>
+                <h1 class="text-4xl font-bold mb-2 text-gray-800">
+                    {{ __("Create Quotation") }}
+                </h1>
+                <p class="text-xl text-gray-600">
+                    {{ __("Fill out the form below to submit your quotation request") }}
+                </p>
+            </div>
         </div>
     </header>
 
@@ -310,7 +357,7 @@
                                         <option value="">{{ __("Select your country") }}</option>
 
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}"> {{ $country->translated_name[app()->getLocale()] }}</option>
+                                            <option value="{{ $country->id }}"> {{ $country->name}}</option>
                                         @endforeach
                                        
                                     </select>
@@ -674,6 +721,35 @@
             if (errorDiv) {
                 errorDiv.style.display = 'none';
             }
+        }
+        
+        // Language switcher functionality
+        function changeLanguage(locale) {
+            // Store the selected language in localStorage
+            localStorage.setItem('selectedLanguage', locale);
+            
+            // Create a form to submit the language change
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("change-language") }}';
+            
+            // Add CSRF token
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+            
+            // Add locale
+            const localeInput = document.createElement('input');
+            localeInput.type = 'hidden';
+            localeInput.name = 'lang';
+            localeInput.value = locale;
+            form.appendChild(localeInput);
+            
+            // Submit the form
+            document.body.appendChild(form);
+            form.submit();
         }
         
         // Add smooth scrolling and animations

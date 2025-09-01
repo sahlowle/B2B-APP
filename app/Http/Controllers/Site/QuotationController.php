@@ -13,6 +13,8 @@ class QuotationController extends Controller
     {
         $data['categories'] = Category::parents();
 
+        // return dd(Country::first());
+
         $countries = Country::orderBy('name', 'asc')->get();
         
         $data['countries'] = $countries;

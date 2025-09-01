@@ -37,6 +37,7 @@ class Country extends Model
      */
     protected $casts = [
         'has_division' => 'boolean',
+        'translated_name' => 'array',
     ];
 
     /**

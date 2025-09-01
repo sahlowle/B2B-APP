@@ -12,6 +12,7 @@
  */
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Site\QuotationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 // homepage
 Route::group(['middleware' => ['locale']], function () {
 
-    // Route::view('/', 'landing.index')->name('site.landing-page');
+    Route::view('/landing', 'landing.index')->name('site.landing-page');
 
     Route::get('/test', function(){
         return  __('Enter Your :x', ['x' => __('Commercial Registration Number')]);
@@ -46,6 +47,8 @@ Route::group(['middleware' => ['locale']], function () {
     Route::get('auth/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('themeable');
     Route::get('auth/registration', [LoginController::class, 'showRegisterForm'])->name('registration')->middleware('themeable');
 
+    Route::get('/page/quotations', [QuotationController::class, 'create'])->name('site.quotations.create')->middleware('themeable');
+    Route::post('/page/quotations', [QuotationController::class, 'store'])->name('site.quotations.store')->middleware('themeable');
     // login register
     Route::get('login', 'LoginController@login');
     Route::get('user/login', 'LoginController@login')->name('site.login');

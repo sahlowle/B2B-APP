@@ -47,6 +47,7 @@
         --sw-anchor-done-primary-color: {{ lighten_color($primaryColor, 50) }} !important;
     }
     </style>
+    
     <link rel="stylesheet" href="{{ asset('public/dist/css/intl-tel-input/intlTelInput.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/app.min.css?v=2.5') }}" />
     <link rel="stylesheet" href="{{ asset('public/css/tailwind-custom.min.css') }}" />

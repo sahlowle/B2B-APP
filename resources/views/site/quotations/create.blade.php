@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Quotation</title>
+    <title>{{ __("Create RFQs") }}</title>
 
     @php
     if (!isset($page->layout)) {
@@ -14,17 +15,29 @@
       $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
       
   @endphp
+
+    
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    @if(app()->getLocale() === 'ar')    
+    <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+        body { font-family: 'Droid Arabic Kufi', sans-serif; }
+    </style>
+
+    @else
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    @endif
     
     <!-- Custom CSS for enhanced styling -->
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        
         .gradient-bg {
             background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);
         }
@@ -157,7 +170,11 @@
         
         .input-icon {
             position: absolute;
+            @if (languageDirection() == 'ltr')
             left: 1rem;
+            @else
+            right: 1rem;
+            @endif
             top: 50%;
             transform: translateY(-50%);
             color: #9ca3af;
@@ -165,7 +182,11 @@
         }
         
         .input-with-icon {
+            @if (languageDirection() == 'rtl')
+            padding-right: 3rem;
+            @else
             padding-left: 3rem;
+            @endif
         }
         
         .logo-container {
@@ -227,7 +248,7 @@
     }
     ?>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen" dir="{{ languageDirection() }}" >
     <!-- Header Section -->
     <header class="py-8">
         <div class="container mx-auto px-6">
@@ -256,7 +277,7 @@
                          class="logo">
                 </div>
                 <h1 class="text-4xl font-bold mb-2 text-gray-800">
-                    {{ __("Create Quotation") }}
+                    {{ __("Create RFQs") }}
                 </h1>
                 <p class="text-xl text-gray-600">
                     {{ __("Fill out the form below to submit your quotation request") }}
@@ -280,7 +301,7 @@
                     <!-- Personal Information Section -->
                     <div class="animate-slide-up">
                         <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4" style="background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-2" style="background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
@@ -304,7 +325,7 @@
                                         name="first_name" 
                                         maxlength="191" 
                                         required
-                                        placeholder="{{ __("Enter your first name") }}">
+                                        placeholder="{{ __('Enter Your :x', ['x' => __('First Name')]) }}">
                                 </div>
                                 <div class="error-message" id="first_name_error"></div>
                             </div>
@@ -322,7 +343,7 @@
                                         name="last_name" 
                                         maxlength="191" 
                                         required
-                                        placeholder="{{ __("Enter your last name") }}">
+                                        placeholder="{{ __('Enter Your :x', ['x' => __('Last Name')]) }}" >
                                 </div>
                                 <div class="error-message" id="last_name_error"></div>
                             </div>
@@ -332,7 +353,7 @@
                     <!-- Contact Information Section -->
                     <div class="animate-slide-up" style="animation-delay: 0.1s;">
                         <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mr-4" style="background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);">
+                            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-2" style="background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                 </svg>
@@ -354,7 +375,7 @@
                                     <select class="form-select input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
                                         name="country" 
                                         required>
-                                        <option value="">{{ __("Select your country") }}</option>
+                                        <option value=""> {{ __("Enter Your :x", ['x' => __('Country')]) }} </option>
 
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}"> {{ $country->name}}</option>
@@ -366,27 +387,32 @@
                             </div>
 
                             <div class="form-group">
+
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">
                                     {{ __("Phone Number") }} <span class="text-red-500">*</span>
                                 </label>
-                                <div class="flex space-x-2">
-                                    <select class="form-select w-1/3 px-3 py-3 rounded-lg text-gray-700 focus:outline-none border-2 border-gray-200 focus:border-blue-500" 
-                                        name="country_code" 
-                                        required>
 
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->callingcode }}">{{ $country->code }} +{{ $country->callingcode }}</option>
-                                        @endforeach
-                                       
-                                    </select>
-                                    <input class="form-input flex-1 px-3 py-3 rounded-lg text-gray-700 focus:outline-none" 
-                                        type="tel" 
-                                        name="phone_number" 
-                                        maxlength="20" 
-                                        required
-                                        placeholder="{{ __("Enter phone number") }}">
+                                <div class="relative mt-2">
+                                    <div class="absolute top-1/2 -translate-y-1/2 left-0 flex items-center pl-3 pr-2">
+                                        <select class="bg-transparent text-slate-700 text-sm focus:outline-none border-0 py-2" name="country_code" required>
+                                            @foreach ($countries->where('callingcode', '!=', null)->sortBy('callingcode')->unique('callingcode') as $country)
+                                                <option value="{{ $country->callingcode }}">+{{ $country->callingcode }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="h-6 border-l border-slate-200 ml-2"></div>
+                                    </div>
+                                    <input
+                                    type="tel"
+                                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-4 pl-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                    name="phone_number" 
+                                    maxlength="20" 
+                                    required
+                                    inputmode="tel"
+                                    autocomplete="tel"
+                                    placeholder="5XXXXXXXX"
+                                    id="phoneNumberInput"
+                                    />
                                 </div>
-                                <div class="error-message" id="phone_error"></div>
                             </div>
                         </div>
 
@@ -403,7 +429,7 @@
                                     name="email" 
                                     maxlength="191" 
                                     required
-                                    placeholder="{{ __("Enter your email address") }}">
+                                    placeholder="{{ __("Enter Your :x", ['x' => __('Email Address')]) }}">
                             </div>
                             <div class="error-message" id="email_error"></div>
                         </div>
@@ -412,7 +438,7 @@
                     <!-- Quotation Details Section -->
                     <div class="animate-slide-up" style="animation-delay: 0.2s;">
                         <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-4" style="background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);">
+                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-2" style="background: linear-gradient(135deg, <?php echo $primaryColor; ?> 0%, <?php echo adjustBrightness($primaryColor, -20); ?> 100%);">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
@@ -433,7 +459,7 @@
                                 <select class="form-select input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
                                     name="category" 
                                     required>
-                                    <option value="">{{ __("Select a category") }}</option>
+                                    <option value="">{{ __("Select") }}</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -445,7 +471,7 @@
 
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                {{ __("Upload PDF") }} <span class="text-red-500">*</span>
+                                {{ __("Upload RFQs") }} <span class="text-red-500">*</span>
                             </label>
                             <div class="file-upload rounded-lg p-6 text-center" id="dropZone">
                                 <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -461,7 +487,7 @@
                                     <span class="text-blue-600 font-medium hover:text-blue-500">
                                         {{ __("Click to upload") }}
                                     </span>
-                                    <span class="text-gray-500"> or drag and drop</span>
+                                    <span class="text-gray-500"> {{ __("or drag and drop") }}</span>
                                 </label>
                                 <p class="text-xs text-gray-500 mt-2">
                                     {{ __("PDF files only, maximum 10MB") }}
@@ -486,9 +512,15 @@
                         <button type="submit" 
                             class="btn-primary px-12 py-4 text-white font-semibold rounded-lg text-lg shadow-lg flex items-center space-x-3">
                             <span>{{ __("Submit Quotation") }}</span>
+                            @if (languageDirection() == 'ltr')
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
+                            @else
+                            <svg class="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                            @endif
                         </button>
                     </div>
                 </form>
@@ -778,6 +810,13 @@
             });
         });
     </script>
+
+<script>
+    // Limit input to numeric values only and restrict length
+    document.getElementById('phoneNumberInput').addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 12);
+    });
+  </script>
 </body>
 </html>
 

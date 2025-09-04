@@ -394,3 +394,13 @@
     </div>
 </section>
 
+
+    <style>
+       @media screen and (max-width: 768px) {
+        .header-searchbar-margin {
+            margin-left: 0px !important;
+        }
+    } 
+    </style>
+
+

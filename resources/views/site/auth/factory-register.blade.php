@@ -25,7 +25,7 @@
 @endphp
    
     <!-- Modern Factory Registration Form -->
-<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(to bottom right, color-mix(in srgb, var(--primary-color) 5%, white), white, color-mix(in srgb, var(--primary-color) 3%, white));">
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
     <!-- Header Section -->
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">

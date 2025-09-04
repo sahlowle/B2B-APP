@@ -52,7 +52,7 @@ Route::group(['middleware' => ['locale']], function () {
     Route::get('/', 'SiteController@index')->name('site.index')->middleware('themeable');
     Route::post('review/pagination/fetch', 'SiteController@fetch')->name('fetch.review')->middleware('themeable');
     Route::post('change-language', 'DashboardController@switchLanguage')->middleware(['checkForDemoMode']);
-    Route::post('change-language-for-get', 'DashboardController@switchLanguageForGet')->name('change-language-for-get')->middleware(['checkForDemoMode']);
+    Route::post('change-language-for-get', 'DashboardController@switchLanguageForGet')->name('change-language')->middleware(['checkForDemoMode']);
     Route::post('change-currency', 'DashboardController@switchCurrency');
 
     Route::get('shop/{alias}', 'SellerController@index')->name('site.shop')->middleware('themeable');

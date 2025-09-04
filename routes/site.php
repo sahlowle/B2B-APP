@@ -42,7 +42,7 @@ Route::group(['middleware' => ['locale']], function () {
     ->group(function () {
         Route::get('login', 'showLoginForm')->name('login');
         Route::post('login', 'login')->name('login');
-        Route::get('registration', 'showRegisterForm')->name('registration');
+        Route::get('register', 'showRegisterForm')->name('registration');
         Route::get('buyer/register', 'buyerRegisterForm')->name('buyer/register');
         Route::get('factory/register', 'factoryRegisterForm')->name('factory/register');
         Route::post('buyer/register', 'buyerRegister')->name('buyer/register');

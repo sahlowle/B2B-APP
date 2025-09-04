@@ -165,7 +165,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Phone Number') }} <span class="text-red-500">*</span></label>
-                                        <div class="flex" dir="rtl" >
+                                        <div class="flex" dir="ltr" >
                                             <span class="inline-flex items-center px-4 py-3 text-sm text-gray-700 bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg">
                                                 🇸🇦 +966
                                             </span>

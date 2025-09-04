@@ -336,6 +336,57 @@
                         </div>
                     @endif
                 </div>
+
+                {{-- Language dropdown for mobile --}}
+                @php
+                    $languages  = \App\Models\Language::getAll()->where('status', 'Active');
+                @endphp
+                @if ($languages->isNotEmpty() && isset($header['top']['show_language']) && $header['top']['show_language'] == 1)
+                    <div class="flex items-center mt-5">
+                        <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.22222 0V4.27867C5.02711 4.15124 3.92648 3.73362 3.09069 3.09917C2.62635 2.74669 2.26451 2.34416 2.00906 1.91439C3.10808 0.870404 4.57949 0.169659 6.22222 0ZM7.77778 0V4.27867C8.97289 4.15124 10.0735 3.73362 10.9093 3.09917C11.3736 2.7467 11.7355 2.34416 11.9909 1.91439C10.8919 0.870406 9.42051 0.169659 7.77778 0ZM13.0019 3.13255C12.6939 3.53233 12.3204 3.90054 11.8902 4.22711C10.7609 5.08438 9.30819 5.60689 7.77778 5.73959L7.77778 7.26013C8.41133 7.31505 9.03445 7.437 9.62923 7.62402C10.4661 7.88714 11.2354 8.27553 11.8902 8.77263C12.3177 9.09708 12.692 9.46462 13.0021 9.86715C13.6356 8.88358 14 7.73154 14 6.5C14 5.26833 13.6356 4.11619 13.0019 3.13255ZM11.991 11.0856C11.7336 10.653 11.3698 10.2501 10.9093 9.90056C10.4086 9.52047 9.80605 9.21303 9.13305 9.00142C8.69923 8.86501 8.24368 8.77083 7.77778 8.72112V13C9.42054 12.8303 10.892 12.1296 11.991 11.0856ZM6.22222 13L6.22222 8.72112C5.75632 8.77083 5.30077 8.86501 4.86695 9.00142C4.19395 9.21303 3.5914 9.52047 3.09069 9.90056C2.63019 10.2501 2.26635 10.653 2.00901 11.0856C3.10803 12.1296 4.57946 12.8303 6.22222 13ZM0.997862 9.86715C1.30804 9.46462 1.68235 9.09708 2.10976 8.77263C2.76462 8.27553 3.53394 7.88714 4.37077 7.62402C4.96555 7.437 5.58867 7.31505 6.22222 7.26013V5.73959C4.69181 5.60689 3.23909 5.08438 2.10976 4.22711C1.67956 3.90054 1.30615 3.53233 0.998052 3.13255C0.364433 4.11618 0 5.26833 0 6.5C0 7.73154 0.364361 8.88358 0.997862 9.86715Z" fill="#DFDFDF"/>
+                        </svg>
+                        
+                        @php
+                            $langData = Cache::get(config('cache.prefix') . '-user-language-' . optional(Auth::guard('user')->user())->id);
+                            if (!auth()->user()) {
+                                $langData = Cache::get(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'));
+                            }
+                            if (empty($langData)) {
+                                $langData = preference('dflt_lang');
+                            }
+                        @endphp
+                        
+                        <div class="ltr:ml-3 rtl:mr-3 relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center text-white hover:text-gray-300 focus:outline-none">
+                                <span class="dm-sans text-sm font-medium">{{ $languages->where('short_name', $langData)->first()->name ?? 'English' }}</span>
+                                <svg class="ltr:ml-2 rtl:mr-2 w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <div x-show="open" 
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 transform scale-100"
+                                 x-transition:leave-end="opacity-0 transform scale-95"
+                                 @click.away="open = false" 
+                                 class="absolute ltr:left-0 rtl:right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                <div class="py-1">
+                                    @foreach ($languages as $language)
+                                        <a href="#" class="lang-change block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150 {{ $langData == $language->short_name ? 'bg-gray-100 font-medium text-gray-900' : '' }}"
+                                           data-short_name="{{ $language->short_name }}">
+                                            <span class="lang" data-short_name="{{ $language->short_name }}">{{ $language->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
                 <div class="flex items-center mt-35p">
                     <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5.8877 1.82952C5.38875 2.1649 4.79817 2.67836 3.94593 3.4218L3.04594 4.2069C2.07069 5.05765 1.75458 5.35299 1.58498 5.72828C1.41463 6.10522 1.40008 6.54516 1.40008 7.85203V11.736C1.40008 12.619 1.40152 13.2121 1.45995 13.6544C1.51589 14.0779 1.61252 14.2565 1.72659 14.3726C1.83897 14.487 2.0096 14.583 2.41987 14.6392C2.85156 14.6983 3.43139 14.6998 4.30004 14.6998H9.69996C10.5686 14.6998 11.1484 14.6983 11.5801 14.6392C11.9904 14.583 12.161 14.487 12.2734 14.3726C12.3875 14.2565 12.4841 14.0779 12.54 13.6544C12.5985 13.2121 12.5999 12.619 12.5999 11.736V7.85204C12.5999 6.54516 12.5854 6.10522 12.415 5.72828C12.2454 5.35299 11.9293 5.05765 10.9541 4.2069L10.0541 3.4218C9.20183 2.67836 8.61125 2.1649 8.1123 1.82952C7.62942 1.50494 7.30682 1.39998 7 1.39998C6.69318 1.39998 6.37058 1.50494 5.8877 1.82952ZM5.10671 0.667625C5.71201 0.260758 6.30804 0 7 0C7.69196 0 8.28799 0.260758 8.89329 0.667624C9.47411 1.05804 10.1306 1.63076 10.9392 2.33611L11.8744 3.15192C11.9112 3.18405 11.9476 3.21574 11.9835 3.24702C12.8054 3.96323 13.3799 4.4639 13.6908 5.15174C14.0009 5.83803 14.0005 6.60465 14 7.70605C13.9999 7.75407 13.9999 7.80272 13.9999 7.85204V11.7837C13.9999 12.6066 14 13.2929 13.928 13.8378C13.8521 14.412 13.6851 14.9334 13.272 15.3538C12.8572 15.776 12.34 15.9482 11.7699 16.0262C11.2321 16.0998 10.5557 16.0998 9.74887 16.0998H4.25112C3.44434 16.0998 2.76788 16.0998 2.23008 16.0262C1.66003 15.9482 1.14281 15.776 0.727991 15.3538C0.314855 14.9334 0.147889 14.412 0.0720281 13.8378C4.9191e-05 13.2929 7.1385e-05 12.6066 9.79206e-05 11.7837L9.89219e-05 7.85203C9.89219e-05 7.80272 7.35546e-05 7.75406 4.8521e-05 7.70604C-0.000526334 6.60465 -0.000926452 5.83803 0.309224 5.15174C0.620073 4.4639 1.19463 3.96323 2.01654 3.24702C2.05243 3.21574 2.0888 3.18405 2.12564 3.15192L3.06084 2.3361C3.86938 1.63076 4.52589 1.05803 5.10671 0.667625Z" fill="#DFDFDF" />

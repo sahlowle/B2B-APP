@@ -166,6 +166,11 @@ class User extends Authenticatable implements BatchDeletable
         });
     }
 
+    public function isActive()
+    {
+        return $this->status === 'Active';
+    }
+
     /**
      * Relation with Role model
      *

@@ -9,24 +9,27 @@
     <section class="">
         <div class="container flex items-center justify-center min-h-screen px-6 mx-auto">
             <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-8">
-                <form class="w-full">
+                <form class="w-full" action="{{ route('login') }}" method="post">
+                    @csrf
                     <div class="flex justify-center mx-auto">
                         <img class="w-auto h-7 sm:h-8" src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" alt="">
                     </div>
             
-                    <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
+                    <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
+                        {{ __("Welcome Back") }}
+                    </h3>
             
                     <p class="mt-1 text-center text-gray-500 dark:text-gray-400">
-                        Enter your email and password to access your account
+                        {{ __("Enter your email and password to access your account") }}
                     </p>
                     
                     <div class="flex items-center justify-center mt-6">
-                        <a href="#" class="w-1/3 pb-4 font-medium text-center text-gray-500 capitalize border-b dark:border-gray-400 dark:text-gray-300"  style="border-color: var(--primary-color);">
-                            sign in
+                        <a href="#" class="w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2"  style="border-color: var(--primary-color);">
+                            {{ __("sign in") }}
                         </a>
         
                         <a href="{{ route('registration') }}" class="w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2">
-                            sign up
+                            {{ __("sign up") }}
                         </a>
                     </div>
         
@@ -37,8 +40,18 @@
                             </svg>
                         </span>
         
-                        <input type="email" class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" style="focus:border-color: var(--primary-color); focus:ring-color: var(--primary-color);">
+                        <input 
+                            type="email" 
+                            name="email"
+                            class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-opacity-40" 
+                            placeholder="{{ __("Email Address")}}" 
+                            style="focus:border-color: var(--primary-color); focus:ring-color: var(--primary-color);"
+                            required
+                            />
                     </div>
+                    @error('email')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
         
                     <div class="relative flex items-center mt-4">
                         <span class="absolute">
@@ -47,17 +60,24 @@
                             </svg>
                         </span>
         
-                        <input type="password" class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" style="focus:border-color: var(--primary-color); focus:ring-color: var(--primary-color);">
+                        <input 
+                            type="password" 
+                            name="password"
+                            class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-opacity-40" 
+                            placeholder="{{ __("Password") }}" 
+                            style="focus:border-color: var(--primary-color); focus:ring-color: var(--primary-color);"
+                            required
+                            />
                     </div>
         
                     <div class="mt-6">
                         <button class="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform rounded-lg focus:outline-none focus:ring focus:ring-opacity-50" style="background-color: var(--primary-color); hover:background-color: var(--primary-color); focus:ring-color: var(--primary-color);">
-                           Login
+                           {{ __("Login") }}
                         </button>
         
                         <div class="mt-6 text-center ">
                             <a href="#" class="text-sm hover:underline text-primary-color">
-                               Forgot Password?
+                               {{ __("Forgot Password?") }}
                             </a>
                         </div>
                     </div>

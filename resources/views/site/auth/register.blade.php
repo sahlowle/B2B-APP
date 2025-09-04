@@ -13,19 +13,21 @@
                     <img class="w-auto h-7 sm:h-8" src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" alt="">
                 </div>
         
-                <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
+                <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
+                    {{ __("Welcome Back") }}
+                </h3>
         
                 <p class="mt-1 text-center text-gray-500 dark:text-gray-400">
-                    Choose your account type to get started
+                    {{ __("Choose your account type to get started") }}
                 </p>
                 
                 <div class="flex items-center justify-center mt-6">
                     <a href="{{ route('login') }}" class="w-1/3 pb-4 font-medium text-center text-gray-500 capitalize border-b dark:border-gray-400 dark:text-gray-300">
-                        sign in
+                        {{ __("sign in") }}
                     </a>
     
                     <a href="#" class="w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2" style="border-color: var(--primary-color);">
-                        sign up
+                        {{ __("sign up") }}
                     </a>
                 </div>
 
@@ -39,8 +41,12 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <h3 class="text-lg font-medium" style="color: var(--primary-color);">Sign up as a buyer</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">I plan to purchase the products</p>
+                                <h3 class="text-lg font-medium" style="color: var(--primary-color);">
+                                    {{ __("Sign up as a buyer") }}
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ __("I plan to purchase the products") }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -54,8 +60,12 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <h3 class="text-lg font-medium" style="color: var(--primary-color);">Sign up as a Factory</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">I plan to sell products</p>
+                                <h3 class="text-lg font-medium" style="color: var(--primary-color);">
+                                    {{ __("Sign up as a Factory") }}
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ __("I plan to sell products") }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -63,7 +73,7 @@
 
                 <div class="mt-6 text-center">
                     <a href="{{ route('login') }}" class="text-sm hover:underline" style="color: var(--primary-color);">
-                        Already have an account?
+                        {{ __("Already have an account?") }}
                     </a>
                 </div>
             </div>

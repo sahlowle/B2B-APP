@@ -394,10 +394,17 @@
                                         style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black)); --tw-ring-color: var(--primary-color);"
                                         onmouseover="this.style.background='linear-gradient(to right, color-mix(in srgb, var(--primary-color) 90%, black), color-mix(in srgb, var(--primary-color) 70%, black))'"
                                         onmouseout="this.style.background='linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black))'">
+                                        {{ __('Register') }}
+                                    
+                                    @if (languageDirection() == 'ltr')
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                     </svg>
-                                    {{ __('Register') }}
+                                    @else
+                                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    @endif
                                 </button>
                             </div>
                         </div>

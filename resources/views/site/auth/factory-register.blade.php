@@ -32,7 +32,7 @@
             <div class="flex justify-center mx-auto">
                 <img class="w-auto h-7 md:h-20" src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" alt="">
             </div>
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ __('Seller Registration Form') }}</h1>
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ __('Seller Registration Form') }}</h1>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ __('Register now with few easy steps!') }}</p>
             <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black));"></div>
         </div>

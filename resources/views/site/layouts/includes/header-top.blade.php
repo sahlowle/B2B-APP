@@ -254,8 +254,8 @@
                             <!-- user dropdown end -->
                         @else
                             <!-- unauthenticated -->
-                            <div
-                                class="flex flex-col justify-center ltr:mr-11 rtl:ml-11 items-center cursor-pointer open-login-modal">
+                            <a href="{{ route('login') }}"
+                                class="flex flex-col justify-center ltr:mr-11 rtl:ml-11 items-center cursor-pointer ">
                                 <svg width="21" height="22" viewBox="0 0 21 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -265,7 +265,7 @@
                                         d="M4.00564 15.9486C5.86929 14.8761 8.11934 14.311 10.4085 14.311C12.6976 14.311 14.9477 14.8761 16.8113 15.9486C18.6743 17.0207 20.0908 18.5688 20.7471 20.4058C20.9687 21.0261 20.6455 21.7085 20.0253 21.9301C19.405 22.1517 18.7226 21.8286 18.501 21.2083C18.0701 20.0024 17.0911 18.8615 15.6216 18.0159C14.1528 17.1706 12.3198 16.6961 10.4085 16.6961C8.49717 16.6961 6.66414 17.1706 5.19535 18.0159C3.72586 18.8615 2.74681 20.0024 2.31597 21.2083C2.09437 21.8286 1.41193 22.1517 0.791676 21.9301C0.171426 21.7085 -0.151748 21.0261 0.0698463 20.4058C0.726164 18.5688 2.14268 17.0207 4.00564 15.9486Z"
                                         fill="#2C2C2C" />
                                 </svg>
-                            </div>
+                            </a>
                         @endauth
                     </li>
                 </ul>

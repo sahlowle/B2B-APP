@@ -25,7 +25,7 @@
 @endphp
    
     <!-- Modern Factory Registration Form -->
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(to bottom right, color-mix(in srgb, var(--primary-color) 5%, white), white, color-mix(in srgb, var(--primary-color) 3%, white));">
     <!-- Header Section -->
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">
@@ -34,7 +34,7 @@
             </div>
             <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ __('Seller Registration Form') }}</h1>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ __('Register now with few easy steps!') }}</p>
-            <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-6 rounded-full"></div>
+            <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black));"></div>
         </div>
 
         <!-- Alert Messages -->
@@ -80,15 +80,15 @@
         @endforeach
 
         <!-- Note Section -->
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
+        <div class="rounded-lg p-4 mb-8" style="background-color: color-mix(in srgb, var(--primary-color) 5%, white); border: 1px solid color-mix(in srgb, var(--primary-color) 20%, white);">
             <div class="flex">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                    <svg class="h-5 w-5" style="color: color-mix(in srgb, var(--primary-color) 60%, white);" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm text-blue-700">{{ __('Note: Please make sure to fill in the form with your actual information or else your account may become banned or suspended.') }}</p>
+                    <p class="text-sm" style="color: color-mix(in srgb, var(--primary-color) 80%, black);">{{ __('Note: Please make sure to fill in the form with your actual information or else your account may become banned or suspended.') }}</p>
                 </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
                         <div class="space-y-6">
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                    <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 mr-2" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
                                     {{ __('Basic Details') }}
@@ -140,7 +140,8 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('First Name') }} <span class="text-red-500">*</span></label>
                                             <input type="text" name="f_name" required 
-                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                   style="--tw-ring-color: var(--primary-color);"
                                                    value="{{ old('f_name') }}" 
                                                    placeholder="{{ __('Enter Your :x', ['x' => __('First Name')]) }}">
                                             @error('f_name')
@@ -150,7 +151,8 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Last Name') }} <span class="text-red-500">*</span></label>
                                             <input type="text" name="l_name" required 
-                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                   style="--tw-ring-color: var(--primary-color);"
                                                    value="{{ old('l_name') }}" 
                                                    placeholder="{{ __('Enter Your :x', ['x' => __('Last Name')]) }}">
                                             @error('l_name')
@@ -168,7 +170,8 @@
                                                 🇸🇦 +966
                                             </span>
                                             <input type="tel" name="phone" required pattern="5[0-9]{8}" maxlength="9"
-                                                   class="flex-1 px-4 py-3 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                   class="flex-1 px-4 py-3 border border-gray-300 rounded-r-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                   style="--tw-ring-color: var(--primary-color);"
                                                    oninvalid="this.setCustomValidity('Please enter a valid Saudi phone number (5xxxxxxxx)')" 
                                                    oninput="this.setCustomValidity('')"
                                                    value="{{ old('phone') }}" 
@@ -183,7 +186,8 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Email Address') }} <span class="text-red-500">*</span></label>
                                             <input type="email" name="email" required 
-                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                   style="--tw-ring-color: var(--primary-color);"
                                                    value="{{ old('email') }}" 
                                                    placeholder="{{ __('Enter Your :x', ['x' => __('Email')]) }}" 
                                                    autocomplete="new-email">
@@ -195,7 +199,8 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Alias') }} <span class="text-red-500">*</span></label>
                                             <input type="text" name="alias" required 
-                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                   style="--tw-ring-color: var(--primary-color);"
                                                    value="{{ old('alias') }}" 
                                                    placeholder="{{ __('Enter Your :x', ['x' => __('Alias')]) }}">
                                             @error('alias')
@@ -213,7 +218,7 @@
                         <div class="space-y-6">
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                    <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 mr-2" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
@@ -224,7 +229,8 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Address') }} <span class="text-red-500">*</span></label>
                                         <input type="text" name="address" required 
-                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                               style="--tw-ring-color: var(--primary-color);"
                                                value="{{ old('address') }}" 
                                                placeholder="{{ __('Enter Your :x', ['x' => __('Address')]) }}">
                                         @error('address')
@@ -236,7 +242,8 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Description') }} <span class="text-red-500">*</span></label>
                                             <textarea name="description" required rows="3"
-                                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                      style="--tw-ring-color: var(--primary-color);"
                                                       placeholder="{{ __('Enter Your :x', ['x' => __('Description')]) }}">{{ old('description') }}</textarea>
                                             @error('description')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -273,7 +280,8 @@
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Postcode') . ' / ' . __('ZIP') }} <span class="text-red-500">*</span></label>
                                                 <input type="text" name="post_code" required 
-                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                       style="--tw-ring-color: var(--primary-color);"
                                                        value="{{ old('post_code') }}" 
                                                        placeholder="{{ __('Enter Your :x', ['x' => __('Postcode')]) }}">
                                                 @error('post_code')
@@ -292,7 +300,7 @@
                         <div class="space-y-6">
                             <div class="border-b border-gray-200 pb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                    <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 mr-2" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                     </svg>
                                     {{ __('Shop Details') }}
@@ -302,7 +310,8 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Shop Name') }} <span class="text-red-500">*</span></label>
                                         <input type="text" name="shop_name" maxlength="191" required 
-                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                               style="--tw-ring-color: var(--primary-color);"
                                                value="{{ old('shop_name') }}" 
                                                placeholder="{{ __('Enter Your :x', ['x' => __('Shop Name')]) }}">
                                         @error('shop_name')
@@ -313,7 +322,8 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Commercial Registration Number') }} <span class="text-red-500">*</span></label>
                                         <input type="text" name="commercial_registration_number" maxlength="191" required 
-                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                               style="--tw-ring-color: var(--primary-color);"
                                                value="{{ old('commercial_registration_number') }}" 
                                                placeholder="{{ __('Enter Your :x', ['x' => __('Commercial Registration Number')]) }}">
                                         @error('commercial_registration_number')
@@ -327,7 +337,7 @@
                                 <!-- Account Section -->
                                 <div class="border-b border-gray-200 pb-6">
                                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                        <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-5 h-5 mr-2" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                         </svg>
                                         {{ __('Account') }}
@@ -348,7 +358,8 @@
                                             </div>
                                             <div class="relative">
                                                 <input type="password" name="password" id="password_seller" required autocomplete="new-password"
-                                                       class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 password-validation"
+                                                       class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200 password-validation"
+                                                       style="--tw-ring-color: var(--primary-color);"
                                                        placeholder="{{ __('Enter Password') }}">
                                                 <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password">
                                                     <svg class="h-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -365,7 +376,8 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Repeat Password') }} <span class="text-red-500">*</span></label>
                                             <input type="password" name="password_confirmation" id="password_confirm" required autocomplete="new-password"
-                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition duration-200"
+                                                   style="--tw-ring-color: var(--primary-color);"
                                                    placeholder="{{ __('Repeat Password') }}">
                                             <span class="password-validation-match-error block text-sm mt-1"></span>
                                         </div>
@@ -378,7 +390,10 @@
                             <!-- Submit Button -->
                             <div class="flex justify-center pt-8">
                                 <button type="submit" onclick="formValidation()" id="btnSubmits"
-                                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg">
+                                        class="inline-flex items-center px-8 py-4 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg"
+                                        style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black)); --tw-ring-color: var(--primary-color);"
+                                        onmouseover="this.style.background='linear-gradient(to right, color-mix(in srgb, var(--primary-color) 90%, black), color-mix(in srgb, var(--primary-color) 70%, black))'"
+                                        onmouseout="this.style.background='linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black))'">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                     </svg>

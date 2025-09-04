@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <section class="bg-white dark:bg-gray-900">
+    <section class="">
         <div class="container flex items-center justify-center min-h-screen px-6 mx-auto">
             <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-8">
                 <div class="flex justify-center mx-auto">
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="mt-6 text-center">
-                    <a href="#" class="text-sm hover:underline" style="color: var(--primary-color);">
+                    <a href="{{ route('login') }}" class="text-sm hover:underline" style="color: var(--primary-color);">
                         Already have an account?
                     </a>
                 </div>

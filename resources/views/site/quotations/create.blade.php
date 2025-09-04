@@ -392,7 +392,8 @@
                                     {{ __("Phone Number") }} <span class="text-red-500">*</span>
                                 </label>
 
-                                <div class="relative mt-2">
+                                <div class="relative" style="direction: {{ languageDirection() }};" >
+                                    
                                     <div class="absolute top-1/2 -translate-y-1/2 left-0 flex items-center pl-3 pr-2">
                                         <select class="bg-transparent text-slate-700 text-sm focus:outline-none border-0 py-2" name="country_code" required>
                                             @foreach ($countries->where('callingcode', '!=', null)->sortBy('callingcode')->unique('callingcode') as $country)

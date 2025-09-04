@@ -12,6 +12,7 @@
  */
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Site\AuthController;
 use App\Http\Controllers\Site\QuotationController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,19 @@ Route::group(['middleware' => ['locale']], function () {
         return  __('Enter Your :x', ['x' => __('Commercial Registration Number')]);
     })->name('site.test');
 
+    Route::controller(AuthController::class)
+    ->prefix('account')
+    ->middleware(['guest','themeable'])
+    ->group(function () {
+        Route::get('login', 'showLoginForm')->name('login');
+        Route::post('login', 'login')->name('login');
+        Route::get('registration', 'showRegisterForm')->name('registration');
+        Route::get('buyer/register', 'buyerRegisterForm')->name('buyer/register');
+        Route::get('factory/register', 'factoryRegisterForm')->name('factory/register');
+        Route::post('buyer/register', 'buyerRegister')->name('buyer/register');
+        Route::post('factory/register', 'factoryRegister')->name('factory/register');
+    });
+
     Route::get('/', 'SiteController@index')->name('site.index')->middleware('themeable');
     Route::post('review/pagination/fetch', 'SiteController@fetch')->name('fetch.review')->middleware('themeable');
     Route::post('change-language', 'DashboardController@switchLanguage')->middleware(['checkForDemoMode']);
@@ -44,15 +58,15 @@ Route::group(['middleware' => ['locale']], function () {
     Route::get('shop/{alias}', 'SellerController@index')->name('site.shop')->middleware('themeable');
     Route::get('shop/profile/{alias}', 'SellerController@vendorProfile')->name('site.shop.profile')->middleware('themeable');
 
-    Route::get('auth', [LoginController::class, 'showLoginForm'])->middleware('themeable');
-    Route::get('auth/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('themeable');
-    Route::get('auth/registration', [LoginController::class, 'showRegisterForm'])->name('registration')->middleware('themeable');
+    // Route::get('auth', [LoginController::class, 'showLoginForm'])->middleware('themeable');
+    // Route::get('auth/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('themeable');
+    // Route::get('auth/registration', [LoginController::class, 'showRegisterForm'])->name('registration')->middleware('themeable');
 
     Route::get('/page/quotations', [QuotationController::class, 'create'])->name('site.quotations.create')->middleware('themeable');
     Route::post('/page/quotations', [QuotationController::class, 'store'])->name('site.quotations.store')->middleware('themeable');
     // login register
-    Route::get('login', 'LoginController@login');
-    Route::get('user/login', 'LoginController@login')->name('site.login');
+    // Route::get('login', 'LoginController@login');
+    // Route::get('user/login', 'LoginController@login')->name('site.login');
     Route::post('authenticate', 'LoginController@authenticate')->name('site.authenticate');
     Route::get('user-verify/{token}/{from?}', 'LoginController@verification')->name('site.verify');
     Route::get('user-verification/{otp}', 'LoginController@verifyByOtp');

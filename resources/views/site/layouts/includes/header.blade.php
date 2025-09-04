@@ -178,13 +178,13 @@
                                     <!-- user dropdown end -->
                                 @else
                                     <!-- unauthenticated -->
-                                    <div class="flex flex-col justify-center items-center cursor-pointer open-login-modal mt-2">
+                                    <a href="{{ route('login') }}" class="flex flex-col justify-center items-center cursor-pointer mt-2">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471" stroke="{{ $header['main']['text_color'] }}" stroke-width="2" stroke-linecap="round"/>
                                             <circle cx="12" cy="8" r="4" stroke="{{ $header['main']['text_color'] }}" stroke-width="2" stroke-linecap="round"/>
                                         </svg>
-                                        <p style="color: {{ $header['main']['text_color'] }}" class="text-xs text-xss font-medium roboto-medium text-center mt-2 mr-0.5 leading-3">{{ __('Account') }}</p>
-                                    </div>
+                                        <p style="color: {{ $header['main']['text_color'] }}" class="text-xs text-xss font-medium roboto-medium text-center mt-2 mr-0.5 leading-3">{{ __('Login') }}</p>
+                                    </a>
                                 @endif
                             </li>
                         @endif

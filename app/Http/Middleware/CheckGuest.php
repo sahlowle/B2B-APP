@@ -23,7 +23,7 @@ class CheckGuest
                 ]);
             }
 
-            return redirect()->route('site.login');
+            return redirect()->route('login');
         }
 
         return $next($request);

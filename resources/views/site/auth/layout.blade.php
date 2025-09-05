@@ -8,6 +8,14 @@
        @yield('title')
     </title>
 
+    @php
+        $favicon = App\Models\Preference::getFavicon()
+    @endphp
+    
+    @if(!empty($favicon))
+        <link rel='shortcut icon' href="{{ $favicon }}" type='image/x-icon' />
+    @endif
+
     
 
     @php
@@ -18,7 +26,7 @@
       $layout = $page->layout;
       $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
       
-  @endphp
+   @endphp
 
   <style>
     :root {

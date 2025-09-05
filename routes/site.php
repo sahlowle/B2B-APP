@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['locale']], function () {
 
     Route::view('/landing', 'landing.index')->name('site.landing-page');
+    Route::view('/email-template', 'emails.send-otp')->name('site.email-template');
+
+
 
     Route::get('/test', function(){
         return  __('Enter Your :x', ['x' => __('Commercial Registration Number')]);
@@ -41,6 +44,7 @@ Route::group(['middleware' => ['locale']], function () {
     ->middleware(['guest','themeable'])
     ->group(function () {
         Route::get('login', 'showLoginForm')->name('login');
+        Route::get('login', 'showLoginForm')->name('site.login');
         Route::post('login', 'login')->name('login');
         Route::get('register', 'showRegisterForm')->name('registration');
         Route::get('buyer/register', 'buyerRegisterForm')->name('buyer/register');

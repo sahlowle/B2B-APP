@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
 use App\Http\Requests\Site\SellerRequest;
 use App\Http\Requests\Site\StoreSellerRequest;
+use App\Mail\SendOtp;
 use Illuminate\Http\Request;
 use App\Models\{
     Role,
@@ -26,6 +27,7 @@ use App\Notifications\SellerRequestToAdminNotification;
 use Illuminate\Support\Facades\Auth;
 use Modules\Shop\Http\Models\Shop;
 use App\Services\Mail\BeASellerMailService;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Modules\Inventory\Entities\Location;
 use Str;
@@ -61,10 +63,13 @@ class RegisteredSellerController extends Controller
         if (preference('vendor_signup') != '1') {
             abort(404);
         }
+        
 
         $response = $this->messageArray(__('Invalid Request'), 'fail');
+
         $request['password'] = \Hash::make($request->password);
         $request['status'] = preference('vendor_default_signup_status') ?? 'Pending';
+
         $user = User::whereEmail($request->email)->first();
         $has_vendor = User::whereHas('vendorUser')->whereEmail($request->email)->first();
         $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
@@ -114,7 +119,10 @@ class RegisteredSellerController extends Controller
 
                 $request['user_id'] = $user_id;
                 (new VendorUser())->store($request->only('vendor_id', 'user_id', 'status'));
-                (new BeASellerMailService())->send($request);
+                
+                Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
+
+                // (new BeASellerMailService())->send($request);
             }
 
             Location::store([

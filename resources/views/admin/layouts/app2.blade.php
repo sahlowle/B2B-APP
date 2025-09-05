@@ -28,6 +28,23 @@
     <link rel="stylesheet" href="{{ asset('public/datta-able/fonts/datta/datta-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/datta-able/plugins/jquery-scrollbar/css/perfect-scrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/dist/css/login.min.css') }}">
+
+    @php
+    if (!isset($page->layout)) {
+          $page = \Modules\CMS\Entities\Page::firstWhere('default', '1');
+      }
+
+      $layout = $page->layout;
+      $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
+      
+   @endphp
+
+    <style>
+        :root {
+        --primary-color: {{ $primaryColor }};
+        }
+    </style>
+
     @yield('css')
     <script type="text/javascript">
         'use strict';

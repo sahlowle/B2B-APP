@@ -7,7 +7,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
                     <div class="card shadow border-0 rounded-3 overflow-hidden">
                         <!-- Header Section -->
-                        <div class="card-header bg-primary text-white text-center py-4 border-0">
+                        <div class="card-header text-white text-center py-4 border-0" style="background-color: var(--primary-color);">
                             <div class="mb-3">
                                 @php
                                     $logo = App\Models\Preference::getLogo('company_logo');
@@ -112,24 +112,25 @@
         }
         
         .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb, 13, 110, 253), 0.25);
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #0d6efd, #0b5ed7);
+            background: var(--primary-color);
             border: none;
             transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            background: linear-gradient(45deg, #0b5ed7, #0a58ca);
+            background: var(--primary-color);
+            opacity: 0.9;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            box-shadow: 0 4px 12px rgba(var(--primary-color-rgb, 13, 110, 253), 0.3);
         }
         
         .btn-link:hover {
-            color: #0d6efd !important;
+            color: var(--primary-color) !important;
         }
         
         /* Loading state for button */

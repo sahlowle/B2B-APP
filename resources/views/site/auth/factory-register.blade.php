@@ -30,12 +30,30 @@
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">
             <div class="flex justify-center mx-auto">
-                <img class="w-auto h-7 md:h-20" src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" alt="">
+                @php
+                    $logo = App\Models\Preference::getLogo('company_logo');
+                @endphp
+                <img class="w-auto h-7 md:h-20" src="{{ $logo }}" alt="{{ trimWords(preference('company_name'), 17)}}" >
             </div>
             <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ __('Seller Registration Form') }}</h1>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ __('Register now with few easy steps!') }}</p>
             <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black));"></div>
         </div>
+
+        @foreach ($errors->all() as $error)
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-700">{{ $error }}</p>
+                    </div>
+                </div>
+            </div>
+        @endforeach
 
         <!-- Alert Messages -->
         @error('fail')
@@ -94,8 +112,8 @@
         </div>
 
         <!-- Registration Form -->
-        <form method="post" action="{{ auth()->user() ? route('seller.store.request') : route('site.seller.signUpStore') }}" 
-              class="bg-white shadow-xl rounded-2xl p-8" onsubmit="return formValidation()">
+        <form method="POST" action="{{ route("site.seller.signUpStore") }}"
+              class="bg-white shadow-xl rounded-2xl p-8" >
             @csrf
 
             <!-- SmartWizard Steps -->
@@ -389,7 +407,7 @@
 
                             <!-- Submit Button -->
                             <div class="flex justify-center pt-8">
-                                <button type="submit" onclick="formValidation()" id="btnSubmits"
+                                <button type="submit"  id=""
                                         class="inline-flex items-center px-8 py-4 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg"
                                         style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black)); --tw-ring-color: var(--primary-color);"
                                         onmouseover="this.style.background='linear-gradient(to right, color-mix(in srgb, var(--primary-color) 90%, black), color-mix(in srgb, var(--primary-color) 70%, black))'"

@@ -10,7 +10,10 @@
         <div class="container flex items-center justify-center min-h-screen px-6 mx-auto">
             <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-8">
                 <div class="flex justify-center mx-auto">
-                    <img class="w-auto h-7 sm:h-8" src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" alt="">
+                    @php
+                        $logo = App\Models\Preference::getLogo('company_logo');
+                    @endphp
+                    <img class="w-auto h-7 sm:h-8" src="{{ $logo }}" alt="{{ trimWords(preference('company_name'), 17)}}" >
                 </div>
         
                 <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
@@ -40,7 +43,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
                             </div>
-                            <div class="ml-4">
+                            <div class="mx-4">
                                 <h3 class="text-lg font-medium" style="color: var(--primary-color);">
                                     {{ __("Sign up as a buyer") }}
                                 </h3>
@@ -59,7 +62,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
                             </div>
-                            <div class="ml-4">
+                            <div class="mx-4">
                                 <h3 class="text-lg font-medium" style="color: var(--primary-color);">
                                     {{ __("Sign up as a Factory") }}
                                 </h3>

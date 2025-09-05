@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\Vendor;
 use App\Services\Reports\AdminDashboardReportService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
@@ -159,17 +160,21 @@ class DashboardController extends Controller
      */
     public function switchLanguage(Request $request)
     {
-        
-        if (Auth::check()) {
-            Cache::put(config('cache.prefix') . '-user-language-' . Auth::guard('user')->user()->id, $request->lang, now()->addYear());
-            Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, now()->addYear());
-            echo 1;
-            exit;
-        } else {
-            Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, now()->addYear());
+        if($request->filled('lang')){
+            
+            $locale = $request->lang;
+
+            session()->put('locale', $locale);
+
+            Cache::put('user-lang', $locale);
+
+            App::setLocale($locale);
+
             echo 1;
             exit;
         }
+        
+        
         echo 0;
         exit();
     }

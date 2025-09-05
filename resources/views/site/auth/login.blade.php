@@ -12,7 +12,10 @@
                 <form class="w-full" action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="flex justify-center mx-auto">
-                        <img class="w-auto h-7 sm:h-8" src="https://exportsvalley.com/public/uploads/20250809/dbe06c7860a0e3390969d8392dbcd898.webp" alt="">
+                        @php
+                        $logo = App\Models\Preference::getLogo('company_logo');
+                        @endphp
+                        <img class="w-auto h-7 sm:h-8" src="{{ $logo }}" alt="{{ trimWords(preference('company_name'), 17)}}" >
                     </div>
             
                     <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">

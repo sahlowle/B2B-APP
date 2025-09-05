@@ -60,6 +60,7 @@ class AuthController extends Controller
             } else if ($role == 'vendor') {
                 return redirect()->route('vendor-dashboard');
             }
+            
             return redirect()->intended(route('site.index'));
         }
 

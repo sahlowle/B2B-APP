@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Modules\CMS\Http\Models\ThemeOption;
@@ -30,38 +31,38 @@ class DashboardController extends Controller
      */
     public function switchLanguage(Request $request)
     {
-        if ($request->lang) {
-            Cache::forget('theme_options');
-            ThemeOption::forgetCache();
+        if($request->filled('lang')){
+            
+            $locale = $request->lang;
 
-            if (! empty(Auth::user()->id) && isset(Auth::guard('user')->user()->id)) {
-                Cache::put(config('cache.prefix') . '-user-language-' . Auth::guard('user')->user()->id, $request->lang, now()->addYear());
-                echo 1;
-                exit;
-            } else {
-                Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, now()->addYear());
-                echo 1;
-                exit;
-            }
+            session()->put('locale', $locale);
+
+            Cache::put('user-lang', $locale);
+
+            App::setLocale($locale);
+
+            echo 1;
+            exit;
         }
+        
         echo 0;
         exit();
     }
 
     public function switchLanguageForGet(Request $request)
     {
-        if ($request->lang) {
-            Cache::forget('theme_options');
-            ThemeOption::forgetCache();
+        if($request->filled('lang')){
+            
+            $locale = $request->lang;
 
-            if (! empty(Auth::user()->id) && isset(Auth::guard('user')->user()->id)) {
-                Cache::put(config('cache.prefix') . '-user-language-' . Auth::guard('user')->user()->id, $request->lang, now()->addYear());
-               return redirect()->back();
-            } else {
-                Cache::put(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'), $request->lang, now()->addYear());
-                return redirect()->back();
-            }
+            session()->put('locale', $locale);
+
+            Cache::put('user-lang', $locale);
+
+            App::setLocale($locale);
         }
+   
+
         return redirect()->back();
     }
 

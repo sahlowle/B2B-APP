@@ -83,7 +83,7 @@ class RegisteredSellerController extends Controller
 
             return redirect()->back();
         }
-        
+
         if ($has_vendor) {
             $response['status'] = 'info';
             $response['message'] = __('You are already registered.');
@@ -123,8 +123,6 @@ class RegisteredSellerController extends Controller
                 $request['user_id'] = $user_id;
                 (new VendorUser())->store($request->only('vendor_id', 'user_id', 'status'));
                 
-                Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
-
                 // (new BeASellerMailService())->send($request);
             }
 
@@ -137,9 +135,12 @@ class RegisteredSellerController extends Controller
                 'is_default' => 1,
             ]);
 
-            });
+        });
 
-            $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');
+        Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
+
+
+        $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');
         
 
         $prefer = preference();

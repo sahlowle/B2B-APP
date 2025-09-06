@@ -14,6 +14,9 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Site\AuthController;
 use App\Http\Controllers\Site\QuotationController;
+use App\Mail\SendOtp;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,9 +38,12 @@ Route::group(['middleware' => ['locale']], function () {
 
 
 
-    Route::get('/test', function(){
-        return  __('Enter Your :x', ['x' => __('Commercial Registration Number')]);
-    })->name('site.test');
+    Route::get('/send-otp', function(){
+        Mail::to('sahlowle@gmail.com')->send(new SendOtp(User::first(),1234));
+
+        return '<h1>success</h1>';
+
+    })->name('send.otp-test');
 
     Route::controller(AuthController::class)
     ->prefix('account')

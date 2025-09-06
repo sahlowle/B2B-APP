@@ -139,8 +139,8 @@ class RegisteredSellerController extends Controller
 
             return $user;
         });
-
-        Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
+        
+        // Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
 
 
         // $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');

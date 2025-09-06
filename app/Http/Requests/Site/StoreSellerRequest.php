@@ -69,7 +69,10 @@ class StoreSellerRequest extends FormRequest
         $otp = random_int(1111, 9999);
         $otp = 1234;
 
-        $alias = Shop::whereAlias($alias = Str::slug($this->f_name . ' ' . $this->l_name))->exists() ? $alias . strtolower(Str::random(4)) : $alias;
+        // $alias = Shop::whereAlias($alias = Str::slug($this->f_name . ' ' . $this->l_name))->exists() ? $alias . strtolower(Str::random(4)) : $alias;
+        
+        $random = Str::random(4).'-'.Str::random(4);
+        $alias = Str::slug($random);
         
         $this->merge([
             'name' => $this->f_name . ' ' . $this->l_name,

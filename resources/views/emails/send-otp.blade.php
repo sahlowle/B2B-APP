@@ -5,7 +5,15 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>OTP Verification</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    @php
+        $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
+    @endphp
+
     <style type="text/css">
+        :root {
+            --primary-color: {{ $primaryColor }};
+        }
         @media screen {
             @font-face {
                 font-family: "DM Sans";

@@ -7,13 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     @php
-        $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
-    @endphp
+    if (!isset($page->layout)) {
+          $page = \Modules\CMS\Entities\Page::firstWhere('default', '1');
+      }
+
+      $layout = $page->layout;
+      $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
+      
+   @endphp
 
     <style type="text/css">
         :root {
             --primary-color: {{ $primaryColor }};
         }
+        
         @media screen {
             @font-face {
                 font-family: "DM Sans";

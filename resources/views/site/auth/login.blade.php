@@ -11,6 +11,9 @@
             <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-8">
                 <form class="w-full" action="{{ route('login') }}" method="post">
                     @csrf
+
+                    <x-session-message />
+
                     <div class="flex justify-center mx-auto">
                         @php
                         $logo = App\Models\Preference::getLogo('company_logo');

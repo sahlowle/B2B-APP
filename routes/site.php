@@ -47,10 +47,10 @@ Route::group(['middleware' => ['locale']], function () {
         Route::get('login', 'showLoginForm')->name('site.login');
         Route::post('login', 'login')->name('login');
         Route::get('register', 'showRegisterForm')->name('registration');
-        Route::get('buyer/register', 'buyerRegisterForm')->name('buyer/register');
-        Route::get('factory/register', 'factoryRegisterForm')->name('factory/register');
-        Route::post('buyer/register', 'buyerRegister')->name('buyer/register');
-        Route::post('factory/register', 'factoryRegister')->name('factory/register');
+        Route::get('buyer/register', 'buyerRegisterForm')->name('buyer.register');
+        Route::get('factory/register', 'factoryRegisterForm')->name('factory.register');
+        Route::post('buyer/register', 'buyerRegister')->name('buyer.register');
+        Route::post('factory/register', 'factoryRegister')->name('factory.register');
     });
 
     Route::get('/', 'SiteController@index')->name('site.index')->middleware('themeable');

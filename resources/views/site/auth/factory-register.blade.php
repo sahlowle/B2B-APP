@@ -407,22 +407,30 @@
 
                             <!-- Submit Button -->
                             <div class="flex justify-center pt-8">
-                                <button type="submit"  id=""
-                                        class="inline-flex items-center px-8 py-4 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg"
+                                <button type="submit" id="factorySubmitBtn"
+                                        class="inline-flex items-center px-8 py-4 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                                         style="background: linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black)); --tw-ring-color: var(--primary-color);"
-                                        onmouseover="this.style.background='linear-gradient(to right, color-mix(in srgb, var(--primary-color) 90%, black), color-mix(in srgb, var(--primary-color) 70%, black))'"
-                                        onmouseout="this.style.background='linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black))'">
-                                        {{ __('Register') }}
+                                        onmouseover="if(!this.disabled) this.style.background='linear-gradient(to right, color-mix(in srgb, var(--primary-color) 90%, black), color-mix(in srgb, var(--primary-color) 70%, black))'"
+                                        onmouseout="if(!this.disabled) this.style.background='linear-gradient(to right, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black))'">
                                     
+                                    <!-- Loading Spinner (hidden by default) -->
+                                    <svg id="factoryLoadingSpinner" class="w-5 h-5 mr-2 animate-spin hidden" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    
+                                    <!-- Default Arrow Icon (shown by default) -->
                                     @if (languageDirection() == 'ltr')
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg id="factoryDefaultIcon" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                     </svg>
                                     @else
-                                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg id="factoryDefaultIcon" class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                         </svg>
                                     @endif
+                                    
+                                    <span id="factoryButtonText">{{ __('Register') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -530,6 +538,32 @@
 
             return allValid;
 
+        });
+
+        // Factory registration form submission loading state
+        document.addEventListener('DOMContentLoaded', function() {
+            const factoryForm = document.querySelector('form');
+            const factorySubmitBtn = document.getElementById('factorySubmitBtn');
+            const factoryLoadingSpinner = document.getElementById('factoryLoadingSpinner');
+            const factoryDefaultIcon = document.getElementById('factoryDefaultIcon');
+            const factoryButtonText = document.getElementById('factoryButtonText');
+            
+            if (factoryForm && factorySubmitBtn) {
+                factoryForm.addEventListener('submit', function() {
+                    // Disable the submit button
+                    factorySubmitBtn.disabled = true;
+                    
+                    // Show loading spinner and hide default icon
+                    factoryLoadingSpinner.classList.remove('hidden');
+                    factoryDefaultIcon.classList.add('hidden');
+                    
+                    // Change button text
+                    factoryButtonText.textContent = '{{ __("Registering...") }}';
+                    
+                    // Add loading class for additional styling
+                    factorySubmitBtn.classList.add('loading');
+                });
+            }
         });
 
     </script>

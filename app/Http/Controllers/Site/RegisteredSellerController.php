@@ -27,6 +27,8 @@ use App\Notifications\SellerRequestToAdminNotification;
 use Illuminate\Support\Facades\Auth;
 use Modules\Shop\Http\Models\Shop;
 use App\Services\Mail\BeASellerMailService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Modules\Inventory\Entities\Location;
@@ -67,7 +69,7 @@ class RegisteredSellerController extends Controller
 
         $response = $this->messageArray(__('Invalid Request'), 'fail');
 
-        $request['password'] = \Hash::make($request->password);
+        $request['password'] = Hash::make($request->password);
         $request['status'] = preference('vendor_default_signup_status') ?? 'Pending';
 
         $user = User::whereEmail($request->email)->first();
@@ -81,6 +83,7 @@ class RegisteredSellerController extends Controller
 
             return redirect()->back();
         }
+        
         if ($has_vendor) {
             $response['status'] = 'info';
             $response['message'] = __('You are already registered.');
@@ -89,9 +92,9 @@ class RegisteredSellerController extends Controller
             return redirect()->route('login');
         }
 
-        try {
-            \DB::beginTransaction();
+        $user_id = null;
 
+        DB::transaction(function () use ($request, $user, $response) {
             // Store user information
             if (empty($user)) {
                 $user_id = (new User())->store($request->only('name', 'email', 'password', 'activation_code', 'activation_otp', 'status'));
@@ -134,26 +137,20 @@ class RegisteredSellerController extends Controller
                 'is_default' => 1,
             ]);
 
-            \DB::commit();
-            $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            $response['status'] = 'fail';
-            dd($e->getMessage());
-            $response['message'] = $e->getMessage();
-            // $response['message'] = __('Failed! Something has gone wrong. Please contact with admin.');
-            $this->setSessionValue($response);
+            });
 
-            return redirect()->back();
-        }
+            $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');
+        
 
         $prefer = preference();
+
         if ($prefer['email'] == 'token') {
             $response['message'] = __('Success! Registration has been done and account activation key has been sent your account.');
             $this->setSessionValue($response);
 
             return redirect()->route('login');
         }
+        
         Session::put('martvill-seller', User::find($user_id));
 
         return redirect()->route('site.seller.otp');

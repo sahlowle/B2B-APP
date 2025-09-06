@@ -4,7 +4,7 @@
 </div>
 @enderror
 @php
-$colors = ['fail' => 'text-red-500', 'info' => 'text-red-500', 'success' => 'text-green-1']
+$colors = ['fail' => 'text-red-500', 'info' => 'text-red-500', 'success' => 'text-green-500']
 @endphp
 @foreach (['success', 'fail', 'info'] as $msg)
 @if ($message = Session::get($msg))

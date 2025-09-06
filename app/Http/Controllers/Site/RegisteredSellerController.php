@@ -139,7 +139,9 @@ class RegisteredSellerController extends Controller
         } catch (\Exception $e) {
             \DB::rollBack();
             $response['status'] = 'fail';
-            $response['message'] = __('Failed! Something has gone wrong. Please contact with admin.');
+            dd($e->getMessage());
+            $response['message'] = $e->getMessage();
+            // $response['message'] = __('Failed! Something has gone wrong. Please contact with admin.');
             $this->setSessionValue($response);
 
             return redirect()->back();

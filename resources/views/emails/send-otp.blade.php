@@ -20,7 +20,7 @@
         :root {
             --primary-color: {{ $primaryColor }};
         }
-        
+
         @media screen {
             @font-face {
                 font-family: "DM Sans";
@@ -91,7 +91,7 @@
         }
 
         .otp-code {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-color);
             color: white;
             font-size: 32px;
             font-weight: bold;

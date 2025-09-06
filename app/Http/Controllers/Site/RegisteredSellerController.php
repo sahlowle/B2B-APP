@@ -65,36 +65,38 @@ class RegisteredSellerController extends Controller
         if (preference('vendor_signup') != '1') {
             abort(404);
         }
+
+        $user = DB::transaction(function () use ($request) {
         
 
-        $response = $this->messageArray(__('Invalid Request'), 'fail');
+            $response = $this->messageArray(__('Invalid Request'), 'fail');
 
-        $request['password'] = Hash::make($request->password);
-        $request['status'] = preference('vendor_default_signup_status') ?? 'Pending';
+            $request['password'] = Hash::make($request->password);
+            $request['status'] = preference('vendor_default_signup_status') ?? 'Pending';
 
-        $user = User::whereEmail($request->email)->first();
-        $has_vendor = User::whereHas('vendorUser')->whereEmail($request->email)->first();
-        $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
+            $user = User::whereEmail($request->email)->first();
+            $has_vendor = User::whereHas('vendorUser')->whereEmail($request->email)->first();
+            $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
 
-        if ($vendor) {
-            $response['status'] = 'info';
-            $response['message'] = __('The email address has already been taken.');
-            $this->setSessionValue($response);
+            if ($vendor) {
+                $response['status'] = 'info';
+                $response['message'] = __('The email address has already been taken.');
+                $this->setSessionValue($response);
 
-            return redirect()->back();
-        }
+                return redirect()->back();
+            }
 
-        if ($has_vendor) {
-            $response['status'] = 'info';
-            $response['message'] = __('You are already registered.');
-            $this->setSessionValue($response);
+            if ($has_vendor) {
+                $response['status'] = 'info';
+                $response['message'] = __('You are already registered.');
+                $this->setSessionValue($response);
 
-            return redirect()->route('login');
-        }
+                return redirect()->route('login');
+            }
 
-        $user_id = null;
+            $user_id = null;
 
-        DB::transaction(function () use ($request, $user, $response) {
+        
             // Store user information
             if (empty($user)) {
                 $user_id = (new User())->store($request->only('name', 'email', 'password', 'activation_code', 'activation_otp', 'status'));
@@ -135,24 +137,25 @@ class RegisteredSellerController extends Controller
                 'is_default' => 1,
             ]);
 
+            return $user;
         });
 
         Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
 
 
-        $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');
+        // $response = $this->messageArray(__('The :x has been successfully saved.', ['x' => __('Vendor')]), 'success');
         
 
-        $prefer = preference();
+        // $prefer = preference();
 
-        if ($prefer['email'] == 'token') {
-            $response['message'] = __('Success! Registration has been done and account activation key has been sent your account.');
-            $this->setSessionValue($response);
+        // if ($prefer['email'] == 'token') {
+        //     $response['message'] = __('Success! Registration has been done and account activation key has been sent your account.');
+        //     $this->setSessionValue($response);
 
-            return redirect()->route('login');
-        }
+        //     return redirect()->route('login');
+        // }
         
-        Session::put('martvill-seller', User::find($user_id));
+        Session::put('martvill-seller', $user);
 
         return redirect()->route('site.seller.otp');
     }

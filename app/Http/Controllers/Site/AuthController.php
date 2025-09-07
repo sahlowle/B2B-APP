@@ -157,7 +157,7 @@ class AuthController extends Controller
 
         Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
 
-        Session::put('martvill-seller', $user);
+        // Session::put('martvill-seller', $user);
 
         return redirect()->route('site.seller.otp', ['email' => $request->email]);
     }

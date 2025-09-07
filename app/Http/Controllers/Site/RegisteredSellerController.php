@@ -236,7 +236,11 @@ class RegisteredSellerController extends Controller
             return view('site.vendor.otp', ['user' => $user]);
         }
 
-        return redirect()->route('site.login');
+        $response['status'] = 'success';
+        $response['message'] = __('Your account is already verified.');
+        $this->setSessionValue($response);
+
+        return redirect()->route('site.login')->withErrors(['email' => __('Your account is already verified.')]);
     }
 
     /**

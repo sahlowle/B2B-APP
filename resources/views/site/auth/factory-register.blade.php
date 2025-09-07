@@ -112,7 +112,7 @@
         </div>
 
         <!-- Registration Form -->
-        <form method="POST" action="{{ route("site.seller.signUpStore") }}"
+        <form method="POST" action="{{ route("factory.register") }}"
               class="bg-white shadow-xl rounded-2xl p-8" >
             @csrf
 

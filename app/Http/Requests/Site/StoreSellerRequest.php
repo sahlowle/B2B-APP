@@ -31,7 +31,7 @@ class StoreSellerRequest extends FormRequest
     {
         return [
             'name'      => ['required', 'min:3', 'max:191'],
-            'email'     => ['required', 'max:191', new CheckValidEmail()],
+            'email'     => ['required', 'email','max:191', 'unique:users,email'],
             'password'  => ['required', 'max:20', 'confirmed'],
             'phone'     => ['required', 'min:9', 'max:9', new CheckValidPhone()],
             'logo'      => ['nullable', new CheckValidFile(getFileExtensions(3))],
@@ -76,7 +76,7 @@ class StoreSellerRequest extends FormRequest
         
         $this->merge([
             'name' => $this->f_name . ' ' . $this->l_name,
-            'status' => 'Pending',
+            // 'status' => 'Pending',
             'activation_code' => Str::random(10),
             'activation_otp' => $otp,
             'alias' => $alias,

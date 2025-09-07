@@ -79,7 +79,7 @@ class RegisteredSellerController extends Controller
             $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
 
             if ($vendor) {
-                $response['status'] = 'info';
+                $response['status'] = 'error';
                 $response['message'] = __('The email address has already been taken.');
                 $this->setSessionValue($response);
 
@@ -87,7 +87,7 @@ class RegisteredSellerController extends Controller
             }
 
             if ($has_vendor) {
-                $response['status'] = 'info';
+                $response['status'] = 'error';
                 $response['message'] = __('You are already registered.');
                 $this->setSessionValue($response);
 
@@ -103,6 +103,7 @@ class RegisteredSellerController extends Controller
             } else {
                 $user_id = $user->id;
             }
+            
             // Store vendor information
             $data['vendorData'] = $request->only('name', 'email', 'phone', 'formal_name', 'website', 'status');
             $vendorId = (new Vendor())->store($data);

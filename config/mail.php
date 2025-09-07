@@ -33,6 +33,7 @@ return [
     |
     */
 
+    'verify_peer' => false,
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',

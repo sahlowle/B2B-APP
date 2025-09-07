@@ -3,13 +3,22 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Site\StoreSellerRequest;
+use App\Mail\SendOtp;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
+use App\Models\Vendor;
+use App\Models\VendorUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Modules\Inventory\Entities\Location;
+use Modules\Shop\Http\Models\Shop;
 
 class AuthController extends Controller
 {
@@ -62,9 +71,91 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function factoryRegister(Request $request)
+    public function factoryRegister(StoreSellerRequest $request)
     {
-        return $request->all();
+        if (preference('vendor_signup') != '1') {
+            abort(404);
+        }
+
+        $user = DB::transaction(function () use ($request) {
+            $user = User::whereEmail($request->email)->first();
+            $has_vendor = User::whereHas('vendorUser')->whereEmail($request->email)->first();
+            $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
+
+            if ($vendor) {
+                $response['status'] = 'error';
+                $response['message'] = __('The email address has already been taken.');
+                $this->setSessionValue($response);
+
+                return redirect()->back();
+            }
+
+            if ($has_vendor) {
+                $response['status'] = 'error';
+                $response['message'] = __('You are already registered.');
+                $this->setSessionValue($response);
+
+                return redirect()->route('login');
+            }
+
+            $user_id = null;
+            // Store user information
+            if (empty($user)) {
+                $request['password'] = Hash::make($request->password);
+                $user_id = (new User())->store($request->only('name', 'email', 'password', 'activation_code', 'activation_otp', 'status'));
+            } else {
+                $user_id = $user->id;
+            }
+
+
+             // Store vendor information
+             $data['vendorData'] = $request->only('name', 'email', 'phone', 'formal_name', 'website', 'status');
+             $vendorId = (new Vendor())->store($data);
+ 
+             // Store shop information
+             $request['vendor_id'] = $vendorId;
+             $alias = cleanedUrl($request->name);
+             $request->merge(['alias' => $alias]);
+             
+             (new Shop())->store($request->only('commercial_registration_number','name', 'vendor_id', 'email', 'website', 'alias', 'phone', 'address', 'country', 'state', 'city', 'post_code'));
+ 
+             if (! empty($user_id)) {
+                $roleId = Role::where('slug', 'vendor-admin')->first()->id;
+                $roles = ['user_id' => $user_id, 'role_id' =>  $roleId];
+
+                if (! empty($roles)) {
+                    (new RoleUser())->update($roles);
+                }
+
+                $request['user_id'] = $user_id;
+                (new VendorUser())->store($request->only('vendor_id', 'user_id', 'status'));
+                
+                // (new BeASellerMailService())->send($request);
+            }
+
+            Location::store([
+                'name' => $request->name,
+                'slug' => $request->alias,
+                'parent_id' => null,
+                'vendor_id' => $vendorId,
+                'status' => 'Active',
+                'is_default' => 1,
+            ]);
+
+            return $user;
+        });
+
+        //Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
+        $response['status'] = 'success';
+        $response['message'] = __('Registration successful. Please login to your account.');
+
+        $this->setSessionValue($response);
+
+        return redirect()->route('login');
+
+        Session::put('martvill-seller', $user);
+
+        return redirect()->route('site.seller.otp');
     }
 
     public function login(Request $request)
@@ -74,15 +165,19 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        // return $request->all();
+
         if (Auth::attempt($request->only('email', 'password'))) {
 
             $user = auth()->user();
             $role = $user->role()->type;
 
-            if (! $user->isActive()) {
-                Auth::logout();
-                return back()->withInput()->withErrors(['error' => __('Inactive User')]);
-            }
+            // return $user;
+
+            // if (! $user->isActive()) {
+            //     Auth::logout();
+            //     return back()->withInput()->withErrors(['email' => __('Inactive User')]);
+            // }
 
             if ($role == 'admin') {
                 return redirect()->route('dashboard');

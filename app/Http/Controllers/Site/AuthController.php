@@ -87,7 +87,8 @@ class AuthController extends Controller
                 $response['message'] = __('The email address has already been taken.');
                 $this->setSessionValue($response);
 
-                return redirect()->back();
+                // return redirect()->back();
+                return back()->withInput()->withErrors(['email' => __('The email address has already been taken.')]);
             }
 
             if ($has_vendor) {
@@ -95,7 +96,8 @@ class AuthController extends Controller
                 $response['message'] = __('You are already registered.');
                 $this->setSessionValue($response);
 
-                return redirect()->route('login');
+                // return redirect()->route('login');
+                return back()->withInput()->withErrors(['email' => __('You are already registered.')]);
             }
 
             $user_id = null;
@@ -152,12 +154,12 @@ class AuthController extends Controller
         $this->setSessionValue($response);
         
         // return redirect()->route('login');
-        
+
         Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
 
         Session::put('martvill-seller', $user);
 
-        return redirect()->route('site.seller.otp');
+        return redirect()->route('site.seller.otp', ['email' => $request->email]);
     }
 
     public function login(Request $request)

@@ -225,14 +225,15 @@ class RegisteredSellerController extends Controller
      *
      * @return vendor otp form
      */
-    public function otpForm()
+    public function otpForm(Request $request)
     {
-        $user = Session::get('martvill-seller');
-        if ($user) {
-            $data['user'] = User::find($user->id);
-        }
-        if (! empty($data['user']) && empty($data['user']->email_verified_at)) {
-            return view('site.vendor.otp', $data);
+        abort_if($request->filled('email'), 404, __('Invalid Request'));
+
+        $user = User::whereEmail($request->email)->firstOrFail();
+
+        
+        if (! empty($user) && empty($user->email_verified_at)) {
+            return view('site.vendor.otp', ['user' => $user]);
         }
 
         return redirect()->route('site.login');

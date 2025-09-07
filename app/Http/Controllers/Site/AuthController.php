@@ -145,13 +145,15 @@ class AuthController extends Controller
             return $user;
         });
 
-        //Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
+        
         $response['status'] = 'success';
         $response['message'] = __('Registration successful. Please login to your account.');
-
+        
         $this->setSessionValue($response);
-
-        return redirect()->route('login');
+        
+        // return redirect()->route('login');
+        
+        Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
 
         Session::put('martvill-seller', $user);
 

@@ -91,7 +91,7 @@
         }
 
         .otp-code {
-            background: var(--primary-color);
+            background: #ed552a;
             color: white;
             font-size: 32px;
             font-weight: bold;
@@ -159,21 +159,17 @@
                     <tr>
                         <td align="center" bgcolor="#ffffff">
                             
-                            @php
-                                $logo = App\Models\Preference::getLogo('company_logo');
-                            @endphp
+                
 
                             @php
                                 $companyName = preference('company_name');
                             @endphp
 
-                            @if(isset($logo) && $logo)
-                                <img class="logo-img" src="{{ $logo }}" alt="Exports Valley" />
-                            @else
-                                <div style="margin: 26px 0px 19px 0px; padding: 0px; width: 207.98px; height: 56px; background-color: #f8f9fa; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #6c757d; font-family: 'DM Sans', sans-serif; font-weight: 500;">
+                          
+                                <h3 style="margin: 26px 0px 19px 0px; padding: 0px; width: 207.98px; height: 56px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #6c757d; font-family: 'DM Sans', sans-serif; font-weight: 500;">
                                     {{ $companyName }}
-                                </div>
-                            @endif
+                                </h3>
+                           
                             <p style="border-top: 1px solid #dfdfdf; margin: 1px 20px 0px 20px;"></p>
                         </td>
                     </tr>

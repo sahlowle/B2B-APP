@@ -227,7 +227,7 @@ class RegisteredSellerController extends Controller
      */
     public function otpForm(Request $request)
     {
-        abort_if($request->filled('email'), 404, __('Invalid Request'));
+        abort_if($request->isNotFilled('email'), 404, __('Invalid Request'));
 
         $user = User::whereEmail($request->email)->firstOrFail();
 

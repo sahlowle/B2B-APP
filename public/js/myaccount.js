@@ -634,7 +634,7 @@ if ($('#customer_wishlists').length) {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == '401') {
-                    window.location.href = SITE_URL + "/user/login";
+                    window.location.href = SITE_URL + "/login";
                 }
             },
             complete: function() {

@@ -7,7 +7,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
                     <div class="card shadow border-0 rounded-3 overflow-hidden">
                         <!-- Header Section -->
-                        <div class="card-header text-white text-center py-4 border-0" style="background-color: var(--primary-color);">
+                        <div class="card-header text-white text-center py-4 border-0" style="">
                             <div class="mb-3">
                                 @php
                                     $logo = App\Models\Preference::getLogo('company_logo');

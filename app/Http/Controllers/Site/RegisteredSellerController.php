@@ -266,6 +266,10 @@ class RegisteredSellerController extends Controller
         User::first()->notify(new SellerRequestToAdminNotification($user));
         Session::forget('martvill-seller');
 
+        $response['status'] = 'success';
+        $response['message'] = __('Your account is verified.');
+        $this->setSessionValue($response);
+
         return redirect()->route('login');
     }
 

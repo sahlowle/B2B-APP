@@ -65,7 +65,8 @@ Route::group(['middleware' => ['locale']], function () {
     Route::match(['get', 'post'], 'change-language-for-get', 'DashboardController@switchLanguageForGet')->name('change-language')->middleware(['checkForDemoMode']);
     Route::post('change-currency', 'DashboardController@switchCurrency');
 
-    Route::get('shop/{alias}', 'SellerController@index')->name('site.shop')->middleware('themeable');
+    Route::get('shops', 'SellerController@index')->name('site.shop.index')->middleware('themeable');
+    Route::get('shop/{alias}', 'SellerController@showVendor')->name('site.shop')->middleware('themeable');
     Route::get('shop/profile/{alias}', 'SellerController@vendorProfile')->name('site.shop.profile')->middleware('themeable');
 
     // Route::get('auth', [LoginController::class, 'showLoginForm'])->middleware('themeable');
@@ -77,6 +78,7 @@ Route::group(['middleware' => ['locale']], function () {
     // login register
     // Route::get('login', 'LoginController@login');
     // Route::get('user/login', 'LoginController@login')->name('site.login');
+    Route::redirect('user/login', 'login');
     Route::post('authenticate', 'LoginController@authenticate')->name('site.authenticate');
     Route::get('user-verify/{token}/{from?}', 'LoginController@verification')->name('site.verify');
     Route::get('user-verification/{otp}', 'LoginController@verifyByOtp');

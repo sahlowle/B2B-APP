@@ -16,12 +16,18 @@ use Illuminate\Http\Request;
 
 class SellerController extends Controller
 {
+
+    public function index()
+    {
+        return view('site.shop.all-shops');
+    }
+
     /**
      * Shop
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index($alias = null)
+    public function showVendor($alias = null)
     {
         $data['shop'] = \Modules\Shop\Http\Models\Shop::firstWhere('alias', $alias);
 

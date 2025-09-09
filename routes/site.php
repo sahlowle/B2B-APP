@@ -44,11 +44,13 @@ Route::group(['middleware' => ['locale']], function () {
         return '<h1>success</h1>';
 
     })->name('send.otp-test');
+    
 
     Route::controller(AuthController::class)
     ->prefix('account')
     ->middleware(['guest','themeable'])
     ->group(function () {
+        Route::get('otp-verify', 'otpForm')->name('site.otp-verify');
         Route::get('login', 'showLoginForm')->name('login');
         Route::get('login', 'showLoginForm')->name('site.login');
         Route::post('login', 'login')->name('login');

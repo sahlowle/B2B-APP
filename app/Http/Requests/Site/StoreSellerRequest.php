@@ -67,8 +67,6 @@ class StoreSellerRequest extends FormRequest
     protected function prepareForValidation()
     {
         $otp = random_int(1111, 9999);
-        $otp = 1234;
-
         // $alias = Shop::whereAlias($alias = Str::slug($this->f_name . ' ' . $this->l_name))->exists() ? $alias . strtolower(Str::random(4)) : $alias;
         
         $random = Str::random(4).'-'.Str::random(4);

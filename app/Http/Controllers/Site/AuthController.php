@@ -58,7 +58,7 @@ class AuthController extends Controller
 
 
         $user = User::create($data);
-
+        
         $role = Role::where('slug', 'customer')->first();
         $roles = ['user_id' => $user->id, 'role_id' => $role->id];
         (new RoleUser())->store($roles);
@@ -67,6 +67,8 @@ class AuthController extends Controller
         $response['message'] = __('Registration successful. Please login to your account.');
 
         $this->setSessionValue($response);
+
+        $user->sendOtpToEmail();
 
         return redirect()->route('login');
     }
@@ -155,11 +157,11 @@ class AuthController extends Controller
         
         // return redirect()->route('login');
 
-        Mail::to($request->email)->send(new SendOtp($user,$request->activation_otp));
+        $user->sendOtpToEmail();
 
         // Session::put('martvill-seller', $user);
 
-        return redirect()->route('site.seller.otp', ['email' => $request->email]);
+        return redirect()->route('site.otp-verify', ['email' => $request->email]);
     }
 
     public function login(Request $request)
@@ -178,10 +180,15 @@ class AuthController extends Controller
 
             // return $user;
 
-            // if (! $user->isActive()) {
-            //     Auth::logout();
-            //     return back()->withInput()->withErrors(['email' => __('Inactive User')]);
-            // }
+            if (! $user->isActive()) {
+                $user->sendOtpToEmail();
+                Auth::logout();
+                $response['status'] = 'error';
+                $response['message'] = __('Verify your account.');
+                $this->setSessionValue($response);
+                return redirect()->route('site.otp-verify', ['email' => $user->email]);
+                // return back()->withInput()->withErrors(['email' => __('Inactive User')]);
+            }
 
             if ($role == 'admin') {
                 return redirect()->route('dashboard');
@@ -193,5 +200,24 @@ class AuthController extends Controller
         }
 
         return back()->withInput()->withErrors(['email' => __('Invalid email or password')]);
+    }
+
+
+    public function otpForm(Request $request)
+    {
+        abort_if($request->isNotFilled('email'), 404, __('Invalid Request'));
+
+        $user = User::whereEmail($request->email)->firstOrFail();
+
+        
+        if (! empty($user) && empty($user->email_verified_at)) {
+            return view('site.vendor.otp', ['user' => $user]);
+        }
+
+        $response['status'] = 'success';
+        $response['message'] = __('Your account is already verified.');
+        $this->setSessionValue($response);
+
+        return redirect()->route('site.login')->withErrors(['email' => __('Your account is already verified.')]);
     }
 }

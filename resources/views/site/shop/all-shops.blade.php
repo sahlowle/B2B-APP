@@ -129,31 +129,7 @@
 @endsection
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="shops-hero py-16 px-4 xl:px-0 relative">
-        <div class="layout-wrapper relative z-10">
-            <div class="text-center text-white">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ __('Discover Amazing Factories') }}</h1>
-                <p class="text-xl md:text-2xl opacity-90 mb-8 max-w-3xl mx-auto">{{ __('Connect with trusted manufacturers and suppliers from around the world') }}</p>
-                
-                <!-- Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
-                    <div class="stats-card p-6 text-center">
-                        <div class="text-3xl font-bold text-gray-800" id="total-shops">-</div>
-                        <div class="text-gray-600 font-medium">{{ __('Active Factories') }}</div>
-                    </div>
-                    <div class="stats-card p-6 text-center">
-                        <div class="text-3xl font-bold text-gray-800" id="total-products">-</div>
-                        <div class="text-gray-600 font-medium">{{ __('Products Available') }}</div>
-                    </div>
-                    <div class="stats-card p-6 text-center">
-                        <div class="text-3xl font-bold text-gray-800" id="avg-rating">-</div>
-                        <div class="text-gray-600 font-medium">{{ __('Average Rating') }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <section class="layout-wrapper px-4 xl:px-0 py-8">
         <!-- Modern Breadcrumb -->
@@ -200,6 +176,7 @@
                 @php
                     $shop = $vendor->shop;
                     $logoUrl = optional($vendor->logo)->fileUrl() ?? $vendor->fileUrl();
+                    // $logoUrl = $vendor->fileUrl();
                     $review = $vendor->shopReview();
                 @endphp
                 <div class="shop-card group">
@@ -211,18 +188,24 @@
                                      src="{{ $logoUrl ?: asset('public/frontend/img/seller.png') }}" 
                                      alt="{{ $vendor->name }}"
                                      onerror="this.src='{{ asset('public/frontend/img/seller.png') }}'">
-                                @if($vendor->status === 'Active')
-                                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                               
+                            </div>
+                            
+                            <!-- Shop Name -->
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
+                                <li class="flex items-center">
+                                    @if($vendor->status === 'Active')
+                                    <div
+                                     class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                                         <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                         </svg>
                                     </div>
                                 @endif
-                            </div>
-                            
-                            <!-- Shop Name -->
-                            <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
-                                {{ $vendor->name }}
+                                   
+                                    {{ $vendor->name }}
+                                   
+                                </li>
                             </h3>
                             
                             <!-- Rating -->

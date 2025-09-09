@@ -11,6 +11,7 @@
 namespace App\Models;
 
 use App\Contract\BatchDeletable;
+use App\Mail\SendOtp;
 use App\Traits\ModelTraits\hasFiles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,6 +34,7 @@ use App\Traits\ModelTraits\Metable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Modules\Blog\Http\Models\Blog;
@@ -168,7 +170,7 @@ class User extends Authenticatable implements BatchDeletable
 
     public function isActive()
     {
-        return $this->status === 'Active';
+        return $this->status === 'Active' && filled($this->email_verified_at);
     }
 
     /**
@@ -319,6 +321,13 @@ class User extends Authenticatable implements BatchDeletable
     public function refunds()
     {
         return $this->hasMany(\Modules\Refund\Entities\Refund::class);
+    }
+
+    public function sendOtpToEmail()
+    {
+        $this->activation_otp = random_int(1111, 9999);
+        $this->save();
+        Mail::to($this->email)->send(new SendOtp($this,$this->activation_otp));
     }
 
     /**

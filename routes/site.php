@@ -51,6 +51,7 @@ Route::group(['middleware' => ['locale']], function () {
     ->middleware(['guest','themeable'])
     ->group(function () {
         Route::get('otp-verify', 'otpForm')->name('site.otp-verify');
+        Route::post('otp-verify', 'otpVerification')->name('otp-verify');
         Route::get('login', 'showLoginForm')->name('login');
         Route::get('login', 'showLoginForm')->name('site.login');
         Route::post('login', 'login')->name('login');

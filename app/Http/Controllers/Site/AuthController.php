@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\StoreSellerRequest;
-use App\Mail\SendOtp;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorUser;
+use App\Notifications\SellerRequestToAdminNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,14 +63,14 @@ class AuthController extends Controller
         $roles = ['user_id' => $user->id, 'role_id' => $role->id];
         (new RoleUser())->store($roles);
 
-        $response['status'] = 'success';
-        $response['message'] = __('Registration successful. Please login to your account.');
+        // $response['status'] = 'success';
+        // $response['message'] = __('Registration successful. Please login to your account.');
 
-        $this->setSessionValue($response);
+        // $this->setSessionValue($response);
 
         $user->sendOtpToEmail();
 
-        return redirect()->route('login');
+        return redirect()->route('site.otp-verify', ['email' => $request->email]);
     }
 
     public function factoryRegister(StoreSellerRequest $request)
@@ -219,5 +219,30 @@ class AuthController extends Controller
         $this->setSessionValue($response);
 
         return redirect()->route('site.login')->withErrors(['email' => __('Your account is already verified.')]);
+    }
+
+
+    public function otpVerification(Request $request)
+    {
+        if (empty($request->token)) {
+            return redirect()->back()->withErrors(['otp' => __('The OTP field is required.')]);
+        }
+
+        $user = User::where('activation_otp', $request->token)->whereEmail($request->email)->first();
+        if (empty($user)) {
+            $response['message'] = __('Your OTP is invalid.');
+
+            return redirect()->back()->withErrors(['otp' => __('Your OTP is invalid.')]);
+        }
+
+        $user->update(['activation_otp' => null, 'activation_code' => null, 'status' => 'Active', 'email_verified_at' => now()]);
+        // User::first()->notify(new SellerRequestToAdminNotification($user));
+        // Session::forget('martvill-seller');
+
+        $response['status'] = 'success';
+        $response['message'] = __('Your account is verified.');
+        $this->setSessionValue($response);
+
+        return redirect()->route('login');
     }
 }

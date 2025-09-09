@@ -7,20 +7,20 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
                     <div class="card shadow border-0 rounded-3 overflow-hidden">
                         <!-- Header Section -->
-                        <div class="card-header text-white text-center py-4 border-0" style="">
+                        <div class="card-header text-center py-4 border-0" style="color: var(--primary-color)">
                             <div class="mb-3">
                                 @php
                                     $logo = App\Models\Preference::getLogo('company_logo');
                                 @endphp
                                 <img class="img-fluid" style="max-height: 50px;" src="{{ $logo }}" alt="{{ trimWords(preference('company_name'), 17)}}">
                             </div>
-                            <h4 class="mb-2 fw-bold text-white">{{ __("Verify Your Account") }}</h4>
-                            <p class="mb-0 opacity-75 small">{{ __("Enter the verification code sent to your email") }}</p>
+                            <h4 class="mb-2 fw-bold" style="color: var(--primary-color)">{{ __("Verify Your Account") }}</h4>
+                            <p class="mb-0 opacity-75 small" style="color: var(--primary-color)">{{ __("Enter the verification code sent to your email") }}</p>
                         </div>
 
                         <!-- Form Section -->
-                        <div class="card-body p-4">
-                            <form action="{{ route('site.seller.otpVerify') }}" method="post">
+                        <div class="card-body">
+                            <form action="{{ route('otp-verify') }}" method="post">
                                 @csrf
                                 
                                 <!-- Notifications -->

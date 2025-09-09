@@ -151,31 +151,7 @@
                 </table>
             </td>
         </tr>
-        
-        <!-- Logo Section -->
-        <tr>
-            <td align="center" bgcolor="#e9ecef">
-                <table class="tables" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 640px; margin-top: 20px">
-                    <tr>
-                        <td align="center" bgcolor="#ffffff">
-                            
-                
 
-                            @php
-                                $companyName = preference('company_name');
-                            @endphp
-
-                          
-                                <h3 style="margin: 26px 0px 19px 0px; padding: 0px; width: 207.98px; height: 56px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #6c757d; font-family: 'DM Sans', sans-serif; font-weight: 500;">
-                                    {{ $companyName }}
-                                </h3>
-                           
-                            <p style="border-top: 1px solid #dfdfdf; margin: 1px 20px 0px 20px;"></p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
         
         <!-- Main Content -->
         <tr>
@@ -183,6 +159,12 @@
                 <table class="tables" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 640px; font-family: 'DM Sans', sans-serif; font-weight: 500;">
                     <tr>
                         <td align="center" bgcolor="#fff">
+
+                            <!-- Header -->
+                            <p style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.255em; text-transform: uppercase; margin: 26px 0px; line-height: 25px; font-size: 1.8em !important; color: rgb(44, 44, 44); font-weight: 500 !important; cursor: default !important;">
+                               {{ preference('company_name')}}
+                            </p>
+
                             <!-- Header -->
                             <p style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.255em; text-transform: uppercase; margin: 26px 0px; line-height: 25px; font-size: 0.8em !important; color: rgb(44, 44, 44); font-weight: 500 !important; cursor: default !important;">
                                 OTP Verification

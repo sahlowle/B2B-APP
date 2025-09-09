@@ -6,21 +6,171 @@
     @include('site.shop.seo', ['page' => null])
 @endsection --}}
 
+@section('css')
+<style>
+    .shops-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, rgba(252, 202, 25, 0.8) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .shops-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .shop-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(229, 231, 235, 0.8);
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .shop-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), rgba(252, 202, 25, 0.6));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .shop-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-color: var(--primary-color);
+    }
+    
+    .shop-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .shop-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        object-fit: cover;
+        border: 3px solid rgba(252, 202, 25, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .shop-card:hover .shop-logo {
+        border-color: var(--primary-color);
+        transform: scale(1.05);
+    }
+    
+    .rating-stars {
+        color: #fbbf24;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+    
+    .empty-state {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 20px;
+        border: 2px dashed #cbd5e1;
+    }
+    
+    .breadcrumb-modern {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 12px 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .page-title {
+        background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+    }
+    
+    .stats-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .shop-card {
+            margin-bottom: 1rem;
+        }
+        
+        .shops-hero {
+            padding: 2rem 1rem;
+        }
+    }
+    
+    .loading-skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+</style>
+@endsection
+
 @section('content')
-    <section class="layout-wrapper px-4 xl:px-0">
-        <div class="mt-8">
-            <nav class="text-gray-600 text-sm" aria-label="Breadcrumb">
-                <ol class="list-none p-0 flex flex-wrap md:inline-flex text-xs md:text-sm roboto-medium font-medium text-gray-10 leading-5">
+    <!-- Hero Section -->
+    <section class="shops-hero py-16 px-4 xl:px-0 relative">
+        <div class="layout-wrapper relative z-10">
+            <div class="text-center text-white">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ __('Discover Amazing Factories') }}</h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-8 max-w-3xl mx-auto">{{ __('Connect with trusted manufacturers and suppliers from around the world') }}</p>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+                    <div class="stats-card p-6 text-center">
+                        <div class="text-3xl font-bold text-gray-800" id="total-shops">-</div>
+                        <div class="text-gray-600 font-medium">{{ __('Active Factories') }}</div>
+                    </div>
+                    <div class="stats-card p-6 text-center">
+                        <div class="text-3xl font-bold text-gray-800" id="total-products">-</div>
+                        <div class="text-gray-600 font-medium">{{ __('Products Available') }}</div>
+                    </div>
+                    <div class="stats-card p-6 text-center">
+                        <div class="text-3xl font-bold text-gray-800" id="avg-rating">-</div>
+                        <div class="text-gray-600 font-medium">{{ __('Average Rating') }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="layout-wrapper px-4 xl:px-0 py-8">
+        <!-- Modern Breadcrumb -->
+        <div class="mb-8">
+            <nav class="breadcrumb-modern inline-block" aria-label="Breadcrumb">
+                <ol class="list-none p-0 flex flex-wrap md:inline-flex text-sm font-medium text-gray-700">
                     <li class="flex items-center">
-                        <svg class="-mt-1 ltr:mr-2 rtl:ml-2" width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.35643 1.89407C4.93608 2.1717 4.43485 2.59943 3.69438 3.23412L2.916 3.9013C2.0595 4.63545 1.82512 4.85827 1.69934 5.13174C1.57357 5.4052 1.55692 5.72817 1.55692 6.85625V10.1569C1.55692 10.9127 1.55857 11.4013 1.60698 11.7613C1.65237 12.099 1.72565 12.2048 1.7849 12.264C1.84416 12.3233 1.94997 12.3966 2.28759 12.442C2.64759 12.4904 3.13619 12.492 3.89206 12.492H8.56233C9.31819 12.492 9.80679 12.4904 10.1668 12.442C10.5044 12.3966 10.6102 12.3233 10.6695 12.264C10.7287 12.2048 10.802 12.099 10.8474 11.7613C10.8958 11.4013 10.8975 10.9127 10.8975 10.1569V6.85625C10.8975 5.72817 10.8808 5.4052 10.755 5.13174C10.6293 4.85827 10.3949 4.63545 9.53838 3.9013L8.76 3.23412C8.01953 2.59943 7.5183 2.1717 7.09795 1.89407C6.69581 1.62848 6.44872 1.55676 6.22719 1.55676C6.00566 1.55676 5.75857 1.62848 5.35643 1.89407ZM4.49849 0.595063C5.03749 0.239073 5.5849 0 6.22719 0C6.86948 0 7.41689 0.239073 7.95589 0.595063C8.4674 0.932894 9.04235 1.42573 9.7353 2.01972L10.5515 2.71933C10.5892 2.75162 10.6264 2.78347 10.6632 2.81492C11.3564 3.40806 11.8831 3.85873 12.1694 4.48124C12.4557 5.10375 12.4551 5.79693 12.4543 6.70926C12.4543 6.75764 12.4542 6.80662 12.4542 6.85625L12.4542 10.2081C12.4543 10.8981 12.4543 11.4927 12.3903 11.9688C12.3217 12.479 12.167 12.9681 11.7703 13.3648C11.3736 13.7615 10.8845 13.9162 10.3742 13.9848C9.89812 14.0488 9.30358 14.0488 8.61355 14.0488H3.84083C3.1508 14.0488 2.55626 14.0488 2.08015 13.9848C1.56991 13.9162 1.08082 13.7615 0.68411 13.3648C0.2874 12.9681 0.132701 12.479 0.064101 11.9688C9.07021e-05 11.4927 0.000124017 10.8981 0.000162803 10.2081L0.000164659 6.85625C0.000164659 6.80662 0.000122439 6.75763 8.07765e-05 6.70926C-0.000705247 5.79693 -0.00130245 5.10374 0.285011 4.48124C0.571324 3.85873 1.09802 3.40806 1.79122 2.81492C1.82798 2.78347 1.8652 2.75162 1.90288 2.71933L2.68126 2.05215C2.69391 2.0413 2.70652 2.03049 2.71909 2.01972C3.41204 1.42573 3.98698 0.932893 4.49849 0.595063Z" fill="#898989"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50293 9.37853C3.50293 8.51876 4.19991 7.82178 5.05969 7.82178H7.39482C8.25459 7.82178 8.95158 8.51876 8.95158 9.37853V13.2704C8.95158 13.7003 8.60309 14.0488 8.1732 14.0488C7.74331 14.0488 7.39482 13.7003 7.39482 13.2704V9.37853H5.05969V13.2704C5.05969 13.7003 4.71119 14.0488 4.28131 14.0488C3.85142 14.0488 3.50293 13.7003 3.50293 13.2704V9.37853Z" fill="#898989"></path>
+                        <svg class="w-4 h-4 ltr:mr-2 rtl:ml-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
-                        <a href="{{ route('site.index') }}">{{ __('Home') }}</a>
-                        <p class="px-2 text-gray-12">/</p>
+                        <a href="{{ route('site.index') }}" class="hover:text-gray-900 transition-colors">{{ __('Home') }}</a>
+                        <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
                     </li>
-                    <li class="flex items-center text-gray-12">
-                        <a href="javascript: void(0)">{{ __('All Shops') }}</a>
+                    <li class="text-gray-900 font-semibold">
+                        {{ __('Factories') }}
                     </li>
                 </ol>
             </nav>
@@ -31,35 +181,234 @@
                 ->where('status', 'Active')
                 ->whereHas('shop')
                 ->paginate(24);
+                
+            // Calculate stats for the hero section
+            $totalShops = $vendors->total();
+            $totalProducts = \App\Models\Product::where('status', 'Active')->count();
+            $avgRating = \App\Models\Review::avg('rating') ?? 0;
         @endphp
 
-        <div class="grid md:grid-cols-4 grid-cols-1 gap-30p w-full mt-6">
+        <!-- Page Title -->
+        <div class="text-center mb-12">
+            <h2 class="page-title text-3xl md:text-4xl mb-4">{{ __('Our Partner Factories') }}</h2>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">{{ __('Browse through our carefully curated list of verified manufacturers and suppliers') }}</p>
+        </div>
+
+        <!-- Shops Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             @forelse ($vendors as $vendor)
                 @php
                     $shop = $vendor->shop;
                     $logoUrl = optional($vendor->logo)->fileUrl() ?? $vendor->fileUrl();
                     $review = $vendor->shopReview();
                 @endphp
-                <div class="border border-line rounded p-4 flex flex-col">
-                    <a class="flex items-center" href="{{ $shop ? route('site.shop', ['alias' => $shop->alias]) : 'javascript:void(0)' }}">
-                        <img class="w-16 h-16 rounded object-cover primary-bg-color" src="{{ $logoUrl ?: asset('public/frontend/img/placeholder.png') }}" alt="{{ $vendor->name }}">
-                        <div class="ltr:ml-4 rtl:mr-4">
-                            <p class="text-gray-12 text-base dm-sans font-medium leading-5">{{ $vendor->name }}</p>
+                <div class="shop-card group">
+                    <a href="{{ $shop ? route('site.shop', ['alias' => $shop->alias]) : 'javascript:void(0)' }}" class="block p-6">
+                        <div class="flex flex-col items-center text-center">
+                            <!-- Logo -->
+                            <div class="mb-4 relative">
+                                <img class="shop-logo mx-auto" 
+                                     src="{{ $logoUrl ?: asset('public/frontend/img/seller.png') }}" 
+                                     alt="{{ $vendor->name }}"
+                                     onerror="this.src='{{ asset('public/frontend/img/seller.png') }}'">
+                                @if($vendor->status === 'Active')
+                                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            <!-- Shop Name -->
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
+                                {{ $vendor->name }}
+                            </h3>
+                            
+                            <!-- Rating -->
                             @if ($review && $review->count)
-                                <p class="text-gray-10 text-sm">{{ number_format($review->rating, 1) }} ★ ({{ $review->count }})</p>
+                                <div class="flex items-center justify-center mb-3">
+                                    <div class="flex items-center">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <svg class="w-4 h-4 rating-stars {{ $i <= floor($review->rating) ? 'text-yellow-400' : 'text-gray-300' }}" 
+                                                 fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                        @endfor
+                                    </div>
+                                    <span class="ml-2 text-sm text-gray-600 font-medium">
+                                        {{ number_format($review->rating, 1) }} ({{ $review->count }})
+                                    </span>
+                                </div>
+                            @else
+                                <div class="flex items-center justify-center mb-3">
+                                    <span class="text-sm text-gray-400">{{ __('No reviews yet') }}</span>
+                                </div>
                             @endif
+                            
+                            <!-- Shop Info -->
+                            <div class="text-sm text-gray-500 mb-4">
+                                @if($shop)
+                                    <div class="flex items-center justify-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        {{ $shop->name ?? __('Factory') }}
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            <!-- Visit Button -->
+                            <div class="w-full">
+                                <span class="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors group-hover:bg-gray-700">
+                                    {{ __('Visit Factory') }}
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </div>
                     </a>
                 </div>
             @empty
-                <p class="text-gray-10">{{ __('No shops found.') }}</p>
+                <!-- Enhanced Empty State -->
+                <div class="col-span-full">
+                    <div class="empty-state p-12 text-center">
+                        <div class="max-w-md mx-auto">
+                            <svg class="w-24 h-24 mx-auto text-gray-400 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-2">{{ __('No Factories Found') }}</h3>
+                            <p class="text-gray-500 mb-6">{{ __('We are working on adding more factories to our platform. Check back soon!') }}</p>
+                            <a href="{{ route('site.index') }}" class="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                {{ __('Back to Home') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             @endforelse
         </div>
 
-        <div class="mt-6">
-            {{ $vendors->links() }}
-        </div>
+        <!-- Enhanced Pagination -->
+        @if($vendors->hasPages())
+            <div class="flex justify-center">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    {{ $vendors->links() }}
+                </div>
+            </div>
+        @endif
     </section>
+@endsection
+
+@section('js')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate stats counters
+    function animateCounter(element, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        
+        function updateCounter() {
+            start += increment;
+            if (start < target) {
+                element.textContent = Math.floor(start);
+                requestAnimationFrame(updateCounter);
+            } else {
+                element.textContent = target;
+            }
+        }
+        
+        updateCounter();
+    }
+    
+    // Update stats with actual data
+    const totalShopsElement = document.getElementById('total-shops');
+    const totalProductsElement = document.getElementById('total-products');
+    const avgRatingElement = document.getElementById('avg-rating');
+    
+    if (totalShopsElement) {
+        animateCounter(totalShopsElement, {{ $totalShops }});
+    }
+    
+    if (totalProductsElement) {
+        animateCounter(totalProductsElement, {{ $totalProducts }});
+    }
+    
+    if (avgRatingElement) {
+        // Animate rating with one decimal place
+        let start = 0;
+        const target = {{ number_format($avgRating, 1) }};
+        const increment = target / (2000 / 16);
+        
+        function updateRating() {
+            start += increment;
+            if (start < target) {
+                avgRatingElement.textContent = start.toFixed(1);
+                requestAnimationFrame(updateRating);
+            } else {
+                avgRatingElement.textContent = target.toFixed(1);
+            }
+        }
+        
+        updateRating();
+    }
+    
+    // Add loading animation to shop cards
+    const shopCards = document.querySelectorAll('.shop-card');
+    shopCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+    
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all shop cards
+    shopCards.forEach(card => {
+        observer.observe(card);
+    });
+});
+
+// Add CSS for fade-in animation
+const style = document.createElement('style');
+style.textContent = `
+    .animate-fade-in {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
 @endsection
 
 

@@ -59,7 +59,7 @@ class LoginController extends Controller
 
 
         if (strpos(url()->current(), 'admin') !== false) {
-            return redirect('/auth/login');
+            return redirect()->route('login');
         }
 
         $value = Cookie::get($this->ckname);

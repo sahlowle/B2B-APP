@@ -137,39 +137,45 @@
                     @endphp
                     @if ($languages->isNotEmpty() && isset($header['top']['show_language']) && $header['top']['show_language'] == 1)
                         <button class="rtl-direction-space-left flex items-center justify-end ltr:pl-30p rtl:pr-30p">
-                            <span class="text-sm roboto-medium text-gray-12 ltr:mr-6 rtl:ml-6">
-                                <svg class="ltr:-mr-2 rtl:-ml-2" width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.22222 0V4.27867C5.02711 4.15124 3.92648 3.73362 3.09069 3.09917C2.62635 2.74669 2.26451 2.34416 2.00906 1.91439C3.10808 0.870404 4.57949 0.169659 6.22222 0ZM7.77778 0V4.27867C8.97289 4.15124 10.0735 3.73362 10.9093 3.09917C11.3736 2.7467 11.7355 2.34416 11.9909 1.91439C10.8919 0.870406 9.42051 0.169659 7.77778 0ZM13.0019 3.13255C12.6939 3.53233 12.3204 3.90054 11.8902 4.22711C10.7609 5.08438 9.30819 5.60689 7.77778 5.73959L7.77778 7.26013C8.41133 7.31505 9.03445 7.437 9.62923 7.62402C10.4661 7.88714 11.2354 8.27553 11.8902 8.77263C12.3177 9.09708 12.692 9.46462 13.0021 9.86715C13.6356 8.88358 14 7.73154 14 6.5C14 5.26833 13.6356 4.11619 13.0019 3.13255ZM11.991 11.0856C11.7336 10.653 11.3698 10.2501 10.9093 9.90056C10.4086 9.52047 9.80605 9.21303 9.13305 9.00142C8.69923 8.86501 8.24368 8.77083 7.77778 8.72112V13C9.42054 12.8303 10.892 12.1296 11.991 11.0856ZM6.22222 13L6.22222 8.72112C5.75632 8.77083 5.30077 8.86501 4.86695 9.00142C4.19395 9.21303 3.5914 9.52047 3.09069 9.90056C2.63019 10.2501 2.26635 10.653 2.00901 11.0856C3.10803 12.1296 4.57946 12.8303 6.22222 13ZM0.997862 9.86715C1.30804 9.46462 1.68235 9.09708 2.10976 8.77263C2.76462 8.27553 3.53394 7.88714 4.37077 7.62402C4.96555 7.437 5.58867 7.31505 6.22222 7.26013V5.73959C4.69181 5.60689 3.23909 5.08438 2.10976 4.22711C1.67956 3.90054 1.30615 3.53233 0.998052 3.13255C0.364433 4.11618 0 5.26833 0 6.5C0 7.73154 0.364361 8.88358 0.997862 9.86715Z" fill="{{ $textColor }}"/>
-                                </svg>
+                            @php
+                            // $langData = Cache::get(config('cache.prefix') . '-user-language-' . optional(Auth::guard('user')->user())->id);
+                            // if (!auth()->user()) {
+                            //     $langData = Cache::get(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'));
+                            // }
+                            // if (empty($langData)) {
+                            //     $langData = preference('dflt_lang');
+                            // }
+
+                            $langData = app()->getLocale();
+                        @endphp
+                            <span class="text-sm roboto-medium text-gray-12 mx-2">
+                                <img style="width:16px; height:16px" class="self-center rounded-full mx-1" src='{{ url("public/datta-able/fonts/flag/flags/4x3/" . getSVGFlag($langData) . ".svg") }}' alt="">
+
                             </span>
 
-                            @php
-                                $langData = Cache::get(config('cache.prefix') . '-user-language-' . optional(Auth::guard('user')->user())->id);
-                                if (!auth()->user()) {
-                                    $langData = Cache::get(config('cache.prefix') . '-guest-language-' . request()->server('HTTP_USER_AGENT'));
-                                }
-                                if (empty($langData)) {
-                                    $langData = preference('dflt_lang');
-                                }
-                            @endphp
+                          
                             
                             <div id="directionSwitch" class="dropdown rounded shadow-none relative lang-dropdown lang"
                                 data-value={{ $languages->where('short_name', $langData)->first()->direction }}>
                                 <div class="select flex justify-between items-center lang-p">
                                     <p class="msg roboto-medium msg-color ltr:mr-1.5 rtl:ml-1.5">
                                         {{ $languages->where('short_name', $langData)->first()->name }} </p>
-                                    <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M3.93933e-08 0.696543L0.737986 8.80039e-09L3.5 2.60691L6.26201 7.46738e-08L7 0.696543L3.5 4L3.93933e-08 0.696543Z"
-                                            fill="{{ $textColor }}" />
-                                    </svg>
+
                                 </div>
                                 <input type="hidden" name="Showing" value="English">
                                 <ul class="dropdown-menu language-dropdown border border-gray-11 ltr:-right-2 rtl:-left-2 top-30p">
-                                    @foreach ($languages as $language)
+                                     @foreach ($languages as $language)
                                         <li id="{{ $language->name }}" class="Showing lang-change text-gray-10 {{ $langData == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
-                                            <a class="roboto-medium text-xs text-left lang" data-short_name="{{ $language->short_name }}">
-                                                {{ $language->name }}
+                                            <a class="roboto-medium text-xs text-left lang notification" data-short_name="{{ $language->short_name }}">
+                                                <p>
+                                                    <span class="inline-flex items-baseline">
+                                                        <img style="width:16px; height:16px" class="self-center rounded-full mx-1" src='{{ url("public/datta-able/fonts/flag/flags/4x3/" . getSVGFlag($language->short_name) . ".svg") }}' alt="{{ $language->flag }}">
+                                                       
+                                                        <span>
+                                                            {{ $language->name }}
+                                                        </span>
+                                                    </span>
+                                                    </p>
                                             </a>
                                         </li>
                                     @endforeach

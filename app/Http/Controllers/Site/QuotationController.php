@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Modules\GeoLocale\Entities\Country;
 
@@ -24,21 +25,28 @@ class QuotationController extends Controller
     }
 
     public function store(Request $request)
-    {
-
-        $request->validate([
-            'first_name' => 'required',
+    { 
+        $data = $request->validate([
+            'first_name' => 'required|max:100',
             'last_name' => 'required',
-            'country' => 'required',
-            'country_code' => 'required',
-            'phone_number' => 'required',
+            'country' => 'required|exists:geolocale_countries,id',
+            'phone_number' => 'required|min:9|max:15',
             'email' => 'required|email',
-            'category' => 'required',
+            'category' => 'required|exists:categories,id',
             'notes' => 'nullable',
             'pdf_file' => 'required|file|mimes:pdf|max:10240',
         ]);
 
-        // $quotation = Quotation::create($request->all());
+        Quotation::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'country_id' => $data['country'],
+            'phone_number' => $data['phone_number'],
+            'email' => $data['email'],
+            'category_id' => $data['category'],
+            'notes' => $data['notes'],
+            'pdf_file' => $data['pdf_file'],
+        ]);
 
         return redirect()->route('site.index')->with('success', __('Quotation submitted successfully'));
     }

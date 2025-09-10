@@ -17,7 +17,7 @@
   @endphp
 
     
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/css/intlTelInput.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -229,6 +229,59 @@
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
+
+        .iti{
+            width: 100%;
+        }
+
+        .iti__search {
+            width: 100%;
+            background-color: transparent;
+            color: #334155; /* slate-700 */
+            font-size: 0.875rem; /* text-sm */
+            border: 1px solid #e5e7eb; /* slate-200 */
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 1rem 1rem 1rem 7rem; /* py-4 px-4 pl-28 */
+            transition: all 300ms ease; /* transition duration-300 ease */
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); /* shadow-sm */
+        }
+
+        .iti__search:hover {
+            border-color: #cbd5e1; /* slate-300 */
+        }
+
+        .iti__search:focus {
+            outline: none; /* focus:outline-none */
+            border-color: #94a3b8; /* focus:border-slate-400 */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* focus:shadow */
+        }
+
+        .iti__search-input{
+            width: 100%;
+            background-color: transparent;
+            color: #334155; /* slate-700 */
+            font-size: 0.875rem; /* text-sm */
+            border: 1px solid #e5e7eb; /* slate-200 */
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 1rem 1rem 1rem 2rem; /* py-4 px-4 pl-28 */
+            transition: all 300ms ease; /* transition duration-300 ease */
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); /* shadow-sm */
+        }
+
+        .iti__search-input::placeholder{
+            color: #94a3b8; /* slate-400 */
+        }
+
+        .iti__search-input:hover{
+            border-color: #cbd5e1; /* slate-300 */
+        }
+
+        .iti__search-input:focus{
+            outline: none; /* focus:outline-none */
+            border-color: #94a3b8; /* focus:border-slate-400 */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* focus:shadow */
+        }
+        
     </style>
     
     <?php
@@ -373,7 +426,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <select class="form-select input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
-                                        name="country" 
+                                        name="country_id" 
                                         required>
                                         <option value=""> {{ __("Enter Your :x", ['x' => __('Country')]) }} </option>
 
@@ -394,18 +447,10 @@
 
                                 <div class="relative" style="direction: {{ languageDirection() }};" >
                                     
-                                    <div class="absolute top-1/2 -translate-y-1/2 left-0 flex items-center pl-3 pr-2">
-                                        <select class="bg-transparent text-slate-700 text-sm focus:outline-none border-0 py-2" name="country_code" required>
-                                            @foreach ($countries->where('callingcode', '!=', null)->sortBy('callingcode')->unique('callingcode') as $country)
-                                                <option value="{{ $country->callingcode }}">+{{ $country->callingcode }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="h-6 border-l border-slate-200 ml-2"></div>
-                                    </div>
+                                   
                                     <input
                                     type="tel"
                                     class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-4 pl-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                    name="phone_number" 
                                     maxlength="20" 
                                     required
                                     inputmode="tel"
@@ -818,6 +863,16 @@
       e.target.value = e.target.value.replace(/\D/g, '').slice(0, 12);
     });
   </script>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/js/intlTelInput.min.js"></script>
+<script>
+  const input = document.querySelector("#phoneNumberInput");
+  window.intlTelInput(input, {
+    initialCountry: "sa",
+    hiddenInput: () => ({ phone: "phone_number", country: "country_code" }),
+    loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/js/utils.js"),
+  });
+</script>
 </body>
 </html>
 

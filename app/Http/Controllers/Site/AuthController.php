@@ -79,7 +79,7 @@ class AuthController extends Controller
             abort(404);
         }
 
-        $user = DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request) {
             $user = User::whereEmail($request->email)->first();
             $has_vendor = User::whereHas('vendorUser')->whereEmail($request->email)->first();
             $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
@@ -146,6 +146,9 @@ class AuthController extends Controller
                 'is_default' => 1,
             ]);
 
+            $user->sendOtpToEmail();
+
+
             return $user;
         });
 
@@ -156,8 +159,6 @@ class AuthController extends Controller
         $this->setSessionValue($response);
         
         // return redirect()->route('login');
-
-        $user->sendOtpToEmail();
 
         // Session::put('martvill-seller', $user);
 

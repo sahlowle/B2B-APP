@@ -1,5 +1,5 @@
 @extends('admin.layouts.app2')
-@section('page_title', __('Seller OTP'))
+@section('page_title', __('User OTP'))
 @section('content')
     <div class="auth-wrapper">
         <div class="container-fluid">

@@ -153,10 +153,10 @@ class AuthController extends Controller
         });
 
         
-        $response['status'] = 'success';
-        $response['message'] = __('Registration successful. Please login to your account.');
+        // $response['status'] = 'success';
+        // $response['message'] = __('Registration successful. Please login to your account.');
         
-        $this->setSessionValue($response);
+        // $this->setSessionValue($response);
         
         // return redirect()->route('login');
 

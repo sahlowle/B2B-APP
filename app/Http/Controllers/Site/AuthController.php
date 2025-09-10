@@ -80,6 +80,7 @@ class AuthController extends Controller
         }
 
         DB::transaction(function () use ($request) {
+
             $user = User::whereEmail($request->email)->first();
             $has_vendor = User::whereHas('vendorUser')->whereEmail($request->email)->first();
             $vendor = Vendor::withTrashed()->whereEmail($request->email)->first();
@@ -146,10 +147,9 @@ class AuthController extends Controller
                 'is_default' => 1,
             ]);
 
-            $user->sendOtpToEmail();
+            User::find($user_id)->sendOtpToEmail();
 
 
-            return $user;
         });
 
         

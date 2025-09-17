@@ -260,7 +260,7 @@ class UserController extends Controller
                     DB::beginTransaction();
 
                     $request['email'] = validateEmail($request->email) ? strtolower($request->email) : null;
-                    $data['userData'] = $request->only('name', 'email', 'phone', 'status');
+                    $data['userData'] = $request->only('name', 'email', 'phone', 'status', 'is_approved_as_buyer');
                     $data['userMetaData'] = $request->only('designation', 'description', 'facebook', 'twitter', 'instagram');
                     $userStore = (new user())->updateUser($data, $id);
 

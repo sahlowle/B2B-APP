@@ -46,6 +46,9 @@ class UserListDataTable extends DataTable
             ->editColumn('status', function ($users) {
                 return statusBadges(lcfirst($users->status));
             })
+            ->editColumn('is_approved_as_buyer', function ($users) {
+                return approvedBadges($users->is_approved_as_buyer);
+            })
             ->addColumn('role', function ($users) {
                 $roles = $users->roles->map(function ($role) {   
                     $roleName = ($role->vendor_id) ? 'Vendor Staff' : $role->name;
@@ -78,7 +81,7 @@ class UserListDataTable extends DataTable
 
                 return $loginAs . $str;
             })
-            ->rawColumns(['picture', 'name', 'email', 'role', 'status', 'created_at', 'action']);
+            ->rawColumns(['picture', 'name', 'email', 'role', 'status','is_approved_as_buyer', 'created_at', 'action']);
 
         return $dt->make(true);
     }
@@ -111,7 +114,9 @@ class UserListDataTable extends DataTable
 
         CustomFieldService::dataTableHeader($builder, 'users');
 
-        $builder->addColumn(['data' => 'status', 'name' => 'status', 'title' => __('Status'), 'className' => 'align-middle'])
+        $builder
+            ->addColumn(['data' => 'status', 'name' => 'status', 'title' => __('Status'), 'className' => 'align-middle'])
+            ->addColumn(['data' => 'is_approved_as_buyer', 'name' => 'is_approved_as_buyer', 'title' => __('Approved as Buyer'), 'className' => 'align-middle'])
             ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => __('Registered'), 'className' => 'align-middle', 'width' => '11%'])
             ->addColumn([
                 'data' => 'action', 'name' => 'action', 'title' => '', 'width' => '12%',

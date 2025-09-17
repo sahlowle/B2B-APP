@@ -73,6 +73,7 @@ class User extends Authenticatable implements BatchDeletable
         'address',
         'gender',
         'status',
+        'is_approved_as_buyer',
         'activation_code',
         'activation_otp',
         'email_verified_at',
@@ -95,6 +96,7 @@ class User extends Authenticatable implements BatchDeletable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_approved_as_buyer' => 'boolean',
     ];
 
     /**
@@ -170,7 +172,7 @@ class User extends Authenticatable implements BatchDeletable
 
     public function isActive()
     {
-        return $this->status === 'Active' && filled($this->email_verified_at);
+        return $this->status === 'Active';
     }
 
     /**

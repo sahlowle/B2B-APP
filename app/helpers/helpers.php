@@ -559,6 +559,21 @@ if (! function_exists('wrapIt')) {
     }
 }
 
+if (! function_exists('approvedBadges')) {
+    /**
+     * Approved Badges
+     *
+     * @param  bool  $status
+     * @return string
+     */
+    function approvedBadges($status = false)
+    {
+        $class = $status ? 'badge-mv-success' : 'badge-mv-danger';
+        $status_text = $status ? __('Yes') : __('No');
+        return '<span class="badge ' . $class . ' f-12 f-w-600">' . $status_text . '</span>';
+    }
+}
+
 if (! function_exists('statusBadges')) {
     /**
      * Status Badges

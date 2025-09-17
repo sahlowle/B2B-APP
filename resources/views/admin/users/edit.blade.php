@@ -125,6 +125,28 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <label for="is_approved_as_buyer"
+                                                class="col-form-label require ltr:ps-3 rtl:pe-3">{{ __('Approved as Buyer') }}</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control select2-hide-search inputFieldDesign"
+                                                    {{ auth()->user()->id == $user->id ? 'disabled' : '' }}
+                                                    name="is_approved_as_buyer"
+                                                    id="is_approved_as_buyer">
+                                                    
+                                                    <option value="1"
+                                                        {{ old('is_approved_as_buyer', $user->is_approved_as_buyer) == '1' ? 'selected' : '' }}>
+                                                        {{ __('Yes') }}
+                                                    </option>
+
+                                                    <option value="0"
+                                                        {{ old('is_approved_as_buyer', $user->is_approved_as_buyer) == '0' ? 'selected' : '' }}>
+                                                        {{ __('No') }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group row user">
                                             <label for="designation"
                                                 class="col-form-label ltr:ps-3 rtl:pe-3">{{ __('Designation') }}</label>

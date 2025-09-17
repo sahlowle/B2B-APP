@@ -16,10 +16,11 @@ use App\Rules\{
     CheckValidEmail, CheckValidPhone
 };
 use Validator;
+use App\Traits\InteractsWithVisitors;
 
 class Shop extends Model
 {
-    use hasFiles;
+    use hasFiles, InteractsWithVisitors;
 
     protected $casts = [
         'commercial_registration_verified' => 'boolean',

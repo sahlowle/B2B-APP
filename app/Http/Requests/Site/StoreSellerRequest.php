@@ -71,10 +71,13 @@ class StoreSellerRequest extends FormRequest
         
         $random = Str::random(4).'-'.Str::random(4);
         $alias = Str::slug($random);
+
+        $status = preference('vendor_default_signup_status') ?? 'Pending';
         
         $this->merge([
             'name' => $this->f_name . ' ' . $this->l_name,
-            // 'status' => 'Pending',
+            'user_status' => 'Pending',
+            'status' => $status,
             'activation_code' => Str::random(10),
             'activation_otp' => $otp,
             'alias' => $alias,

@@ -29,13 +29,17 @@ class SellerController extends Controller
      */
     public function showVendor($alias = null)
     {
-        $data['shop'] = \Modules\Shop\Http\Models\Shop::firstWhere('alias', $alias);
+      $shop = \Modules\Shop\Http\Models\Shop::firstWhere('alias', $alias);
+
+      $data['shop'] = $shop;
 
         if (is_null($alias) || ! isActive('Shop') || empty($data['shop']) || ! Vendor::isVendorExist($data['shop']->vendor_id)
             || (request('homepage') && (! auth()->user() || (! isSuperAdmin())
             || (auth()->user()->role()->type == 'vendor' && auth()->user()->vendor()->vendor_id != $data['shop']->vendor_id)))) {
             abort(404);
         }
+
+        $shop->visit();
 
         return view('site.shop.index', $data);
     }

@@ -36,7 +36,7 @@
 
                 <div class="mt-8 space-y-4">
                     <!-- Buyer Button -->
-                    <div onclick="window.location.href='{{ route('buyer.register') }}'" class="w-full p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md transition-shadow duration-200 dark:bg-gray-700 dark:border-gray-600">
+                    <div onclick="window.location.href='{{ route('buyer.register') }}'" class="w-full p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md transition-all duration-200 dark:bg-gray-700 dark:border-gray-600" style="--hover-border-color: var(--primary-color);" onmouseover="this.style.borderColor='var(--primary-color)'" onmouseout="this.style.borderColor=''">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color: var(--primary-color);">
@@ -55,7 +55,7 @@
                     </div>
 
                     <!-- Vendor Button -->
-                    <div onclick="window.location.href='{{ route('factory.register') }}'" class="w-full p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md transition-shadow duration-200 dark:bg-gray-700 dark:border-gray-600">
+                    <div onclick="window.location.href='{{ route('factory.register') }}'" class="w-full p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md transition-all duration-200 dark:bg-gray-700 dark:border-gray-600" style="--hover-border-color: var(--primary-color);" onmouseover="this.style.borderColor='var(--primary-color)'" onmouseout="this.style.borderColor=''">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color: var(--primary-color);">

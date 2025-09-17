@@ -44,6 +44,10 @@ class AuthController extends Controller
 
     public function buyerRegister(Request $request)
     {
+        if (preference('customer_signup') != '1') {
+            abort(404);
+        }
+
         $data = $request->validate([
             'name' => 'required|min:3|max:191',
             'email' => 'required|email|unique:users,email',
@@ -52,10 +56,14 @@ class AuthController extends Controller
             'commercial_registration_number' => 'required',
         ]);
 
+        $status = preference('user_default_signup_status') ?? 'Pending';
+
         $data['password'] = Hash::make($data['password']);
+        $data['status'] = $status;
         $data['activation_code'] = Str::random(10);
         $data['activation_otp'] = random_int(1111, 9999);
 
+        $data['buyer_commercial_registration_number'] = $data['commercial_registration_number'];
 
         $user = User::create($data);
         
@@ -68,9 +76,19 @@ class AuthController extends Controller
 
         // $this->setSessionValue($response);
 
-        $user->sendOtpToEmail();
+        if ($status == 'Pending') {
+            $user->sendOtpToEmail();
+            return redirect()->route('site.otp-verify', ['email' => $request->email]);
+        }
 
-        return redirect()->route('site.otp-verify', ['email' => $request->email]);
+        $response['status'] = 'success';
+        $response['message'] = __('Registration successful. Please login to your account.');
+
+        $this->setSessionValue($response);
+
+
+        return redirect()->route('site.login')->withSuccess(__('Registration successful. Please login to your account.'));
+
     }
 
     public function factoryRegister(StoreSellerRequest $request)
@@ -107,7 +125,7 @@ class AuthController extends Controller
             // Store user information
             if (empty($user)) {
                 $request['password'] = Hash::make($request->password);
-                $user_id = (new User())->store($request->only('name', 'email', 'password', 'activation_code', 'activation_otp', 'status'));
+                $user_id = (new User())->store($request->only('name', 'email', 'password', 'activation_code', 'activation_otp', 'user_status'));
             } else {
                 $user_id = $user->id;
             }
@@ -196,8 +214,13 @@ class AuthController extends Controller
             } else if ($role == 'vendor') {
                 return redirect()->route('vendor-dashboard');
             }
+
+            if ($role == 'customer' && ! $user->is_approved_as_buyer) {
+                Auth::logout();
+                return redirect()->route('site.login')->withErrors(['email' => __('Your account is not approved yet. wait for approval.')]);
+            }
             
-            return redirect()->intended(route('site.index'));
+            return redirect()->intended(route('site.dashboard'));
         }
 
         return back()->withInput()->withErrors(['email' => __('Invalid email or password')]);

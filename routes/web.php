@@ -13,6 +13,7 @@
  */
 
 use App\Http\Controllers\AddressSettingController;
+use App\Http\Controllers\AdminQuotationController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
@@ -208,6 +209,17 @@ Route::group(['middleware' => ['auth', 'locale', 'permission']], function () {
     Route::post('reviews/delete/{id}', 'ReviewController@destroy')->name('review.destroy');
     Route::get('reviews/pdf', 'ReviewController@pdf')->name('review.pdf');
     Route::get('reviews/csv', 'ReviewController@csv')->name('review.csv');
+
+    // Quotation
+    Route::controller(AdminQuotationController::class)
+    ->group(function () {   
+        Route::get('quotations', 'index')->name('quotation.index');
+        Route::get('quotations/{quotation}', 'show')->name('quotation.show');
+        Route::post('quotations/{quotation}', 'update')->name('quotation.update');
+        Route::delete('quotations/{quotation}', 'destroy')->name('quotation.destroy');
+        Route::get('quotations/pdf', 'pdf')->name('quotation.pdf');
+        Route::get('quotations/csv', 'csv')->name('quotation.csv');
+    });
 
     // SSO Service
     Route::match(['GET', 'POST'], 'sso-service', 'SsoController@index')->name('sso.index');

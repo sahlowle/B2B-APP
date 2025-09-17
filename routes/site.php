@@ -76,8 +76,14 @@ Route::group(['middleware' => ['locale']], function () {
     // Route::get('auth/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('themeable');
     // Route::get('auth/registration', [LoginController::class, 'showRegisterForm'])->name('registration')->middleware('themeable');
 
-    Route::get('/page/quotations', [QuotationController::class, 'create'])->name('site.quotations.create')->middleware('themeable');
-    Route::post('/page/quotations', [QuotationController::class, 'store'])->name('site.quotations.store')->middleware('themeable');
+    Route::controller(QuotationController::class)
+    ->prefix('page')
+    ->middleware('themeable')
+    ->group(function () {
+        Route::get('/quotations', 'create')->name('site.quotations.create');
+        Route::post('/quotations', 'store')->name('site.quotations.store');
+    });
+    
     // login register
     // Route::get('login', 'LoginController@login');
     // Route::get('user/login', 'LoginController@login')->name('site.login');

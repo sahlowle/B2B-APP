@@ -51,14 +51,18 @@ trait InteractsWithVisitors
         $user = $user ?? resolve(Authenticatable::class);
         $request = $request ?? resolve(Request::class);
 
-        Visitor::create([
+         // Option 1: Update based on visitable, visitable_id, auth_id, and IP
+        Visitor::updateOrCreate([
             'visitable' => static::class,
             'visitable_id' => $this->id,
-            'auth_id' => $user?->id,
+            // 'auth_id' => $user?->id,
             'ip' => $request->ip(),
+        ], [
+            'auth_id' => $user?->id,
             'referer' => $request->header('referer'),
             'user_agent' => $request->userAgent(),
             'path' => $request->path(),
+            'updated_at' => now(), // Ensure updated_at is refreshed
         ]);
     }
 

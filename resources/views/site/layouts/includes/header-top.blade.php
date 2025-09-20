@@ -165,8 +165,8 @@
                                 <input type="hidden" name="Showing" value="English">
                                 <ul class="dropdown-menu language-dropdown border border-gray-11 ltr:-right-2 rtl:-left-2 top-30p">
                                      @foreach ($languages as $language)
-                                        <li id="{{ $language->name }}" class="Showing lang-change text-gray-10 {{ $langData == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
-                                            <a class="roboto-medium text-xs text-left lang notification" data-short_name="{{ $language->short_name }}">
+                                        <li id="{{ $language->name }}" class="Showing text-gray-10 {{ $langData == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
+                                            <a href="{{ route('change-language', ['lang' => $language->short_name]) }}" class="roboto-medium text-xs text-left lang notification" data-short_name="{{ $language->short_name }}">
                                                 <p>
                                                     <span class="inline-flex items-baseline">
                                                         <img style="width:16px; height:16px" class="self-center rounded-full mx-1" src='{{ url("public/datta-able/fonts/flag/flags/4x3/" . getSVGFlag($language->short_name) . ".svg") }}' alt="{{ $language->flag }}">
@@ -382,7 +382,7 @@
                                  class="absolute ltr:left-0 rtl:right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                                 <div class="py-1">
                                     @foreach ($languages as $language)
-                                        <a href="#" class="lang-change block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150 {{ $langData == $language->short_name ? 'bg-gray-100 font-medium text-gray-900' : '' }}"
+                                        <a href="{{ route('change-language', ['lang' => $language->short_name]) }}" class=" block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150 {{ $langData == $language->short_name ? 'bg-gray-100 font-medium text-gray-900' : '' }}"
                                            data-short_name="{{ $language->short_name }}">
                                             <span class="lang" data-short_name="{{ $language->short_name }}">{{ $language->name }}</span>
                                         </a>

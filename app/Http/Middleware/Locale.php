@@ -7,6 +7,8 @@ use Closure;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Language;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class Locale
 {
@@ -16,33 +18,29 @@ class Locale
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        $defaultLang = preference('dflt_lang');
+        $locale = null;
 
-        $language = Cache::remember('default-language-from-db', 3600, function () {
-            return Language::where(['is_default' => '1', 'status' => 'Active'])->get();
-        });
-
-        if($language->isNotEmpty()){
-            $defaultLang = $language->first()->short_name;
-            $direction = $language->first()->direction;
+        // 1. The highest priority is the user's choice, stored in their session.
+        if (Session::has('locale')) {
+            $locale = Session::get('locale');
         } else {
-            $defaultLang = 'en';
-            $direction = 'ltr';
+            // 2. If the user hasn't chosen a language, find the application's default.
+            // This is a good use of cache, as the site's default language is the same for everyone.
+            $defaultLanguage = Cache::remember('app_default_language', 3600, function () {
+                return Language::where('is_default', '1')->where('status', 'Active')->first();
+            });
+
+            // 3. Use the default from the database, or fallback to 'en' if none is set.
+            $locale = $defaultLanguage ? $defaultLanguage->short_name : 'en';
+            
+            // 4. Store this default locale in the session for subsequent requests.
+            Session::put('locale', $locale);
         }
 
-        if(Cache::get('user-lang')){
-            $defaultLang = Cache::get('user-lang');
-            $direction = Language::where(['short_name' => $defaultLang, 'status' => 'Active'])->first()->direction;
-            session()->put('locale', $defaultLang);
-        }
-
-
-        App::setLocale($defaultLang);
-        Cache::put(config('cache.prefix') . '-language-direction', $direction, 600);
-
-    
+        // 5. Set the application's locale for the current request.
+        App::setLocale($locale);
 
         return $next($request);
     }

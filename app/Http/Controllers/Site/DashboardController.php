@@ -37,7 +37,7 @@ class DashboardController extends Controller
 
             session()->put('locale', $locale);
 
-            Cache::put('user-lang', $locale);
+            // Cache::put('user-lang', $locale);
 
             App::setLocale($locale);
 
@@ -57,7 +57,7 @@ class DashboardController extends Controller
 
             session()->put('locale', $locale);
 
-            Cache::put('user-lang', $locale);
+            // Cache::put('user-lang', $locale);
 
             App::setLocale($locale);
         }

@@ -170,13 +170,12 @@ class DashboardController extends Controller
 
             App::setLocale($locale);
 
-            echo 1;
-            exit;
+            // Return a success response
+            return response()->json(['success' => true, 'message' => 'Language switched successfully.']);
         }
         
         
-        echo 0;
-        exit();
+        return response()->json(['success' => false, 'message' => 'Invalid request.']);
     }
 
     /**

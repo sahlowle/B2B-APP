@@ -234,7 +234,7 @@
                                 @if (isset($footer['main']['contact_us']['data']['social_data']))
                                     @foreach ($footer['main']['contact_us']['data']['social_data'] as $data)
                                         @if (!empty($data['link']))
-                                            <a href="{{ $data['link'] }}" target="_blank" rel="noopener" aria-label="{{ $data['label'] ?? 'Social' }}" class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-slate-200 hover:bg-slate-300 transition-colors">
+                                            <a href="{{ $data['link'] }}" target="_blank" rel="noopener" aria-label="{{ $data['label'] ?? 'Social' }}" class="inline-flex items-center justify-center w-9 h-9 rounded-full primary-bg-hover hover:text-gray-800 text-white transition-colors">
                                                 <img class="w-4 h-4" src="{{ asset('Modules/CMS/Resources/views/partials/themes/footer/svg/' . $data['label']) . '.svg' }}" alt="{{ __('Image') }}">
                                             </a>
                                         @endif

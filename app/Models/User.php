@@ -76,6 +76,7 @@ class User extends Authenticatable implements BatchDeletable
         'is_approved_as_buyer',
         'activation_code',
         'activation_otp',
+        'user_status',
         'email_verified_at',
     ];
 

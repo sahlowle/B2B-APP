@@ -361,8 +361,10 @@ class ThemeOption extends Model
             return self::$loadData;
         }
 
-        return self::$loadData =  \Cache::remember('theme_options', now()->addMinutes(1), function () {
-            return self::getAll()->pluck('key_value', 'name')->toArray();
-        });
+        return self::getAll()->pluck('key_value', 'name')->toArray();
+
+        // return self::$loadData =  \Cache::remember('theme_options', now()->addMinutes(1), function () {
+        //     return self::getAll()->pluck('key_value', 'name')->toArray();
+        // });
     }
 }

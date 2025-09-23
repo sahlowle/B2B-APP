@@ -97,8 +97,13 @@
      <!-- Header Section -->
      <header class="">
         <div class="container mx-auto mt-4">
-            <!-- Language Switcher -->
-            <div class="flex justify-end">
+            <div class="flex justify-between items-center">
+                <div>
+                    <a href="{{ url('/') }}" class="inline-flex items-center text-sm font-medium text-white px-3 py-1.5 rounded-md shadow-sm hover:opacity-90" style="background-color: var(--primary-color);">
+                        {{ __('Back Home') }}
+                    </a>
+                </div>
+                <!-- Language Switcher -->
                 <div class="language-switcher">
                     <div class="flex items-center space-x-2">
                         <span class="text-sm font-medium text-gray-700">{{ __("Language") }}:</span>
@@ -112,6 +117,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </header>
 
     @yield('content')

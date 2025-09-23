@@ -285,20 +285,20 @@
     </style>
     
     <?php
-    // Helper function to adjust color brightness
-    function adjustBrightness($hex, $steps) {
-        $hex = str_replace('#', '', $hex);
-        
-        $r = hexdec(substr($hex, 0, 2));
-        $g = hexdec(substr($hex, 2, 2));
-        $b = hexdec(substr($hex, 4, 2));
-        
-        $r = max(0, min(255, $r + $steps));
-        $g = max(0, min(255, $g + $steps));
-        $b = max(0, min(255, $b + $steps));
-        
-        return '#' . sprintf('%02x%02x%02x', $r, $g, $b);
-    }
+        // Helper function to adjust color brightness
+        function adjustBrightness($hex, $steps) {
+            $hex = str_replace('#', '', $hex);
+            
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
+            
+            $r = max(0, min(255, $r + $steps));
+            $g = max(0, min(255, $g + $steps));
+            $b = max(0, min(255, $b + $steps));
+            
+            return '#' . sprintf('%02x%02x%02x', $r, $g, $b);
+        }
     ?>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen" dir="{{ languageDirection() }}" >

@@ -2,6 +2,7 @@
 
 use App\Models\{Language};
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 if (! function_exists('DbDateFormat')) {
     /**
@@ -653,7 +654,11 @@ if (! function_exists('languageDirection')) {
      */
     function languageDirection()
     {
-        return \Cache::get(config('cache.prefix') . '-language-direction') ?? 'ltr';
+        if (Session::has('language_direction')) {
+            return Session::get('language_direction');
+        }
+
+        return 'ltr';
     }
 }
 if (! function_exists('randomDateBetween')) {

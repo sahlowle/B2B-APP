@@ -20,7 +20,13 @@ class CountryRepository implements CountryRepositoryInterface
      */
     public function index($request)
     {
-        $countries = Country::select('id', 'name', 'code', 'currency_code', 'currency_name', 'currency_symbol')->orderBy('name')->get();
+        $query = Country::select('id', 'name', 'code', 'currency_code', 'currency_name', 'currency_symbol')->orderBy('name');
+
+        if($request->filled('code')) {
+            $query = $query->where('code', $request->code);
+        }
+
+        $countries = $query->get();
 
         if ($request->route()->getPrefix() == '/api') {
             return [

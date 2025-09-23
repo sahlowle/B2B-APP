@@ -39,6 +39,12 @@ class Locale
             Session::put('locale', $locale);
         }
 
+        if($locale == 'ar') {
+            Session::put('language_direction', 'rtl');
+        } else {
+            Session::put('language_direction', 'ltr');
+        }
+
         // 5. Set the application's locale for the current request.
         App::setLocale($locale);
 

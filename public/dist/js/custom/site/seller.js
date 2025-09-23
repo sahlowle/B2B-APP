@@ -114,7 +114,7 @@ $(document).ready(function() {
     // initially country loading 
  
     $.ajax({
-        url: SITE_URL + "/geo-locale/countries",
+        url: SITE_URL + "/geo-locale/countries?code=sa",
         type: "GET",
         dataType: 'json',
         beforeSend: function() {

@@ -37,7 +37,7 @@ class StoreSellerRequest extends FormRequest
             'logo'      => ['nullable', new CheckValidFile(getFileExtensions(3))],
             'city'      => ['required', 'max:100'],
             'post_code' => ['required', 'max:10'],
-            'country'   => ['required', 'max:100'],
+            'country'   => ['required', 'max:100', 'in:sa'],
             'state'     => ['nullable', 'max:100'],
             'shop_name' => ['required', 'max:100', 'unique:shops,name'],
             'commercial_registration_number' => ['required', 'max:191', 'unique:shops,commercial_registration_number'],

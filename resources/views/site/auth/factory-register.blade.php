@@ -272,10 +272,15 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Country') }} <span class="text-red-500">*</span></label>
-                                            <select name="country" id="country" required 
-                                                    class="w-full px-4 py-3 border border-gray-300">
+                                            <select name="country_select" 
+                                                id="country"
+                                                disabled 
+                                                required 
+                                                class="w-full px-4 py-3 border border-gray-300 disabled:cursor-not-allowed"
+                                                >
                                                 <option value="">{{ __('Select Country') }}</option>
                                             </select>
+                                            <input type="hidden" name="country" id="country_hidden" value="sa">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('State') . ' / ' . __('Province') }}</label>
@@ -566,5 +571,15 @@
             }
         });
 
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            setTimeout(() => {
+                $('#country').val('sa').trigger('change');
+                $('#state').val('').trigger('change');
+                $('#country').attr('disabled', 'true');
+            }, 2000);
+        });
     </script>
 @endsection

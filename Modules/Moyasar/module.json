@@ -1,0 +1,14 @@
+{
+    "name": "Moyasar",
+    "alias": "moyasar",
+    "gateway": true,
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Moyasar\\Providers\\MoyasarServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

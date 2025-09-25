@@ -35,11 +35,11 @@
       @yield('css')
 
       <!-- Theme style RTL -->
-      @php
-        if (\Cache::get(config('cache.prefix') . '-language-direction') == 'rtl') {
-      @endphp
-          <link rel="stylesheet" href="{{ asset('public/datta-able/css/layouts/rtl.min.css') }}">
-      @php } @endphp
+      
+    @if (languageDirection() == 'rtl')
+      <link rel="stylesheet" href="{{ asset('public/datta-able/css/layouts/rtl.min.css') }}">
+    @endif
+    
     @if(file_exists(base_path('public/js/lang/' . config('app.locale') . '.js')))
         <script src="{{ asset('public/js/lang/' . config('app.locale') . '.js') }}"></script>
     @else

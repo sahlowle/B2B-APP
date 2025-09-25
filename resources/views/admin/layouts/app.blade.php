@@ -50,7 +50,7 @@
     @stack('styles')
 
     <!-- Theme style RTL -->
-    @if (\Cache::get(config('cache.prefix') . '-language-direction') == 'rtl')
+    @if (languageDirection() == 'rtl')
         <link rel="stylesheet" href="{{ asset('public/datta-able/css/layouts/rtl.min.css') }}">
     @endif
     @if (file_exists(base_path('public/js/lang/' . config('app.locale') . '.js')))

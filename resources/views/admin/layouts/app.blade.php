@@ -72,7 +72,7 @@
         var dateFormat = '{!! preference('date_format_type') !!}';
         var app_locale_url = "{!! url('/resources/lang/' . config('app.locale') . '.json') !!}";
         var row_per_page = '{!! preference('row_per_page') !!}';
-        var language_direction = '{!! \Cache::get(config('cache.prefix') . '-language-direction') !!}';
+        var language_direction = '{{ languageDirection() }}';
         var summernote_regex = /<\/*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|ilayer|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|t(?:itle|extarea)|xml)[^>]*?>/gi;
     </script>
 

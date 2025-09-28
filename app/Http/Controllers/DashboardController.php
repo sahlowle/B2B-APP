@@ -37,17 +37,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (is_null(EmailConfiguration::first())) {
-            Session::flash(
-                'fail',
-                __('Please configure SMTP setting to work all the email sending and related functionality.')
-                . ' <a href=' . route('emailConfigurations.index') . " target='_blank'>" . __('Configure Now.') . '</a>'
-            );
-        }
+        // if (is_null(EmailConfiguration::first())) {
+        //     Session::flash(
+        //         'fail',
+        //         __('Please configure SMTP setting to work all the email sending and related functionality.')
+        //         . ' <a href=' . route('emailConfigurations.index') . " target='_blank'>" . __('Configure Now.') . '</a>'
+        //     );
+        // }
 
-        if (config('martvill.is_demo')) {
-            Session::flash('info', __('Demo resets every 4 hours. Before purchasing, Feel free to test all the features. Some features are disabled in demo.'));
-        }
+        // if (config('martvill.is_demo')) {
+        //     Session::flash('info', __('Demo resets every 4 hours. Before purchasing, Feel free to test all the features. Some features are disabled in demo.'));
+        // }
 
         return view('admin.dashboard', $this->reportService
             ->thisMonthOrdersCount()
@@ -175,7 +175,7 @@ class DashboardController extends Controller
         }
         
         
-        return response()->json(['success' => false, 'message' => 'Invalid request.']);
+        return response()->json(['success' => false, 'message' => 'Invalid request.'],400);
     }
 
     /**

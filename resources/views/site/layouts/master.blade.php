@@ -99,7 +99,7 @@
         var token = '{!! csrf_token() !!}';
         var app_locale_url = "{!! url('/resources/lang/' . config('app.locale') . '.json') !!}";
         var row_per_page = '{!! preference('row_per_page') !!}';
-        var language_direction = '{!! \Cache::get(config('cache.prefix') . '-language-direction') !!}';
+        var language_direction = '{!! languageDirection() !!}';
         var totalProductPerPage = '{!! totalProductPerPage() !!}';
         var variationId = null;
         var variationStatus = 'Out Of Stock';

@@ -22,7 +22,7 @@ class TopHeaderLeftMenu
             'full-screen' => [
                 'item' => '<a href="javascript:" class="full-screen text-decoration-none ltr:ps-2 rtl:pe-2" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a>',
                 'position' => '10',
-                'visibility' => true,
+                'visibility' => false,
             ],
             'visit_site' => [
                 'item' => '<a class="d-flex align-items-center text-decoration-none" href="' . route('site.index') . '" target="_blank">
@@ -34,7 +34,7 @@ class TopHeaderLeftMenu
                 'item' => '<a class="d-flex align-items-center text-decoration-none" href="' . route('site.dashboard') . '" target="_blank">
                 <i class="feather icon-external-link"></i><span class="ltr:ms-2 rtl:me-2 list-curent-color">' . __('Customer Panel') . '</span></a>',
                 'position' => '30',
-                'visibility' => true,
+                'visibility' => false,
             ],
             'admin_panel' => [
                 'item' => '<a class="d-flex align-items-center text-decoration-none" href="' . route('dashboard') . '" target="_blank">
@@ -44,7 +44,7 @@ class TopHeaderLeftMenu
             ],
             'shop' => [
                 'item' => '<a class="d-flex align-items-center text-decoration-none" href="' . route('site.shop', ['alias' => $user->shop()->alias]) . '" target="_blank">
-                <i class="feather icon-external-link"></i><span class="ltr:ms-2 rtl:me-2 list-curent-color">' . __('Shop') . '</span></a>',
+                <i class="feather icon-external-link"></i><span class="ltr:ms-2 rtl:me-2 list-curent-color">' . __('My Shop') . '</span></a>',
                 'position' => '40',
                 'visibility' => ! empty($user->shop()) && isset($user->shop()->alias) && ($user->role()->type == 'vendor' || $user->role()->type == 'admin'),
             ],

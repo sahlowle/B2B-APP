@@ -13,9 +13,9 @@ $('.lang-change').on('click', function() {
         type:"POST",
         success:function(data) {
 
-            if (data == 1) {
+            // if (data == 1) {
                 location.reload();
-            }
+            // }
             if (data.status == 'info') {
                 const Toast = Swal.mixin({
                     toast: true,

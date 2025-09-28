@@ -14,6 +14,7 @@
 
 use App\Http\Controllers\AddressSettingController;
 use App\Http\Controllers\AdminQuotationController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
@@ -219,6 +220,20 @@ Route::group(['middleware' => ['auth', 'locale', 'permission']], function () {
         Route::delete('quotations/{quotation}', 'destroy')->name('quotation.destroy');
         Route::get('quotations/pdf', 'pdf')->name('quotation.pdf');
         Route::get('quotations/csv', 'csv')->name('quotation.csv');
+    });
+
+    // Invoice
+    Route::controller(InvoiceController::class)
+    ->group(function () {
+        Route::get('invoices', 'index')->name('invoices.index');
+        Route::get('invoices/create', 'create')->name('invoices.create');
+        Route::post('invoices', 'store')->name('invoices.store');
+        Route::get('invoices/{invoice}', 'show')->name('invoices.show');
+        Route::get('invoices/{invoice}/edit', 'edit')->name('invoices.edit');
+        Route::put('invoices/{invoice}', 'update')->name('invoices.update');
+        Route::delete('invoices/{invoice}', 'destroy')->name('invoices.destroy');
+        Route::get('invoices/{invoice}/pdf', 'pdf')->name('invoices.pdf');
+        Route::get('invoices/{invoice}/print', 'print')->name('invoices.print');
     });
 
     // SSO Service

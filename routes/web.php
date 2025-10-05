@@ -232,7 +232,7 @@ Route::group(['middleware' => ['auth', 'locale', 'permission']], function () {
         Route::get('invoices/{invoice}/edit', 'edit')->name('invoices.edit');
         Route::put('invoices/{invoice}', 'update')->name('invoices.update');
         Route::delete('invoices/{invoice}', 'destroy')->name('invoices.destroy');
-        Route::get('invoices/{invoice}/pdf', 'pdf')->name('invoices.pdf');
+        Route::get('invoices/{invoice}/pdf', 'downlopadPdf')->name('invoices.pdf');
         Route::get('invoices/{invoice}/print', 'print')->name('invoices.print');
     });
 

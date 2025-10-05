@@ -176,6 +176,25 @@ class User extends Authenticatable implements BatchDeletable
         return $this->status === 'Active';
     }
 
+    public function isAdmin()
+    {
+        if ($this->role()) {
+            return $this->role()->type === 'admin';
+        }
+
+        return false;
+
+    }
+
+    public function isVendor()
+    {
+        if ($this->role()) {
+            return $this->role()->type === 'vendor';
+        }
+
+        return false;
+    }
+
     /**
      * Relation with Role model
      *

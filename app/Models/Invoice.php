@@ -13,51 +13,23 @@ class Invoice extends Model
 
     protected $fillable = [
         'invoice_number',
-        'customer_name',
-        'customer_email',
-        'customer_phone',
-        'customer_address',
-        'billing_address',
-        'invoice_date',
-        'due_date',
-        'subtotal',
-        'tax_rate',
-        'tax_amount',
-        'discount_amount',
+        'invoice_file',
         'total_amount',
-        'status',
-        'notes',
-        'terms_conditions',
-        'user_id',
         'currency',
+        'user_id',
     ];
 
     protected $casts = [
-        'invoice_date' => 'date',
-        'due_date' => 'date',
-        'subtotal' => 'decimal:2',
-        'tax_rate' => 'decimal:2',
-        'tax_amount' => 'decimal:2',
-        'discount_amount' => 'decimal:2',
         'total_amount' => 'decimal:2',
     ];
 
-    /**
-     * Get the user that owns the invoice.
-     */
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the invoice items for the invoice.
-     */
-    public function items(): HasMany
-    {
-        return $this->hasMany(InvoiceItem::class);
-    }
 
+  
     /**
      * Generate unique invoice number
      */
@@ -70,19 +42,7 @@ class Invoice extends Model
         return $prefix . str_pad($number, 6, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * Calculate totals
-     */
-    public function calculateTotals(): void
-    {
-        $subtotal = $this->items->sum(function ($item) {
-            return $item->quantity * $item->unit_price;
-        });
-
-        $this->subtotal = $subtotal;
-        $this->tax_amount = $subtotal * ($this->tax_rate / 100);
-        $this->total_amount = $subtotal + $this->tax_amount - $this->discount_amount;
-    }
+   
 
     /**
      * Get status options

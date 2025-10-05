@@ -3,81 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
-use App\Models\InvoiceItem;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::with('user')->orderBy('created_at', 'desc')->paginate(15);
+        $query = Invoice::orderBy('created_at', 'desc');
+
+        if ($request->user()->isVendor()) {
+            $query->where('user_id', request()->user()->id);
+        }
+
+        $invoices = $query->paginate(15);
+
         return view('admin.invoices.index', compact('invoices'));
     }
 
     public function create()
     {
-        $users = User::where('status', 'Active')->get();
-        return view('admin.invoices.create', compact('users'));
+        return view('admin.invoices.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_email' => 'required|email|max:255',
-            'customer_phone' => 'nullable|string|max:20',
-            'customer_address' => 'nullable|string',
-            'billing_address' => 'nullable|string',
-            'invoice_date' => 'required|date',
-            'due_date' => 'required|date|after_or_equal:invoice_date',
-            'tax_rate' => 'nullable|numeric|min:0|max:100',
-            'discount_amount' => 'nullable|numeric|min:0',
-            'notes' => 'nullable|string',
-            'terms_conditions' => 'nullable|string',
             'currency' => 'required|string|size:3',
-            'items' => 'required|array|min:1',
-            'items.*.description' => 'required|string',
-            'items.*.quantity' => 'required|numeric|min:0.01',
-            'items.*.unit_price' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:1',
+            'invoice_file' => 'required|file|max:5120',
         ]);
 
         try {
             DB::beginTransaction();
 
             $invoice = new Invoice();
+            $invoice->user_id = $request->user()->id;
             $invoice->invoice_number = Invoice::generateInvoiceNumber();
-            $invoice->customer_name = $request->customer_name;
-            $invoice->customer_email = $request->customer_email;
-            $invoice->customer_phone = $request->customer_phone;
-            $invoice->customer_address = $request->customer_address;
-            $invoice->billing_address = $request->billing_address;
-            $invoice->invoice_date = $request->invoice_date;
-            $invoice->due_date = $request->due_date;
-            $invoice->tax_rate = $request->tax_rate ?? 0;
-            $invoice->discount_amount = $request->discount_amount ?? 0;
-            $invoice->notes = $request->notes;
-            $invoice->terms_conditions = $request->terms_conditions;
             $invoice->currency = $request->currency;
-            $invoice->status = $request->status ?? 'draft';
-            $invoice->user_id = auth()->id();
-            $invoice->save();
+            $invoice->total_amount = $request->total_amount;
 
-            // Add invoice items
-            foreach ($request->items as $itemData) {
-                $item = new InvoiceItem();
-                $item->invoice_id = $invoice->id;
-                $item->description = $itemData['description'];
-                $item->quantity = $itemData['quantity'];
-                $item->unit_price = $itemData['unit_price'];
-                $item->calculateTotal();
-                $item->save();
+            if ($request->hasFile('invoice_file')) {
+                $path = $request->file('invoice_file')->store('invoices', 'public');
+                $invoice->invoice_file = $path;
             }
 
-            // Calculate totals
-            $invoice->calculateTotals();
             $invoice->save();
 
             DB::commit();
@@ -95,72 +66,43 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
-        $invoice->load('items');
+        $this->authorizeInvoiceAccess($invoice, 'view');
+        
         return view('admin.invoices.show', compact('invoice'));
     }
 
     public function edit(Invoice $invoice)
     {
-        $users = User::where('status', 'Active')->get();
-        $invoice->load('items');
-        return view('admin.invoices.edit', compact('invoice', 'users'));
+        $this->authorizeInvoiceAccess($invoice, 'edit');
+
+        return view('admin.invoices.edit', compact('invoice'));
     }
 
     public function update(Request $request, Invoice $invoice)
     {
+        $this->authorizeInvoiceAccess($invoice, 'edit');
+
         $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_email' => 'required|email|max:255',
-            'customer_phone' => 'nullable|string|max:20',
-            'customer_address' => 'nullable|string',
-            'billing_address' => 'nullable|string',
-            'invoice_date' => 'required|date',
-            'due_date' => 'required|date|after_or_equal:invoice_date',
-            'tax_rate' => 'nullable|numeric|min:0|max:100',
-            'discount_amount' => 'nullable|numeric|min:0',
-            'notes' => 'nullable|string',
-            'terms_conditions' => 'nullable|string',
             'currency' => 'required|string|size:3',
-            'items' => 'required|array|min:1',
-            'items.*.description' => 'required|string',
-            'items.*.quantity' => 'required|numeric|min:0.01',
-            'items.*.unit_price' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
+            'invoice_file' => 'nullable|file|max:5120',
         ]);
 
         try {
             DB::beginTransaction();
 
-            $invoice->customer_name = $request->customer_name;
-            $invoice->customer_email = $request->customer_email;
-            $invoice->customer_phone = $request->customer_phone;
-            $invoice->customer_address = $request->customer_address;
-            $invoice->billing_address = $request->billing_address;
-            $invoice->invoice_date = $request->invoice_date;
-            $invoice->due_date = $request->due_date;
-            $invoice->tax_rate = $request->tax_rate ?? 0;
-            $invoice->discount_amount = $request->discount_amount ?? 0;
-            $invoice->notes = $request->notes;
-            $invoice->terms_conditions = $request->terms_conditions;
             $invoice->currency = $request->currency;
-            $invoice->status = $request->status ?? 'draft';
-            $invoice->save();
+            $invoice->total_amount = $request->total_amount;
 
-            // Delete existing items
-            $invoice->items()->delete();
-
-            // Add new invoice items
-            foreach ($request->items as $itemData) {
-                $item = new InvoiceItem();
-                $item->invoice_id = $invoice->id;
-                $item->description = $itemData['description'];
-                $item->quantity = $itemData['quantity'];
-                $item->unit_price = $itemData['unit_price'];
-                $item->calculateTotal();
-                $item->save();
+            if ($request->hasFile('invoice_file')) {
+                // delete old file if exists
+                if ($invoice->invoice_file && Storage::disk('public')->exists($invoice->invoice_file)) {
+                    Storage::disk('public')->delete($invoice->invoice_file);
+                }
+                $path = $request->file('invoice_file')->store('invoices', 'public');
+                $invoice->invoice_file = $path;
             }
 
-            // Calculate totals
-            $invoice->calculateTotals();
             $invoice->save();
 
             DB::commit();
@@ -178,7 +120,12 @@ class InvoiceController extends Controller
 
     public function destroy(Invoice $invoice)
     {
+        $this->authorizeInvoiceAccess($invoice, 'delete');
+        
         try {
+            if ($invoice->invoice_file && Storage::disk('public')->exists($invoice->invoice_file)) {
+                Storage::disk('public')->delete($invoice->invoice_file);
+            }
             $invoice->delete();
             return redirect()->route('invoices.index')
                 ->with('success', 'Invoice deleted successfully!');
@@ -188,16 +135,32 @@ class InvoiceController extends Controller
         }
     }
 
-    public function pdf(Invoice $invoice)
+    public function downlopadPdf(Invoice $invoice)
     {
-        $invoice->load('items');
-        $pdf = Pdf::loadView('admin.invoices.pdf', compact('invoice'));
-        return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
+        $this->authorizeInvoiceAccess($invoice, 'view');
+
+        $file_path = $invoice->invoice_file;
+
+        return Storage::disk('public')->download($file_path, 'invoice_' . $invoice->id . '.pdf');
+        
     }
 
     public function print(Invoice $invoice)
     {
-        $invoice->load('items');
-        return view('admin.invoices.print', compact('invoice'));
+        $this->authorizeInvoiceAccess($invoice, 'view');
+
+        $file_path = $invoice->invoice_file;
+
+        return Storage::disk('public')->download($file_path, 'invoice_' . $invoice->id . '.pdf');
+            
+    }
+
+    protected function authorizeInvoiceAccess(Invoice $invoice, string $action = 'access')
+    {
+        $user = auth()->user();
+        
+        if ($invoice->user_id !== $user->id && !$user->isAdmin()) {
+            abort(403, "You are not authorized to {$action} this invoice");
+        }
     }
 }

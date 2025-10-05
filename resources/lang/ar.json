@@ -15,6 +15,7 @@
     "Addon successfully removed.": "تمت إزالة الملحق بنجاح.",
     "Choose file": "اختر ملف",
     "Addons": "الإضافات",
+    "About Us": "من نحن",
     "Upload Addon": "تحميل الملحق",
     "Upload Zip File": "تحميل ملف مضغوط",
     "Browse": "تصفح",
@@ -3924,5 +3925,17 @@
     "No wishlist found!": "لم يتم العثور على قائمة أمنيات!",
     "You haven't saved anything for later.": "لم تقم بحفظ أي شيء لوقت لاحق.",
     "Commercial Registration Number": "رقم السجل التجاري",
-    "Enter Your Commercial Registration Number": "أدخل رقم السجل التجاري"
+    "Enter Your Commercial Registration Number": "أدخل رقم السجل التجاري",
+    "Who We Are": "من نحن",
+    "Our Mission": "رسالتنا",
+    "Our Vision": "رؤيتنا",
+    "Why Choose Us": "لماذا تختارنا",
+    "AI-Powered Matching": "مطابقة مدعومة بالذكاء الاصطناعي",
+    "Advanced AI algorithms to match Saudi products with global buyers": "خوارزميات ذكاء اصطناعي متقدمة لمطابقة المنتجات السعودية مع المشترين العالميين",
+    "Global Reach": "الوصول العالمي",
+    "Connect Saudi manufacturers with buyers worldwide": "ربط المصانع السعودية بالمشترين حول العالم",
+    "Secure & Transparent": "آمن وشفاف",
+    "Trusted platform with secure transactions and transparent processes": "منصة موثوقة مع معاملات آمنة وعمليات شفافة",
+    "Supporting Vision 2030": "دعم رؤية 2030",
+    "Your trusted B2B digital platform connecting Saudi manufacturers with global buyers": "منصتك الرقمية الموثوقة للتجارة بين الشركات التي تربط المصانع السعودية بالمشترين العالميين"
 }

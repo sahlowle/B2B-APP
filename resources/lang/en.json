@@ -3028,6 +3028,7 @@
     "Translations": "Translations",
     "Translation": "Translation",
     "Key": "Key",
+    "About Us": "About Us",
     "Customer Relationship & Project Management": "Customer Relationship & Project Management",
     "Delete Parmanently": "Delete Parmanently",
     "Are you sure about this?": "Are you sure about this?",
@@ -3914,5 +3915,17 @@
     "Server Error": "Server Error",
     "Service Unavailable": "Service Unavailable",
     "There was an error on row :row. :message": "There was an error on row :row. :message",
-    "Preview Link": "Preview Link"
+    "Preview Link": "Preview Link",
+    "Who We Are": "Who We Are",
+    "Our Mission": "Our Mission",
+    "Our Vision": "Our Vision",
+    "Why Choose Us": "Why Choose Us",
+    "AI-Powered Matching": "AI-Powered Matching",
+    "Advanced AI algorithms to match Saudi products with global buyers": "Advanced AI algorithms to match Saudi products with global buyers",
+    "Global Reach": "Global Reach",
+    "Connect Saudi manufacturers with buyers worldwide": "Connect Saudi manufacturers with buyers worldwide",
+    "Secure & Transparent": "Secure & Transparent",
+    "Trusted platform with secure transactions and transparent processes": "Trusted platform with secure transactions and transparent processes",
+    "Supporting Vision 2030": "Supporting Vision 2030",
+    "Your trusted B2B digital platform connecting Saudi manufacturers with global buyers": "Your trusted B2B digital platform connecting Saudi manufacturers with global buyers"
 }

@@ -31,11 +31,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Invoice #') }}</th>
-                                <th>{{ __('Customer') }}</th>
-                                <th>{{ __('Date') }}</th>
-                                <th>{{ __('Due Date') }}</th>
+                                <th>{{ __('Currency') }}</th>
                                 <th>{{ __('Total') }}</th>
-                                <th>{{ __('Status') }}</th>
                                 <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
@@ -43,38 +40,22 @@
                             @forelse($invoices as $invoice)
                                 <tr>
                                     <td>{{ $invoice->invoice_number }}</td>
-                                    <td>
-                                        <div>
-                                            <strong>{{ $invoice->customer_name }}</strong><br>
-                                            <small class="text-muted">{{ $invoice->customer_email }}</small>
-                                        </div>
-                                    </td>
-                                    <td>{{ $invoice->invoice_date->format('M d, Y') }}</td>
-                                    <td>{{ $invoice->due_date->format('M d, Y') }}</td>
+                                    <td>{{ $invoice->currency }}</td>
                                     <td>{{ $invoice->currency }} {{ number_format($invoice->total_amount, 2) }}</td>
                                     <td>
-                                        <span class="badge badge-{{ $invoice->status == 'paid' ? 'success' : ($invoice->status == 'overdue' ? 'danger' : 'warning') }}">
-                                            {{ ucfirst($invoice->status) }}
-                                        </span>
-                                    </td>
-                                    <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('invoices.show', $invoice) }}" class="btn btn-info btn-sm">
+                                            <a href="{{ route('invoices.show', $invoice) }}" class="btn btn-info mx-1   btn-sm">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-warning btn-sm">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ route('invoices.pdf', $invoice) }}" class="btn btn-success btn-sm">
-                                                <i class="fa fa-file-pdf"></i>
-                                            </a>
+                                            <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-warning mx-1 btn-sm"><i class="fa fa-edit"></i></a>
                                             <form action="{{ route('invoices.destroy', $invoice) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this invoice?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                <button type="submit" class="btn btn-danger mx-1 btn-sm">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
+                                       
                                         </div>
                                     </td>
                                 </tr>

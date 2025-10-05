@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Site\AuthController;
+use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\QuotationController;
 use App\Mail\SendOtp;
 use App\Models\User;
@@ -182,6 +183,13 @@ Route::group(['middleware' => ['locale']], function () {
 
     // Pages
     Route::get('page/{slug}', 'SiteController@page')->name('site.page')->middleware('themeable');
+
+   Route::controller(PageController::class)
+    // ->prefix('page')
+    ->middleware('themeable')
+    ->group(function () {
+        Route::get('/about-us', 'aboutUs')->name('site.about-us');
+    });
 
     Route::get('/get-component-product', 'SiteController@getComponentProduct')->name('ajax-product')->middleware('themeable');
 

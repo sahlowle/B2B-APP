@@ -335,22 +335,44 @@ function setColor($fileExtension)
     return $color;
 }
 
-/**
- * Get the specified option value.
- * If field not found default will return
- *
- * @param  string  $field
- * @param  mixed  $default
- * @return mixed
- */
-function preference($field = null, $default = null)
-{
+if (! function_exists('preference')) {
+    /**
+     * Get the specified option value.
+     * If field not found default will return
+     *
+     * @param  string  $field
+     * @param  mixed  $default
+     * @return mixed
+     */
+    function preference($field = null, $default = null)
+    {
 
-    if (is_null($field)) {
-        return app(config('cache.prefix') . '.' . 'preferences');
+        if (is_null($field)) {
+            return app(config('cache.prefix') . '.' . 'preferences');
+        }
+
+        return app(config('cache.prefix') . '.' . 'preferences')->get($field, $default);
     }
 
-    return app(config('cache.prefix') . '.' . 'preferences')->get($field, $default);
+}
+
+
+
+if (! function_exists('getCurrencies')) {
+    /**
+     * Get all currencies
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    function getCurrencies()
+    {
+        return [
+            'USD' ,
+            'EUR' ,
+            'GBP' ,
+            'CAD' 
+        ];
+    }
 }
 
 /**

@@ -25,11 +25,20 @@ class MoyasarView implements PaymentViewInterface
 
         try {
 
+            $purchaseData = $helper->getPurchaseData($key);
+            $price = $purchaseData->total;
+
+            if($purchaseData->currency_code == 'SAR') {
+                $price =  intval(round(($price * 100)));
+            } else {
+                $price =  intval(round(($price)));
+            }
 
             return view('moyasar::pay', [
                 'publishableKey' => 'moyasar_publishable_key',
                 'instruction' => 'moyasar_instruction',
                 'purchaseData' => $helper->getPurchaseData($key),
+                'price' => $price,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors(['error' => __('Purchase data not found.')]);

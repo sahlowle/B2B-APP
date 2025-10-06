@@ -5,7 +5,7 @@ return [
 
     'alias' => 'moyasar',
 
-    'logo' => 'Modules/Moyasar/Resources/assets/moyasar.png',
+    'logo' => 'Modules/Moyasar/Resources/assets/moyasar.jpg',
 
     // Stripe addon settings
 

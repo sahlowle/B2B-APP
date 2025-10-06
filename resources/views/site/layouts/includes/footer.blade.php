@@ -135,9 +135,12 @@
     <section class="mt-24 border-t border-slate-200 bg-gray-100 text-gray-900" style="color: {{ isset($footer['main']['text_color']) ? $footer['main']['text_color'] : '' }}; background: {{ isset($footer['main']['bg_color']) ? $footer['main']['bg_color'] : '' }}">
         <footer class="max-w-7xl mx-auto px-4 xl:px-0 py-14" 
             style="padding-top: 3.5rem !important;
-                    padding-bottom: 3.5rem !important;" 
+                    padding-bottom: 3.5rem !important;
+                    margin-left: 2rem !important;
+                    margin-right: 1rem !important;
+                " 
             >
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 {{ $direction[$footer['main']['direction']] }}">
                 @if (isset($footer['main']['about_us']['status']) && $footer['main']['about_us']['status'] == 1)
                     <div class="text-center sm:text-left order-{{ isset($footer['main']['about_us']['sort']) ? $footer['main']['about_us']['sort'] : 1 }}">

@@ -49,6 +49,20 @@
             }
         @endphp
 
+        @push('styles')
+            <style>
+                .py-14 {
+                    padding-top: 3.5rem;
+                    padding-bottom: 3.5rem;
+                }
+
+                .max-w-7xl {
+                    max-width: 80rem;
+                }
+
+            </style>
+        @endpush
+
         @if (!empty($popup) && $routePage[$popup->page_link] == $routeName)
             <div class="{{ $content->position == 'Center' ? 'custom-modal-overlay' : '' }} custom-modal-over">
                 <div class="{{ $content->position == 'Center' ? 'absolute' : 'fixed' }} overflow-auto z-index-999" style="{{ $style }}">

@@ -74,16 +74,16 @@
                     <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ __('Who We Are') }}</h2>
                     <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                         <p class="mb-6">
-                            Exports Valley is a specialized digital platform in the field of business-to-business (B2B) commerce, headquartered in Riyadh, Saudi Arabia. The platform works to connect Saudi manufacturers with global buyers through customized electronic interfaces and advanced artificial intelligence algorithms to match Saudi products with the needs of buyers around the world.
+                            এক্সপোর্টস ভ্যালি হল একটি বিশেষায়িত ডিজিটাল প্ল্যাটফর্ম যা ব্যবসা-থেকে-ব্যবসা (B2B) বাণিজ্যের ক্ষেত্রে কাজ করে, যার সদর দপ্তর সৌদি আরবের রিয়াদ শহরে। প্ল্যাটফর্মটি কাস্টমাইজড ইলেকট্রনিক ইন্টারফেস এবং উন্নত কৃত্রিম বুদ্ধিমত্তা অ্যালগরিদমের মাধ্যমে সৌদি প্রস্তুতকারকদের বিশ্বব্যাপী ক্রেতাদের সাথে সংযুক্ত করার জন্য কাজ করে সৌদি পণ্যগুলিকে বিশ্বব্যাপী ক্রেতাদের চাহিদার সাথে মিলানোর জন্য।
                         </p>
                         <p class="mb-6">
-                            Exports Valley also provides innovative digital marketing tools and comprehensive support for logistics services and export operations, making it easier for local manufacturers to reach international markets quickly and smoothly. The platform allows factories to showcase their products, communicate directly with buyers, and conclude deals easily and transparently through a reliable and secure electronic environment.
+                            এক্সপোর্টস ভ্যালি উদ্ভাবনী ডিজিটাল মার্কেটিং সরঞ্জাম এবং লজিস্টিক সেবা ও রপ্তানি কার্যক্রমের জন্য সমন্বিত সহায়তা প্রদান করে, যা স্থানীয় প্রস্তুতকারকদের দ্রুত এবং সহজে আন্তর্জাতিক বাজারে পৌঁছাতে সহায়তা করে। প্ল্যাটফর্মটি কারখানাগুলিকে তাদের পণ্য প্রদর্শন, ক্রেতাদের সাথে সরাসরি যোগাযোগ এবং একটি নির্ভরযোগ্য এবং নিরাপদ ইলেকট্রনিক পরিবেশের মাধ্যমে সহজে এবং স্বচ্ছভাবে চুক্তি সম্পাদন করতে দেয়।
                         </p>
                         <p class="mb-6">
-                            Exports Valley focuses on localizing digital solutions for the Saudi industry, where our platform is specifically designed to meet the needs of the national industrial sector in Arabic and multiple global languages to facilitate communication with importers from around the world in accordance with local market requirements.
+                            এক্সপোর্টস ভ্যালি সৌদি শিল্পের জন্য ডিজিটাল সমাধানের স্থানীয়করণে ফোকাস করে, যেখানে আমাদের প্ল্যাটফর্মটি বিশেষভাবে জাতীয় শিল্প খাতের চাহিদা পূরণের জন্য আরবি ভাষা এবং বেশ কয়েকটি বিশ্বব্যাপী ভাষায় ডিজাইন করা হয়েছে যাতে বিশ্বব্যাপী আমদানিকারকদের সাথে যোগাযোগ সহজতর হয় এবং স্থানীয় বাজার প্রয়োজনীয়তার সাথে সামঞ্জস্যপূর্ণ হয়।
                         </p>
                         <p>
-                            Relying on the latest artificial intelligence technologies and digital transformation, we seek to enhance the competitiveness of Saudi factories and enable them to expand globally. In light of Vision 2030, which aims to diversify the economy and increase non-oil exports, Exports Valley is committed to playing an effective role in supporting this vision by enabling national industries with innovative and integrated digital tools that ensure efficiency and transparency in all stages of the export process.
+                            সর্বশেষ কৃত্রিম বুদ্ধিমত্তা প্রযুক্তি এবং ডিজিটাল রূপান্তরের উপর নির্ভর করে, আমরা সৌদি কারখানাগুলির প্রতিযোগিতামূলকতা বৃদ্ধি এবং তাদের বিশ্বব্যাপী সম্প্রসারণের সুযোগ প্রদানের জন্য কাজ করি। ২০৩০ সালের ভিশনের আলোকে, যা অর্থনীতির বৈচিত্র্য এবং অ-তেল রপ্তানি বৃদ্ধির লক্ষ্যে, এক্সপোর্টস ভ্যালি এই ভিশনকে সমর্থন করার জন্য একটি কার্যকর ভূমিকা পালনের জন্য প্রতিশ্রুতিবদ্ধ রপ্তানি প্রক্রিয়ার সমস্ত পর্যায়ে দক্ষতা এবং স্বচ্ছতা নিশ্চিত করে উদ্ভাবনী এবং সমন্বিত ডিজিটাল সরঞ্জামের মাধ্যমে জাতীয় শিল্পগুলিকে সক্ষম করার মাধ্যমে।
                         </p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Mission') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our mission is to enable Saudi factories to reach global markets easily and transparently through an integrated digital platform. We provide innovative local digital solutions supported by artificial intelligence to simplify communication, negotiation, and contracting processes, and enhance the efficiency of marketing and export in a way that supports the sustainable growth of the national industrial sector and aligns with the goals of Vision 2030.
+                        আমাদের মিশন হল একটি সমন্বিত ডিজিটাল প্ল্যাটফর্মের মাধ্যমে সৌদি কারখানাগুলিকে সহজে এবং স্বচ্ছভাবে বিশ্ব বাজারে পৌঁছাতে সক্ষম করা। আমরা যোগাযোগ, আলোচনা এবং চুক্তি প্রক্রিয়াগুলি সহজতর করার জন্য এবং জাতীয় শিল্প খাতের টেকসই বৃদ্ধিকে সমর্থন করে এবং ২০৩০ সালের ভিশনের লক্ষ্যগুলির সাথে সামঞ্জস্যপূর্ণভাবে মার্কেটিং এবং রপ্তানির দক্ষতা বৃদ্ধির জন্য কৃত্রিম বুদ্ধিমত্তা দ্বারা সমর্থিত উদ্ভাবনী স্থানীয় ডিজিটাল সমাধান প্রদান করি।
                     </p>
                 </section>
 
@@ -118,7 +118,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Vision') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our vision is to be the leading digital export platform in Saudi Arabia, through pioneering technical innovation and adopting artificial intelligence technologies in connecting Saudi products with global markets with high flexibility and efficiency. We seek to establish the Kingdom's position as a leading global industrial center by enabling national companies and factories with the best digital solutions, and contributing to increasing the percentage of non-oil exports and achieving sustainable economic development.
+                        আমাদের ভিশন হল সৌদি আরবে নেতৃস্থানীয় ডিজিটাল রপ্তানি প্ল্যাটফর্ম হওয়া, প্রযুক্তিগত উদ্ভাবনের নেতৃত্ব এবং উচ্চ নমনীয়তা এবং দক্ষতার সাথে সৌদি পণ্যগুলিকে বিশ্ব বাজারের সাথে সংযুক্ত করার জন্য কৃত্রিম বুদ্ধিমত্তা প্রযুক্তি গ্রহণের মাধ্যমে। আমরা সেরা ডিজিটাল সমাধানের মাধ্যমে জাতীয় কোম্পানি এবং কারখানাগুলিকে সক্ষম করার মাধ্যমে এবং অ-তেল রপ্তানির শতাংশ বৃদ্ধি এবং টেকসই অর্থনৈতিক উন্নয়ন অর্জনে অবদান রাখার মাধ্যমে রাজ্যের অবস্থানকে নেতৃস্থানীয় বিশ্ব শিল্প কেন্দ্র হিসাবে প্রতিষ্ঠিত করার জন্য কাজ করি।
                     </p>
                 </section>
             </div>
@@ -161,7 +161,7 @@
             <section class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 text-center">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Supporting Vision 2030') }}</h2>
                 <p class="text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                    We believe that technical innovation and digital transformation are the key to the global prosperity of the Saudi industrial sector, so we are keen to provide a reliable platform that elevates the export experience and contributes to establishing the Kingdom's position as a global industrial center.
+                    আমরা বিশ্বাস করি যে প্রযুক্তিগত উদ্ভাবন এবং ডিজিটাল রূপান্তর হল সৌদি শিল্প খাতের বিশ্বব্যাপী সমৃদ্ধির চাবিকাঠি, তাই আমরা একটি নির্ভরযোগ্য প্ল্যাটফর্ম প্রদানের জন্য সচেষ্ট যা রপ্তানি অভিজ্ঞতাকে উন্নত করে এবং রাজ্যের অবস্থানকে বিশ্ব শিল্প কেন্দ্র হিসাবে প্রতিষ্ঠিত করতে অবদান রাখে।
                 </p>
             </section>
         </div>

@@ -57,7 +57,11 @@
         <!-- About Us Hero Section -->
         <div class="py-12 bg-gradient-to-r from-blue-50 to-indigo-100 rounded-lg mb-8">
             <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{{ __('About Us') }}</h1>
+
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Exports Valley
+                </h1>
+
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto px-4">
                     {{ __('Your trusted B2B digital platform connecting Saudi manufacturers with global buyers') }}
                 </p>

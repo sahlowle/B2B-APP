@@ -74,16 +74,16 @@
                     <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ __('Who We Are') }}</h2>
                     <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                         <p class="mb-6">
-                            Exports Valley is a specialized digital platform in the field of business-to-business (B2B) commerce, headquartered in Riyadh, Saudi Arabia. The platform works to connect Saudi manufacturers with global buyers through customized electronic interfaces and advanced artificial intelligence algorithms to match Saudi products with the needs of buyers around the world.
+                            Exports Valley - гэта спецыялізаваная лічбавая платформа ў галіне гандлю бізнес-да-бізнес (B2B), якая знаходзіцца ў горадзе Эр-Рыяд, Саудаўская Арабія. Платформа працуе над злучэннем саудаўскіх вытворцаў з глабальнымі пакупнікамі праз карыстальніцкія электронныя інтэрфейсы і прасунутыя алгарытмы штучнага інтэлекту для супадзення саудаўскіх прадуктаў з патрэбамі пакупнікоў па ўсім свеце.
                         </p>
                         <p class="mb-6">
-                            Exports Valley also provides innovative digital marketing tools and comprehensive support for logistics services and export operations, making it easier for local manufacturers to reach international markets quickly and smoothly. The platform allows factories to showcase their products, communicate directly with buyers, and conclude deals easily and transparently through a reliable and secure electronic environment.
+                            Exports Valley таксама прадастаўляе інавацыйныя інструменты лічбавага маркетынгу і комплексную падтрымку для лагістычных паслуг і экспартных аперацый, што робіць лягчэй для мясцовых вытворцаў дасягнуць міжнародных рынкаў хутка і гладка. Платформа дазваляе фабрыкам дэманстраваць свае прадукты, непасрэдна звязвацца з пакупнікамі і заключаць здзелкі лёгка і празрыста праз надзейнае і бяспечнае электроннае асяроддзе.
                         </p>
                         <p class="mb-6">
-                            Exports Valley focuses on localizing digital solutions for the Saudi industry, where our platform is specifically designed to meet the needs of the national industrial sector in Arabic and multiple global languages to facilitate communication with importers from around the world in accordance with local market requirements.
+                            Exports Valley засяроджваецца на лакалізацыі лічбавых рашэнняў для саудаўскай прамысловасці, дзе наша платформа спецыяльна распрацавана для задавальнення патрэб нацыянальнага прамысловага сектара на арабскай мове і некалькіх глабальных мовах, каб спрасціць зносіны з імпарцёрамі з усяго свету ў адпаведнасці з мясцовымі патрабаваннямі рынку.
                         </p>
                         <p>
-                            Relying on the latest artificial intelligence technologies and digital transformation, we seek to enhance the competitiveness of Saudi factories and enable them to expand globally. In light of Vision 2030, which aims to diversify the economy and increase non-oil exports, Exports Valley is committed to playing an effective role in supporting this vision by enabling national industries with innovative and integrated digital tools that ensure efficiency and transparency in all stages of the export process.
+                            Спасылаючыся на апошнія тэхналогіі штучнага інтэлекту і лічбавую трансфармацыю, мы імкнемся павысіць канкурэнтаздольнасць саудаўскіх фабрык і дазволіць ім пашырацца глабальна. У святле Візіі 2030, якая накіравана на дыверсіфікацыю эканомікі і павелічэнне не-нафтавых экспартаў, Exports Valley абавязана гуляць актыўную ролю ў падтрымцы гэтай візіі праз уключэнне нацыянальных галін з інавацыйнымі і інтэграванымі лічбавымі інструментамі, якія забяспечваюць эфектыўнасць і празрыстасць на ўсіх этапах працэсу экспарту.
                         </p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Mission') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our mission is to enable Saudi factories to reach global markets easily and transparently through an integrated digital platform. We provide innovative local digital solutions supported by artificial intelligence to simplify communication, negotiation, and contracting processes, and enhance the efficiency of marketing and export in a way that supports the sustainable growth of the national industrial sector and aligns with the goals of Vision 2030.
+                        Наша місія - дазволіць саудаўскім фабрыкам дасягнуць глабальных рынкаў лёгка і празрыста праз інтэграваную лічбавую платформу. Мы прадастаўляем інавацыйныя мясцовыя лічбавыя рашэнні, падтрыманыя штучным інтэлектам, для спрашчэння працэсаў зносін, перамоў і заключэння кантрактаў, а таксама павышэння эфектыўнасці маркетынгу і экспарту ў спосаб, які падтрымлівае ўстойлівы рост нацыянальнага прамысловага сектара і адпавядае мэтам Візіі 2030.
                     </p>
                 </section>
 
@@ -118,7 +118,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Vision') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our vision is to be the leading digital export platform in Saudi Arabia, through pioneering technical innovation and adopting artificial intelligence technologies in connecting Saudi products with global markets with high flexibility and efficiency. We seek to establish the Kingdom's position as a leading global industrial center by enabling national companies and factories with the best digital solutions, and contributing to increasing the percentage of non-oil exports and achieving sustainable economic development.
+                        Наша візія - стаць вядучай лічбавай экспартнай платформай у Саудаўскай Арабіі праз піянерства тэхнічных інавацый і прыняцце тэхналогій штучнага інтэлекту ў злучэнні саудаўскіх прадуктаў з глабальнымі рынкамі з высокай гнуткасцю і эфектыўнасцю. Мы імкнемся ўсталяваць становішча Каралеўства як вядучы глабальны прамысловы цэнтр праз уключэнне нацыянальных кампаній і фабрык з найлепшымі лічбавымі рашэннямі і ўнёсак у павелічэнне працэнта не-нафтавых экспартаў і дасягненне ўстойлівага эканамічнага развіцця.
                     </p>
                 </section>
             </div>
@@ -161,7 +161,7 @@
             <section class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 text-center">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Supporting Vision 2030') }}</h2>
                 <p class="text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                    We believe that technical innovation and digital transformation are the key to the global prosperity of the Saudi industrial sector, so we are keen to provide a reliable platform that elevates the export experience and contributes to establishing the Kingdom's position as a global industrial center.
+                    Мы лічым, што тэхнічныя інавацыі і лічбавая трансфармацыя з'яўляюцца ключом да глабальнага росквіту саудаўскага прамысловага сектара, таму мы імкнемся прадаставіць надзейную платформу, якая павышае экспартны досвед і спрыяе ўсталяванню становішча Каралеўства як глабальнага прамысловага цэнтра.
                 </p>
             </section>
         </div>

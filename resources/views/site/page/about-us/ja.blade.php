@@ -74,16 +74,16 @@
                     <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ __('Who We Are') }}</h2>
                     <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                         <p class="mb-6">
-                            Exports Valley is a specialized digital platform in the field of business-to-business (B2B) commerce, headquartered in Riyadh, Saudi Arabia. The platform works to connect Saudi manufacturers with global buyers through customized electronic interfaces and advanced artificial intelligence algorithms to match Saudi products with the needs of buyers around the world.
+                            エクスポーツバレーは、サウジアラビアのリヤド市に本拠を置く、企業間取引（B2B）分野に特化したデジタルプラットフォームです。プラットフォームは、カスタマイズされた電子インターフェースと高度な人工知能アルゴリズムを使用して、サウジの製造業者をグローバルな買い手と結びつけ、サウジの製品を世界中の買い手のニーズとマッチングさせることに取り組んでいます。
                         </p>
                         <p class="mb-6">
-                            Exports Valley also provides innovative digital marketing tools and comprehensive support for logistics services and export operations, making it easier for local manufacturers to reach international markets quickly and smoothly. The platform allows factories to showcase their products, communicate directly with buyers, and conclude deals easily and transparently through a reliable and secure electronic environment.
+                            エクスポーツバレーは、革新的なデジタルマーケティングツールと、ロジスティクスサービスおよび輸出業務のための統合サポートも提供し、地元の製造業者が迅速かつスムーズに国際市場にアクセスできるようにしています。プラットフォームは、工場が製品を展示し、買い手と直接コミュニケーションを取り、信頼性と安全性の高い電子環境を通じて、簡単かつ透明性を持って取引を締結することを可能にします。
                         </p>
                         <p class="mb-6">
-                            Exports Valley focuses on localizing digital solutions for the Saudi industry, where our platform is specifically designed to meet the needs of the national industrial sector in Arabic and multiple global languages to facilitate communication with importers from around the world in accordance with local market requirements.
+                            エクスポーツバレーは、サウジ産業のためのデジタルソリューションのローカライゼーションに焦点を当てており、私たちのプラットフォームは、アラビア語と複数のグローバル言語で国内産業セクターのニーズを満たすように特別に設計されており、地元の市場要件に従って世界中の輸入業者とのコミュニケーションを容易にします。
                         </p>
                         <p>
-                            Relying on the latest artificial intelligence technologies and digital transformation, we seek to enhance the competitiveness of Saudi factories and enable them to expand globally. In light of Vision 2030, which aims to diversify the economy and increase non-oil exports, Exports Valley is committed to playing an effective role in supporting this vision by enabling national industries with innovative and integrated digital tools that ensure efficiency and transparency in all stages of the export process.
+                            最新の人工知能技術とデジタル変革に依存して、私たちはサウジの工場の競争力を向上させ、グローバルに拡張できるようにすることを目指しています。経済の多様化と非石油輸出の増加を目指すビジョン2030の光の中で、エクスポーツバレーは、輸出プロセスのすべての段階で効率性と透明性を保証する革新的で統合されたデジタルツールを通じて国内産業を可能にすることで、このビジョンを支援する効果的な役割を果たすことにコミットしています。
                         </p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Mission') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our mission is to enable Saudi factories to reach global markets easily and transparently through an integrated digital platform. We provide innovative local digital solutions supported by artificial intelligence to simplify communication, negotiation, and contracting processes, and enhance the efficiency of marketing and export in a way that supports the sustainable growth of the national industrial sector and aligns with the goals of Vision 2030.
+                        私たちの使命は、統合されたデジタルプラットフォームを通じて、サウジの工場が簡単かつ透明性を持ってグローバル市場にアクセスできるようにすることです。私たちは、コミュニケーション、交渉、契約締結のプロセスを簡素化し、国内産業セクターの持続可能な成長を支援し、ビジョン2030の目標と一致する方法でマーケティングと輸出の効率を向上させるために、人工知能によってサポートされた革新的なローカルデジタルソリューションを提供します。
                     </p>
                 </section>
 
@@ -118,7 +118,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Vision') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our vision is to be the leading digital export platform in Saudi Arabia, through pioneering technical innovation and adopting artificial intelligence technologies in connecting Saudi products with global markets with high flexibility and efficiency. We seek to establish the Kingdom's position as a leading global industrial center by enabling national companies and factories with the best digital solutions, and contributing to increasing the percentage of non-oil exports and achieving sustainable economic development.
+                        私たちのビジョンは、技術革新をリードし、高い柔軟性と効率性でサウジの製品をグローバル市場と結びつけるために人工知能技術を採用することで、サウジアラビアで主要なデジタル輸出プラットフォームになることです。私たちは、最高のデジタルソリューションを通じて国内企業と工場を可能にし、非石油輸出の割合を増やし、持続可能な経済発展を達成することに貢献することで、王国の地位を主要なグローバル産業センターとして確立することを目指しています。
                     </p>
                 </section>
             </div>
@@ -161,7 +161,7 @@
             <section class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 text-center">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Supporting Vision 2030') }}</h2>
                 <p class="text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                    We believe that technical innovation and digital transformation are the key to the global prosperity of the Saudi industrial sector, so we are keen to provide a reliable platform that elevates the export experience and contributes to establishing the Kingdom's position as a global industrial center.
+                    私たちは、技術革新とデジタル変革がサウジ産業セクターのグローバルな繁栄の鍵であると信じており、そのため輸出体験を向上させ、王国の地位をグローバル産業センターとして確立することに貢献する信頼できるプラットフォームを提供することに努めています。
                 </p>
             </section>
         </div>

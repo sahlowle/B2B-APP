@@ -74,16 +74,16 @@
                     <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ __('Who We Are') }}</h2>
                     <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                         <p class="mb-6">
-                            Exports Valley is a specialized digital platform in the field of business-to-business (B2B) commerce, headquartered in Riyadh, Saudi Arabia. The platform works to connect Saudi manufacturers with global buyers through customized electronic interfaces and advanced artificial intelligence algorithms to match Saudi products with the needs of buyers around the world.
+                            Exports Valley on spetsialiseeritud digitaalne platvorm äri-äri (B2B) kaubanduse valdkonnas, mis asub Riaadi linnas Saudi Araabias. Platvorm töötab Saudi tootjate ühendamiseks globaalsete ostjatega kohandatud elektrooniliste liideste ja arenenud tehisintellekti algoritmide kaudu Saudi toodete sobitamiseks ostjate vajadustega üle maailma.
                         </p>
                         <p class="mb-6">
-                            Exports Valley also provides innovative digital marketing tools and comprehensive support for logistics services and export operations, making it easier for local manufacturers to reach international markets quickly and smoothly. The platform allows factories to showcase their products, communicate directly with buyers, and conclude deals easily and transparently through a reliable and secure electronic environment.
+                            Exports Valley pakub ka innovaatilisi digitaalse turunduse tööriistu ja terviklikku tuge logistika teenuste ja ekspordioperatsioonide jaoks, mis muudab kohalike tootjate jaoks lihtsamaks jõuda rahvusvahelistele turgudele kiiresti ja sujuvalt. Platvorm võimaldab tehastel näidata oma tooteid, suhelda otse ostjatega ja sõlmida lepinguid lihtsalt ja läbipaistvalt usaldusväärse ja turvalise elektroonilise keskkonna kaudu.
                         </p>
                         <p class="mb-6">
-                            Exports Valley focuses on localizing digital solutions for the Saudi industry, where our platform is specifically designed to meet the needs of the national industrial sector in Arabic and multiple global languages to facilitate communication with importers from around the world in accordance with local market requirements.
+                            Exports Valley keskendub Saudi tööstuse digitaalsete lahenduste lokaliseerimisele, kus meie platvorm on spetsiaalselt kavandatud rahuldama riigi tööstussektori vajadusi araabia keeles ja mitmes globaalses keeles, et hõlbustada suhtlust importijatega üle maailma vastavalt kohalike turu nõuetele.
                         </p>
                         <p>
-                            Relying on the latest artificial intelligence technologies and digital transformation, we seek to enhance the competitiveness of Saudi factories and enable them to expand globally. In light of Vision 2030, which aims to diversify the economy and increase non-oil exports, Exports Valley is committed to playing an effective role in supporting this vision by enabling national industries with innovative and integrated digital tools that ensure efficiency and transparency in all stages of the export process.
+                            Toetudes uusimatele tehisintellekti tehnoloogiatele ja digitaalsele transformatsioonile, püüame tõsta Saudi tehastete konkurentsivõimet ja võimaldada neil laieneda globaalselt. 2030. aasta visiooni valguses, mis on suunatud majanduse mitmekesistamisele ja mitte-nafta ekspordi suurendamisele, on Exports Valley pühendunud mängima aktiivset rolli selle visiooni toetamisel, võimaldades riigi tööstustel innovaatiliste ja integreeritud digitaalsete tööriistadega, mis tagavad tõhususe ja läbipaistvuse kõigis ekspordiprotsessi etappides.
                         </p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Mission') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our mission is to enable Saudi factories to reach global markets easily and transparently through an integrated digital platform. We provide innovative local digital solutions supported by artificial intelligence to simplify communication, negotiation, and contracting processes, and enhance the efficiency of marketing and export in a way that supports the sustainable growth of the national industrial sector and aligns with the goals of Vision 2030.
+                        Meie missioon on võimaldada Saudi tehastel jõuda globaalsetele turgudele lihtsalt ja läbipaistvalt integreeritud digitaalse platvormi kaudu. Pakume innovaatilisi kohalikke digitaalseid lahendusi, mida toetab tehisintellekt, suhtluse, läbirääkimiste ja lepingu sõlmimise protsesside lihtsustamiseks ning turunduse ja ekspordi tõhususe suurendamiseks viisil, mis toetab riigi tööstussektori jätkusuutlikku kasvu ja on kooskõlas 2030. aasta visiooni eesmärkidega.
                     </p>
                 </section>
 
@@ -118,7 +118,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Vision') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our vision is to be the leading digital export platform in Saudi Arabia, through pioneering technical innovation and adopting artificial intelligence technologies in connecting Saudi products with global markets with high flexibility and efficiency. We seek to establish the Kingdom's position as a leading global industrial center by enabling national companies and factories with the best digital solutions, and contributing to increasing the percentage of non-oil exports and achieving sustainable economic development.
+                        Meie visioon on olla juhtiv digitaalne ekspordi platvorm Saudi Araabias, juhtides tehnilisi innovatsioone ja omaks võttes tehisintellekti tehnoloogiaid Saudi toodete ühendamiseks globaalsete turgudega kõrge paindlikkuse ja tõhususega. Püüame kindlaks teha kuningriigi positsiooni juhtiva globaalse tööstuskeskusena, võimaldades riigi ettevõtetel ja tehastel parimaid digitaalseid lahendusi ning kaasa aidates mitte-nafta ekspordi protsendi suurendamisele ja jätkusuutliku majandusliku arengu saavutamisele.
                     </p>
                 </section>
             </div>
@@ -161,7 +161,7 @@
             <section class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 text-center">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Supporting Vision 2030') }}</h2>
                 <p class="text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                    We believe that technical innovation and digital transformation are the key to the global prosperity of the Saudi industrial sector, so we are keen to provide a reliable platform that elevates the export experience and contributes to establishing the Kingdom's position as a global industrial center.
+                    Usume, et tehnilised innovatsioonid ja digitaalne transformatsioon on võti Saudi tööstussektori globaalsele õitsengule, seega püüame pakkuda usaldusväärset platvormi, mis tõstab ekspordikogemust ja aitab kaasa kuningriigi positsiooni kindlaks tegemisele globaalse tööstuskeskusena.
                 </p>
             </section>
         </div>

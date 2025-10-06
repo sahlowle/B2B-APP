@@ -189,6 +189,7 @@ Route::group(['middleware' => ['locale']], function () {
     ->middleware('themeable')
     ->group(function () {
         Route::get('/about-us', 'aboutUs')->name('site.about-us');
+        Route::get('/privacy-policy', 'privacyPolicy')->name('site.privacy-policy');
     });
 
     Route::get('/get-component-product', 'SiteController@getComponentProduct')->name('ajax-product')->middleware('themeable');

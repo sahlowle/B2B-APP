@@ -6,6 +6,7 @@ use App\Models\Language;
 
 class PageController extends Controller
 {
+
     public function aboutUs()
     {
        $languages = Language::where('status', 'Active')->get();
@@ -31,5 +32,31 @@ class PageController extends Controller
 
        return view($view,compact('languages', 'currentLang', 'page'));
 
+    }
+
+    public function privacyPolicy()
+    {
+       $languages = Language::where('status', 'Active')->get();
+
+       $availableLanguages = $languages->pluck('short_name')->toArray();
+
+       $lang = app()->getLocale();
+
+       if(!in_array($lang, $availableLanguages)) {
+        $lang = 'en';
+       }
+
+       $view = 'site.page.privacy-policy.' . $lang;
+
+       if(!view()->exists($view)) {
+        $view = 'site.page.privacy-policy.en';
+       }
+
+       $currentLang = $languages->where('short_name', $lang)->first();
+
+       $homeService = $homeService = new \Modules\CMS\Service\HomepageService();
+       $page = $homeService->home();
+
+       return view($view,compact('languages', 'currentLang', 'page'));
     }
 }

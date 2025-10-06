@@ -74,16 +74,16 @@
                     <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ __('Who We Are') }}</h2>
                     <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                         <p class="mb-6">
-                            Exports Valley is a specialized digital platform in the field of business-to-business (B2B) commerce, headquartered in Riyadh, Saudi Arabia. The platform works to connect Saudi manufacturers with global buyers through customized electronic interfaces and advanced artificial intelligence algorithms to match Saudi products with the needs of buyers around the world.
+                            出口谷是一个专门从事企业对企业（B2B）贸易领域的数字平台，总部位于沙特阿拉伯利雅得市。该平台致力于通过定制化的电子界面和先进的人工智能算法将沙特制造商与全球买家连接起来，将沙特产品与世界各地买家的需求进行匹配。
                         </p>
                         <p class="mb-6">
-                            Exports Valley also provides innovative digital marketing tools and comprehensive support for logistics services and export operations, making it easier for local manufacturers to reach international markets quickly and smoothly. The platform allows factories to showcase their products, communicate directly with buyers, and conclude deals easily and transparently through a reliable and secure electronic environment.
+                            出口谷还提供创新的数字营销工具和物流服务及出口业务的综合支持，使当地制造商能够快速顺利地进入国际市场。该平台允许工厂展示其产品，直接与买家沟通，并通过可靠安全的电子环境轻松透明地达成交易。
                         </p>
                         <p class="mb-6">
-                            Exports Valley focuses on localizing digital solutions for the Saudi industry, where our platform is specifically designed to meet the needs of the national industrial sector in Arabic and multiple global languages to facilitate communication with importers from around the world in accordance with local market requirements.
+                            出口谷专注于沙特工业数字解决方案的本地化，我们的平台专门设计用于满足国家工业部门的需求，使用阿拉伯语和多种全球语言，以便于与来自世界各地的进口商沟通，符合当地市场要求。
                         </p>
                         <p>
-                            Relying on the latest artificial intelligence technologies and digital transformation, we seek to enhance the competitiveness of Saudi factories and enable them to expand globally. In light of Vision 2030, which aims to diversify the economy and increase non-oil exports, Exports Valley is committed to playing an effective role in supporting this vision by enabling national industries with innovative and integrated digital tools that ensure efficiency and transparency in all stages of the export process.
+                            依靠最新的人工智能技术和数字化转型，我们寻求提高沙特工厂的竞争力，使它们能够在全球范围内扩张。在2030年愿景的指导下，该愿景旨在实现经济多元化并增加非石油出口，出口谷致力于通过为民族工业提供创新和集成的数字工具来发挥有效作用，这些工具确保出口过程所有阶段的效率和透明度。
                         </p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Mission') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our mission is to enable Saudi factories to reach global markets easily and transparently through an integrated digital platform. We provide innovative local digital solutions supported by artificial intelligence to simplify communication, negotiation, and contracting processes, and enhance the efficiency of marketing and export in a way that supports the sustainable growth of the national industrial sector and aligns with the goals of Vision 2030.
+                        我们的使命是通过集成的数字平台使沙特工厂能够轻松透明地进入全球市场。我们提供由人工智能支持的创新本地数字解决方案，以简化沟通、谈判和合同流程，并提高营销和出口效率，以支持国家工业部门的可持续增长，并与2030年愿景的目标保持一致。
                     </p>
                 </section>
 
@@ -118,7 +118,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Our Vision') }}</h3>
                     </div>
                     <p class="text-gray-700 leading-relaxed text-center">
-                        Our vision is to be the leading digital export platform in Saudi Arabia, through pioneering technical innovation and adopting artificial intelligence technologies in connecting Saudi products with global markets with high flexibility and efficiency. We seek to establish the Kingdom's position as a leading global industrial center by enabling national companies and factories with the best digital solutions, and contributing to increasing the percentage of non-oil exports and achieving sustainable economic development.
+                        我们的愿景是通过引领技术创新和采用人工智能技术以高灵活性和效率将沙特产品与全球市场连接，成为沙特阿拉伯领先的数字出口平台。我们寻求通过为民族企业和工厂提供最佳数字解决方案，并促进增加非石油出口比例和实现可持续经济发展，来确立王国作为领先全球工业中心的地位。
                     </p>
                 </section>
             </div>
@@ -161,7 +161,7 @@
             <section class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 text-center">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Supporting Vision 2030') }}</h2>
                 <p class="text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                    We believe that technical innovation and digital transformation are the key to the global prosperity of the Saudi industrial sector, so we are keen to provide a reliable platform that elevates the export experience and contributes to establishing the Kingdom's position as a global industrial center.
+                    我们相信技术创新和数字化转型是沙特工业部门全球繁荣的关键，因此我们努力提供一个可靠的平台，提升出口体验，并有助于确立王国作为全球工业中心的地位。
                 </p>
             </section>
         </div>

@@ -112,10 +112,11 @@ class GatewayController extends Controller
         try {
             $processor = GatewayHandler::getProcessor($request->gateway);
             $response = $processor->validateTransaction($request);
+            
             $code = $this->helper->getPaymentCode();
             PaymentLog::where('code', $code)->update($this->getUpdateData($response));
 
-            return redirect(route(techDecrypt(request()->to), withOldQueryIntegrity()));
+            return redirect(route(techDecrypt(request()->to), withOldQueryIntegrity(['code' => techEncrypt($code)])));
         } catch (\Exception $e) {
             return redirect(route('gateway.payment', withOldQueryIntegrity()))->withErrors($e->getMessage());
         }

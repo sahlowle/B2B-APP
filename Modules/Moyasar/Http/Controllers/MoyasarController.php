@@ -5,75 +5,50 @@ namespace Modules\Moyasar\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Addons\Entities\Addon;
+use Modules\Moyasar\Entities\Moyasar;
+use Modules\Stripe\Entities\StripeBody;
+use Modules\Stripe\Http\Requests\StripeRequest;
 
 class MoyasarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function store(StripeRequest $request)
     {
-        return view('moyasar::index');
+        $moyasarBody = new StripeBody($request);
+
+        Moyasar::updateOrCreate(
+            ['alias' => 'moyasar'],
+            [
+                'name' => 'Moyasar',
+                'instruction' => $request->instruction,
+                'status' => $request->status,
+                'sandbox' => $request->sandbox,
+                'image' => 'thumbnail.png',
+                'data' => json_encode($moyasarBody),
+            ]
+        );
+
+        return back()->with(['AddonStatus' => 'success', 'AddonMessage' => __('Moyasar settings updated.')]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     * Returns form for the edit modal
+     *
+     * @param \Illuminate\Http\Request
+     * @return JsonResponse
      */
-    public function create()
+    public function edit(Request $request)
     {
-        return view('moyasar::create');
-    }
+            $module = Moyasar::first()->data;
+       
+        $addon = Addon::findOrFail('moyasar');
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('moyasar::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('moyasar::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json(
+            [
+                'html' => view('gateway::partial.form', compact('module', 'addon'))->render(),
+                'status' => true,
+            ],
+            200
+        );
     }
 }

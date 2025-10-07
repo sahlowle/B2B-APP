@@ -14,3 +14,9 @@
 Route::prefix('moyasar')->group(function() {
     Route::get('/', 'MoyasarController@index');
 });
+
+Route::group(['prefix' => 'gateway/moyasar', 'as' => 'moyasar.',  'middleware' => ['auth', 'permission', 'locale', 'web']], function () {
+    Route::post('/store', 'MoyasarController@store')->name('store')->middleware('checkForDemoMode');
+    Route::get('/edit', 'MoyasarController@edit')->name('edit');
+});
+

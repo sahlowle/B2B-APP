@@ -34,12 +34,15 @@ class MoyasarView implements PaymentViewInterface
                 $price =  intval(round(($price)));
             }
 
+            $moyasar = Moyasar::firstWhere('alias', 'moyasar')->data;
+
             return view('moyasar::pay', [
-                'publishableKey' => 'moyasar_publishable_key',
-                'instruction' => 'moyasar_instruction',
+                'publishableKey' => $moyasar->publishableKey,
+                'instruction' => $moyasar->instruction,
                 'purchaseData' => $helper->getPurchaseData($key),
                 'price' => $price,
             ]);
+            
         } catch (\Exception $e) {
             return back()->withErrors(['error' => __('Purchase data not found.')]);
         }

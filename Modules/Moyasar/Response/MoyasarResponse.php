@@ -16,7 +16,7 @@ class MoyasarResponse extends Response implements HasDataResponseInterface
     public function __construct($data, $moyasarResponse)
     {
         $this->data = $data;
-        $this->response = $moyasarResponse->jsonSerialize();
+        $this->response = $moyasarResponse;
         $this->updateStatus();
 
         return $this;
@@ -29,7 +29,7 @@ class MoyasarResponse extends Response implements HasDataResponseInterface
 
     protected function updateStatus()
     {
-        if ($this->response['status'] == 'complete') {
+        if ($this->response->status == 'paid') {
             $this->setPaymentStatus('completed');
         } else {
             $this->setPaymentStatus('failed');
@@ -44,16 +44,16 @@ class MoyasarResponse extends Response implements HasDataResponseInterface
     private function getSimpleResponse()
     {
         return [
-            'amount' => $this->response['amount_total'] / 100,
-            'amount_captured' => $this->response['amount_total'] / 100,
-            'currency' => $this->response['currency'],
+            'amount' => $this->response->amount / 100,
+            'amount_captured' => $this->response->amount / 100,
+            'currency' => $this->response->currency,
             'code' => $this->data->code,
         ];
     }
 
     public function getGateway(): string
     {
-        return 'Stripe';
+        return 'Moyasar';
     }
 
     protected function setPaymentStatus($status)

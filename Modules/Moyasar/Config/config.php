@@ -7,15 +7,15 @@ return [
 
     'logo' => 'Modules/Moyasar/Resources/assets/moyasar.jpg',
 
-    // Stripe addon settings
+    // Moyasar addon settings
 
     'options' => [
-        ['label' => __('Settings'), 'type' => 'modal', 'url' => 'stripe.edit'],
-        ['label' => __('Stripe Documentation'), 'target' => '_blank', 'url' => 'https://stripe.com/docs/keys'],
+        ['label' => __('Settings'), 'type' => 'modal', 'url' => 'moyasar.edit'],
+        ['label' => __('Moyasr Documentation'), 'target' => '_blank', 'url' => 'https://docs.moyasar.com'],
     ],
 
     /**
-     * Stripe data validation
+     * Moyasar data validation
      */
     'validation' => [
         'rules' => [
@@ -64,6 +64,6 @@ return [
         ],
     ],
 
-    'store_route' => 'stripe.store',
+    'store_route' => 'moyasar.store',
 
 ];

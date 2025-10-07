@@ -18,12 +18,12 @@
     <div class="mysr-form"></div>
 
 
-    <form class="pay-form needs-validation"
+    {{-- <form class="pay-form needs-validation"
         action="{{ route('gateway.complete', withOldQueryIntegrity(['gateway' => moduleConfig('moyasar.alias')])) }}" method="post"
         id="payment-form">
         @csrf
         <input type="hidden" name="payment_id">
-    </form>
+    </form> --}}
 
 @endsection
 
@@ -32,15 +32,10 @@
     <script>
         Moyasar.init({
         element: '.mysr-form',
-        // Amount in the smallest currency unit.
-        // For example:
-        // 10 SAR = 10 * 100 Halalas
-        // 10 KWD = 10 * 1000 Fils
-        // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
         amount: {{ $price }},
         currency: '{{ $purchaseData->currency_code }}',
         description: 'Coffee Order #1',
-        publishable_api_key: 'pk_test_wV6yFUYWypyw3fc32N7kknbMfAEHUYEQrryhYW2J',
+        publishable_api_key: '{{ $publishableKey }}',
         callback_url: '{{ route('gateway.callback', withOldQueryIntegrity(['gateway' => moduleConfig('moyasar.alias')])) }}',
         supported_networks: ['visa', 'mastercard', 'mada'],
         methods: ['creditcard'],
@@ -51,10 +46,22 @@
         });
 
         async function savePaymentOnBackend(payment) {
-            console.log(payment);
-            alert(payment.id);
-            document.getElementById('payment_id').value = payment.id;
-            document.getElementById('payment-form').submit();
+       
+            // document.getElementById('payment_id').value = payment.id;
+            // document.getElementById('payment-form').submit();
+
+            $.ajax({
+                url: '{{ route('gateway.complete', withOldQueryIntegrity(['gateway' => moduleConfig('moyasar.alias')])) }}',
+                type: 'POST',
+                data: { 
+                    payment_id: payment.id,
+                    csrf_token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert(response);
+                }
+            });
+
         }
     </script>
 @endsection

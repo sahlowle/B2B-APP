@@ -22,79 +22,51 @@ use Modules\Gateway\Contracts\{
 
 class MoyasarProcessor implements PaymentProcessorInterface, RequiresCallbackInterface
 {
-    private $secret;
-
-    private $key;
+    private $clientSecret;
 
     private $helper;
 
     private $purchaseData;
 
-    private $success_url;
+    private $baseUrl = 'https://api.moyasar.com/v1';
 
-    private $cancel_url;
 
     public function __construct()
     {
         $this->helper = GatewayHelper::getInstance();
+        $code = $this->helper->getPaymentCode();
+        $this->purchaseData = $this->helper->getPurchaseData($code);
+
+        $moyasar = MoyasarModel::firstWhere('alias', 'moyasar')->data;
+        $this->clientSecret = $moyasar->clientSecret;
     }
 
     
     public function pay($request)
     {
+        $payment_id = $request->payment_id;
 
-        $this->moyasarSetup($request);
+        $this->purchaseData->payment_id = $payment_id;
+        $this->purchaseData->save();
 
-        $charge = $this->charge();
-        if (! $charge) {
-            throw new \Exception(__('Payment Request failed due to some issues. Please try again later.'));
-        }
+        $this->setMoyasarSessionId($payment_id);
 
-        $this->setStripeSessionId($charge->id);
+        return response()->json(['success' => true, 'message' => 'Payment initiated successfully']);
 
-        return redirect($charge->url);
     }
-
-    /**
-     * Stripe data setup
-     *
-     * @param \Illuminate\Http\Request
-     *
-     * return mixed
-     */
-    private function moyasarSetup($request)
-    {
-        try {
-            
-            $this->key = $this->helper->getPaymentCode();
-            $moyasar = MoyasarModel::firstWhere('alias', 'moyasar')->data;
-            $this->secret = $moyasar->clientSecret;
-            $this->purchaseData = $this->helper->getPurchaseData($this->key);
-          
-
-        } catch (\Exception $e) {
-            paymentLog($e);
-
-            throw new \Exception(__('Error while trying to setup moyasar.'));
-        }
-    }
-
   
-
-    private function setStripeSessionId($id)
+    private function setMoyasarSessionId($id)
     {
-        session(['stripe_session_id' => $id]);
+        session(['moyasar_session_id' => $id]);
     }
 
-    private function getStripeSessionId()
+    private function getMoyasarSessionId()
     {
-        return session('stripe_session_id');
+        return session('moyasar_session_id');
     }
 
     public function validateTransaction($request)
     {
-        $this->moyasarSetup($request);
-
         $line_item = $this->fetchPayment($request->id);
 
         return new MoyasarResponse($this->purchaseData, $line_item);
@@ -105,9 +77,49 @@ class MoyasarProcessor implements PaymentProcessorInterface, RequiresCallbackInt
         throw new \Exception(__('Payment cancelled from stripe.'));
     }
 
-    private function fetchPayment($id)
+    private function fetchPayment($paymentId)
     {
-        $url = 'https://api.moyasar.com/v1/payments/' . $id;
-        Http::withBasicAuth($this->publishableKey,'')->get($url);
+        $url = "{$this->baseUrl}/payments/{$paymentId}";
+
+        $response = Http::withBasicAuth($this->clientSecret,'')->acceptJson()->get($url);
+
+        if($response->failed()) {
+            throw new \Exception(__('Payment failed from moyasar.'));
+        }
+
+        $payment = $response->object();
+
+        return $payment;
+    }
+
+    public function refundPayment($paymentId)
+    {
+        try {
+            $data = [];
+           
+
+            $response = Http::withBasicAuth($this->clientSecret, '')
+                ->acceptJson()
+                ->post("{$this->baseUrl}/payments/{$paymentId}/refund", $data);
+
+            if ($response->successful()) {
+                return [
+                    'success' => true,
+                    'data' => $response->json()
+                ];
+            }
+
+            return [
+                'success' => false,
+                'message' => $response->json('message') ?? 'Refund failed'
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Moyasar Refund Error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'An error occurred while processing refund'
+            ];
+        }
     }
 }

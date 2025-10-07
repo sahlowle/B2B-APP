@@ -39,10 +39,10 @@ if (! function_exists('formatNumber')) {
             $symbol = Currency::defaultSymbol();
         }
         if (preference('symbol_position') == 'before') {
-            return $symbol . $amount;
+            return $symbol . ' ' . $amount;
         }
 
-        return $amount . $symbol;
+        return $amount . ' ' . $symbol;
     }
 }
 

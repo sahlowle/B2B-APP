@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', 'سياسة الخصوصية')
+@section('page_title', 'الشروط و الأحكام الخاصة بالبائع')
 
 @section('seo')
     <meta name="robots" content="index, follow">

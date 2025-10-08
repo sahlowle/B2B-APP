@@ -59,4 +59,48 @@ class PageController extends Controller
 
        return view($view,compact('languages', 'currentLang', 'page'));
     }
+
+    public function termsAndConditionsOfSeller()
+    {
+
+       $availableLanguages = ['en', 'ar'];
+
+       $lang = app()->getLocale();
+
+       if(!in_array($lang, $availableLanguages)) {
+        $lang = 'en';
+       }
+
+       $view = 'site.page.terms-and-conditions-of-seller.' . $lang;
+
+       if(!view()->exists($view)) {
+        $view = 'site.page.terms-and-conditions-of-seller.en';
+       }
+
+       $currentLang = $lang;
+
+       return view($view,compact('currentLang'));
+    }
+
+    public function termsAndConditionsOfBuyer()
+    {
+
+       $availableLanguages = ['en', 'ar'];
+
+       $lang = app()->getLocale();
+
+       if(!in_array($lang, $availableLanguages)) {
+        $lang = 'en';
+       }
+
+       $view = 'site.page.terms-and-conditions-of-buyer.' . $lang;
+
+       if(!view()->exists($view)) {
+        $view = 'site.page.terms-and-conditions-of-buyer.en';
+       }
+
+       $currentLang = $lang;
+
+       return view($view,compact('currentLang'));
+    }
 }

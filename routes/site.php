@@ -69,7 +69,7 @@ Route::group(['middleware' => ['locale']], function () {
     Route::match(['get', 'post'], 'change-language-for-get', 'DashboardController@switchLanguageForGet')->name('change-language')->middleware(['checkForDemoMode']);
     Route::post('change-currency', 'DashboardController@switchCurrency');
 
-    Route::get('page/factories', 'SellerController@index')->name('site.shop.index')->middleware('themeable');
+    Route::get('factories', 'SellerController@index')->name('site.shop.index')->middleware('themeable');
     Route::get('shop/{alias}', 'SellerController@showVendor')->name('site.shop')->middleware('themeable');
     Route::get('shop/profile/{alias}', 'SellerController@vendorProfile')->name('site.shop.profile')->middleware('themeable');
 

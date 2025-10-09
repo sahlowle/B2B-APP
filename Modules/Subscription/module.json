@@ -1,0 +1,20 @@
+{
+    "name": "Subscription",
+    "alias": "subscription",
+    "display_name": "Seller Subscription",
+    "version": "1.4.0",
+    "type" : "premium",
+    "martvill_version": "3.5.1",
+    "description": "The Seller Subscription addon simplifies subscription management, offering automated billing and flexible plans for seamless user experiences.",
+    "keywords": [],
+    "priority": 55,
+    "providers": [
+        "Modules\\Subscription\\Providers\\SubscriptionServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "helpers/helper.php",
+        "helpers/restriction.php"
+    ],
+    "requires": []
+}

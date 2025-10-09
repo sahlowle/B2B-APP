@@ -1,0 +1,20 @@
+.border-bottom-1-ddd {
+    border-bottom: 1px solid #ccc;
+}
+
+
+.border-bottom-2-ddd {
+    border-bottom: 2px solid #ddd;
+}
+
+.clear {
+    clear: both;
+}
+
+.color-gray {
+    color: #444 !important;
+}
+
+.mb-6 {
+    margin-bottom: 6px;
+}

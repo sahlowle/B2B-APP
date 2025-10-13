@@ -127,6 +127,8 @@
     <!-- Affiliate Code Common Header -->
     
     @doAction('before_site_head')
+
+    <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
 </head>
 
 

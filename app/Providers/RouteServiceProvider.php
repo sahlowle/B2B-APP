@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::group(apply_filters('admin_route_group', [
                 'prefix' => 'admin',
-                'middleware' => ['web','website.locale'],
+                'middleware' => ['web'],
                 'namespace' => $this->namespace,
             ]), base_path('routes/web.php'));
 

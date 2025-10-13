@@ -69,15 +69,11 @@ class RouteServiceProvider extends ServiceProvider
 
 
             // app/Providers/RouteServiceProvider.php
-            Route::group(apply_filters('site_route_group', [
-                'middleware' => ['web', 'website.locale'],
-                'namespace' => $this->siteNamespace,
-                'prefix' => '{locale}',
-            ]), base_path('routes/site.php'));
-
-            // Route::middleware(['web', 'locale'])
-            //     ->namespace($this->siteNamespace)
-            //     ->group(base_path('routes/site.php'));
+            // Route::group(apply_filters('site_route_group', [
+            //     'middleware' => ['web', 'website.locale'],
+            //     'namespace' => $this->siteNamespace,
+            //     'prefix' => '{locale}',
+            // ]), base_path('routes/site.php'));
             
 
             Route::group(apply_filters('admin_route_group', [
@@ -92,10 +88,11 @@ class RouteServiceProvider extends ServiceProvider
                 'namespace' => $this->vendorNamespace,
             ]), base_path('routes/vendor.php'));
 
-            // Route::group(apply_filters('site_route_group', [
-            //     'middleware' => ['web'],
-            //     'namespace' => $this->siteNamespace,
-            // ]), base_path('routes/site.php'));
+            Route::middleware(['web', 'website.locale'])
+                ->namespace($this->siteNamespace)
+                ->prefix('{locale}')
+                ->group(base_path('routes/site.php'));
+
 
             // Handle root redirect
             Route::get('/', function () {

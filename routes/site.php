@@ -128,7 +128,7 @@ Route::get('blog-category/{id}', 'SiteController@blogCategory')->name('blog.cate
 Route::get('brand/{id}/products', 'SiteController@brandProducts')->name('site.brandProducts')->middleware('themeable');
 
 // cart
-Route::get('carts', 'CartController@index')->name('site.cart')->middleware('themeable', 'locale');
+Route::get('carts', 'CartController@index')->name('site.cart')->middleware('themeable');
 Route::post('cart-store', 'CartController@store')->name('site.addCart');
 Route::post('cart-reduce-qty', 'CartController@reduceQuantity')->name('site.cartReduceQuantity');
 Route::post('cart-delete', 'CartController@destroy')->name('site.delete');
@@ -212,7 +212,7 @@ Route::get('login/google/callback', 'LoginController@handelGoogleCallback')->nam
 Route::get('login/facebook', 'LoginController@redirectToFacebook')->name('login.facebook');
 Route::get('login/facebook/callback', 'LoginController@handelFacebookCallback')->name('facebook');
 
-Route::group(['middleware' => ['site.auth', 'locale', 'permission']], function () {
+Route::group(['middleware' => ['site.auth', 'permission']], function () {
     Route::post('/site/review/destroy', 'SiteController@deleteReview');
     Route::post('/site/review/update', 'SiteController@updateReview');
     // be a seller request
@@ -228,7 +228,7 @@ Route::get('guest/invoice/print/{id}', 'OrderController@invoicePrint')->name('si
 
 Route::get('shipping/provider/{id}', 'ShippingProviderController@shippingProvider')->name('shipping.provider');
 Route::get('find-shipping-providers', 'ShippingProviderController@findShippingProviders')->name('find.shipping.providers');
-Route::group(['prefix' => 'myaccount', 'as' => 'site.', 'middleware' => ['site.auth', 'locale', 'permission']], function () {
+Route::group(['prefix' => 'myaccount', 'as' => 'site.', 'middleware' => ['site.auth', 'permission']], function () {
     Route::get('overview', 'DashboardController@index')->name('dashboard')->middleware('themeable');
     Route::get('wishlists', 'WishlistController@index')->name('wishlist')->middleware('themeable');
     Route::get('reviews', 'ReviewController@index')->name('review')->middleware('themeable');
@@ -271,15 +271,13 @@ Route::group(['prefix' => 'myaccount', 'as' => 'site.', 'middleware' => ['site.a
     Route::get('notifications/view/{id}', 'NotificationController@view')->name('notifications.view');
 });
 
-Route::group(['middleware' => ['locale']], function () {
-    Route::get('products', 'ProductController@search')->name('site.product.search')->middleware('themeable');
-});
+Route::get('products', 'ProductController@search')->name('site.product.search')->middleware('themeable');
 
-Route::get('load-web-categories', 'SiteController@loadWebCategories')->middleware('locale');
-Route::get('load-mobile-categories', 'SiteController@loadMobileCategories')->middleware('locale');
+Route::get('load-web-categories', 'SiteController@loadWebCategories');
+Route::get('load-mobile-categories', 'SiteController@loadMobileCategories');
 
-Route::get('load-login-modal', 'SiteController@loadLoginModal')->middleware('locale');
+Route::get('load-login-modal', 'SiteController@loadLoginModal');
 
-Route::get('load-same-shop/{id}', 'SiteController@loadSameShop')->middleware('locale');
-Route::get('load-related-products/{id}', 'SiteController@loadRelatedProducts')->middleware('locale');
-Route::get('load-upsale-products/{id}', 'SiteController@loadUpSaleProducts')->middleware('locale');
+Route::get('load-same-shop/{id}', 'SiteController@loadSameShop');
+Route::get('load-related-products/{id}', 'SiteController@loadRelatedProducts');
+Route::get('load-upsale-products/{id}', 'SiteController@loadUpSaleProducts');

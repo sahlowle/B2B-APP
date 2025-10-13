@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Language;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
@@ -55,11 +54,7 @@ class WebSiteLocale
         // 5. Set the application's locale for the current request.
         App::setLocale($locale);
 
-        
-        $parameters = Route::current()->parameters();
-        
         URL::defaults(['locale' => $locale]);
-        // dd($parameters);
 
         return $next($request);
     }

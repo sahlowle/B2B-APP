@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class Locale
 {
@@ -47,6 +48,8 @@ class Locale
 
         // 5. Set the application's locale for the current request.
         App::setLocale($locale);
+
+        URL::defaults(['locale' => $locale]);
 
         return $next($request);
     }

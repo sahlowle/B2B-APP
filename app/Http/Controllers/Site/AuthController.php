@@ -39,6 +39,10 @@ class AuthController extends Controller
 
     public function factoryRegisterForm()
     {
+        // return '
+        //     <h1 style="text-align: center; font-size: 8rem; font-weight: bold; color: #000;"> Coming Soon </h1>
+        // ';
+
         return view('site.auth.factory-register');
     }
 
@@ -260,7 +264,9 @@ class AuthController extends Controller
         }
 
         $user->update(['activation_otp' => null, 'activation_code' => null, 'status' => 'Active', 'email_verified_at' => now()]);
-        // User::first()->notify(new SellerRequestToAdminNotification($user));
+
+        User::admins()->first()->notify(new SellerRequestToAdminNotification($user));
+
         // Session::forget('martvill-seller');
 
         $response['status'] = 'success';

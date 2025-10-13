@@ -225,6 +225,13 @@ class User extends Authenticatable implements BatchDeletable
         return $this->hasOne(RoleUser::class);
     }
 
+    public function scopeAdmins($query)
+    {
+        return $query->whereHas('role', function ($query) {
+            $query->where('type', 'admin');
+        });
+    }
+
     /**
      * Relation with Review model
      *

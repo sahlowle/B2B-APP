@@ -7,8 +7,9 @@ use App\Notifications\Channel\SmsChannel;
 use App\Services\Mail\SellerRequestMailService;
 use App\Traits\NotificationTrait;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SellerRequestToAdminNotification extends Notification
+class SellerRequestToAdminNotification extends Notification implements ShouldQueue
 {
     use NotificationTrait;
     use Queueable;

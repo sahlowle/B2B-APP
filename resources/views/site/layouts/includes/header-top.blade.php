@@ -164,18 +164,22 @@
                                 </div>
                                 <input type="hidden" name="Showing" value="English">
                                 <ul class="dropdown-menu language-dropdown border border-gray-11 ltr:-right-2 rtl:-left-2 top-30p">
-                                     @foreach ($languages as $language)
-                                        <li id="{{ $language->name }}" class="Showing lang-change text-gray-10 {{ $langData == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
-                                            <a  class="roboto-medium text-xs text-left lang notification" data-short_name="{{ $language->short_name }}">
+                                    @foreach ($languages as $language)
+                                        <li id="{{ $language->name }}" class="Showing text-gray-10 {{ app()->getLocale() == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
+                                            
+                                            {{-- The href attribute is the crucial addition here --}}
+                                            <a  href="{{ route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['locale' => $language->short_name])) }}"
+                                                class="roboto-medium text-xs text-left notification" 
+                                                >
                                                 <p>
                                                     <span class="inline-flex items-baseline">
                                                         <img style="width:16px; height:16px" class="self-center rounded-full mx-1" src='{{ url("public/datta-able/fonts/flag/flags/4x3/" . getSVGFlag($language->short_name) . ".svg") }}' alt="{{ $language->flag }}">
-                                                       
+                                                        
                                                         <span>
                                                             {{ $language->name }}
                                                         </span>
                                                     </span>
-                                                    </p>
+                                                </p>
                                             </a>
                                         </li>
                                     @endforeach

@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
         'permission-api' => \App\Http\Middleware\Api\CheckPermission::class,
         'isLoggedIn' => \App\Http\Middleware\IsLoggedIn::class,
         'locale' => \App\Http\Middleware\Locale::class,
+        'website.locale' => \App\Http\Middleware\WebSiteLocale::class,
         'permission' => \App\Http\Middleware\Permission::class,
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,

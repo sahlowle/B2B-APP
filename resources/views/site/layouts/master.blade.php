@@ -90,7 +90,7 @@
     @endif
     <script type="text/javascript">
         'use strict';
-        var SITE_URL = "{{ URL::to('/') }}";
+        var SITE_URL =  "{{ url(app()->getLocale()) }}";
         var currencySymbol = '{!! currency()->symbol !!}';
         var decimal_digits = '{!! preference('decimal_digits') !!}';
         var thousand_separator = '{!! preference('thousand_separator') !!}';

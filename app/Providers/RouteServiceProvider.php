@@ -65,6 +65,20 @@ class RouteServiceProvider extends ServiceProvider
                 'middleware' => ['api'],
                 'namespace' => $this->userApiNamespace,
             ]), base_path('routes/userApi.php'));
+            
+
+
+            // app/Providers/RouteServiceProvider.php
+            Route::group(apply_filters('site_route_group', [
+                'middleware' => ['web', 'website.locale'],
+                'namespace' => $this->siteNamespace,
+                'prefix' => '{locale}',
+            ]), base_path('routes/site.php'));
+
+            // Route::middleware(['web', 'locale'])
+            //     ->namespace($this->siteNamespace)
+            //     ->group(base_path('routes/site.php'));
+            
 
             Route::group(apply_filters('admin_route_group', [
                 'prefix' => 'admin',
@@ -78,10 +92,20 @@ class RouteServiceProvider extends ServiceProvider
                 'namespace' => $this->vendorNamespace,
             ]), base_path('routes/vendor.php'));
 
-            Route::group(apply_filters('site_route_group', [
-                'middleware' => ['web'],
-                'namespace' => $this->siteNamespace,
-            ]), base_path('routes/site.php'));
+            // Route::group(apply_filters('site_route_group', [
+            //     'middleware' => ['web'],
+            //     'namespace' => $this->siteNamespace,
+            // ]), base_path('routes/site.php'));
+
+            // Handle root redirect
+            Route::get('/', function () {
+
+                $supportedLocales = cache()->get('app_supported_locales');
+                 // Detect the user's preferred language
+                $locale = request()->getPreferredLanguage($supportedLocales);
+
+                return redirect('/' . $locale);
+            });
 
             foreach ($this->app['modules']->allEnabled() as $module) {
                 Route::group(apply_filters("{$module->getLowerName()}_route_group", [

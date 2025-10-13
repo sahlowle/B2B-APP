@@ -427,7 +427,7 @@ class SiteController extends Controller
      */
     public function quickView(Request $request, $code)
     {
-        $request['code'] = $code;
+        $request['code'] = $request->route('id'); 
         $product = ProductAction::execute('getProductWithAttributeAndVariations', $request);
 
         if (! $product) {

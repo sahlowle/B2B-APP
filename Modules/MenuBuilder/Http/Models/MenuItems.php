@@ -4,6 +4,7 @@ namespace Modules\MenuBuilder\Http\Models;
 
 use App\Models\Model;
 use App\Traits\HasTranslations;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class MenuItems extends Model
 {
@@ -146,8 +147,9 @@ class MenuItems extends Model
     public function url($prefix = null)
     {
         if ($this->is_default == 0) {
-            return $this->link;
+            return LaravelLocalization::localizeUrl($this->link);
         }
+        
         $url = ! is_null($prefix) ? url($prefix) : url('/');
 
         if (! empty($this->link)) {

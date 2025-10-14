@@ -56,6 +56,7 @@ class StateController extends Controller
      */
     public function getCountryStates(Request $request, $ciso)
     {
+        $ciso = $request->route('ciso');
         return json_encode($this->stateRepository->getCountryStates($request, $ciso));
     }
 

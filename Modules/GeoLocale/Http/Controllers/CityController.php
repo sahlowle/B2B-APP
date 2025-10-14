@@ -46,6 +46,8 @@ class CityController extends Controller
      */
     public function getStateCities(Request $request, $ciso, $siso)
     {
+        $ciso = $request->route('ciso');
+        $siso = $request->route('siso');
         return json_encode($this->cityRepository->getStateCities($request, $ciso, $siso));
     }
 

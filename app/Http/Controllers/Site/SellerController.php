@@ -27,11 +27,12 @@ class SellerController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function showVendor($alias = null)
+    public function showVendor(Request $request, $alias = null)
     {
-      $shop = \Modules\Shop\Http\Models\Shop::firstWhere('alias', $alias);
+        $alias = $request->route('alias');
+        $shop = \Modules\Shop\Http\Models\Shop::firstWhere('alias', $alias);
 
-      $data['shop'] = $shop;
+        $data['shop'] = $shop;
 
         if (is_null($alias) || ! isActive('Shop') || empty($data['shop']) || ! Vendor::isVendorExist($data['shop']->vendor_id)
             || (request('homepage') && (! auth()->user() || (! isSuperAdmin())
@@ -39,7 +40,7 @@ class SellerController extends Controller
             abort(404);
         }
 
-        $shop->visit();
+        // $shop->visit();
 
         return view('site.shop.index', $data);
     }

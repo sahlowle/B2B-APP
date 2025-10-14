@@ -44,19 +44,18 @@ Route::group(['namespace' => 'Modules\GeoLocale\Http\Controllers', 'middleware' 
         Route::post('/city/delete/{id}', 'CityController@destroy')->middleware(['checkForDemoMode'])->name('city.delete');
     });
 
-    Route::group(['prefix' => 'geo-locale'], function () {
+    Route::group(['prefix' => '{locale}/geo-locale'], function ($locale) {
         // Country
-        Route::get('/countries', 'CountryController@index');
+        Route::get('/countries', 'CountryController@index')->name('geo-locale.countries');
 
         // State
-        Route::get('/countries/{ciso}/states', 'StateController@getCountryStates');
+        Route::get('/countries/{ciso}/states', 'StateController@getCountryStates')->name('geo-locale.states');
 
         // City
-        Route::get('/countries/{ciso}/states/{siso}/cities', 'CityController@getStateCities');
+        Route::get('/countries/{ciso}/states/{siso}/cities', 'CityController@getStateCities')->name('geo-locale.cities');
 
         // Import
         Route::match(['get', 'post'], 'import', 'GeoLocaleController@import')->name('geolocale.import');
-
     });
 });
 

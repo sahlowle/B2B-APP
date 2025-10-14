@@ -114,7 +114,7 @@
                         <select id="languageSelect" onchange="window.location.href = this.value;">
                             @foreach(config('app.available_locales', ['en' => 'English', 'ar' => 'العربية']) as $locale => $name)
                                 <option 
-                                    value="{{ route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['locale' => $locale])) }}" 
+                                    value="{{ LaravelLocalization::getLocalizedURL($locale, null, [], true) }}" 
                                     {{ app()->getLocale() == $locale ? 'selected' : '' }}
                                 >
                                     {{ $name }}

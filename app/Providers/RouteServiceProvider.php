@@ -89,7 +89,7 @@ class RouteServiceProvider extends ServiceProvider
                 'namespace' => $this->vendorNamespace,
             ]), base_path('routes/vendor.php'));
 
-            Route::middleware(['web', 'localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' , 'localeCookieRedirect'])
+            Route::middleware(['web', 'localize','website.locale', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' , 'localeCookieRedirect'])
                 ->namespace($this->siteNamespace)
                 ->prefix(LaravelLocalization::setLocale())
                 ->group(base_path('routes/site.php'));

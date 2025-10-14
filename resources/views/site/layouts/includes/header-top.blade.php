@@ -165,10 +165,13 @@
                                 <input type="hidden" name="Showing" value="English">
                                 <ul class="dropdown-menu language-dropdown border border-gray-11 ltr:-right-2 rtl:-left-2 top-30p">
                                     @foreach ($languages as $language)
-                                        <li id="{{ $language->name }}" class="Showing text-gray-10 {{ app()->getLocale() == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
+                                        <li 
+                                            onclick="window.location.href = '{{ LaravelLocalization::getLocalizedURL($language->short_name, null, [], true) }}'"
+                                            id="{{ $language->short_name }}" 
+                                            class="Showing text-gray-10 {{ app()->getLocale() == $language->short_name ? ' primary-bg-color text-gray-12' : '' }}">
                                             
                                             {{-- The href attribute is the crucial addition here --}}
-                                            <a  href="{{ route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['locale' => $language->short_name])) }}"
+                                            <a  
                                                 class="roboto-medium text-xs text-left notification" 
                                                 >
                                                 <p>

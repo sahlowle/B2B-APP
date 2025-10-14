@@ -15,8 +15,9 @@
       $primaryColor = option($layout . '_template_primary_color', '#FCCA19');
       
   @endphp
+  
+    <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
 
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/css/intlTelInput.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -310,9 +311,9 @@
                 <div class="language-switcher">
                     <div class="flex items-center space-x-2">
                         <span class="text-sm font-medium text-gray-700">{{ __("Language") }}:</span>
-                        <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <select id="languageSelect" onchange="window.location.href = this.value"   >
                             @foreach(config('app.available_locales', ['en' => 'English', 'ar' => 'العربية']) as $locale => $name)
-                                <option value="{{ $locale }}" {{ app()->getLocale() == $locale ? 'selected' : '' }}>
+                                <option value="{{ LaravelLocalization::getLocalizedURL($locale, null, [], true) }}" {{ app()->getLocale() == $locale ? 'selected' : '' }}>
                                     {{ $name }}
                                 </option>
                             @endforeach

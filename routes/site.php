@@ -76,7 +76,6 @@ Route::get('shop/profile/{alias}', 'SellerController@vendorProfile')->name('site
 // Route::get('auth/registration', [LoginController::class, 'showRegisterForm'])->name('registration')->middleware('themeable');
 
 Route::controller(QuotationController::class)
-->prefix('page')
 ->middleware('themeable')
 ->group(function () {
     Route::get('/quotations', 'create')->name('site.quotations.create');

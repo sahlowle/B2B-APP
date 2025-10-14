@@ -11,6 +11,8 @@
 |
 */
 
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 Route::group(['namespace' => 'Modules\GeoLocale\Http\Controllers', 'middleware' => ['locale', 'web']], function () {
 
     Route::group(['prefix' => 'admin'], function () {
@@ -44,19 +46,22 @@ Route::group(['namespace' => 'Modules\GeoLocale\Http\Controllers', 'middleware' 
         Route::post('/city/delete/{id}', 'CityController@destroy')->middleware(['checkForDemoMode'])->name('city.delete');
     });
 
-    Route::group(['prefix' => '{locale}/geo-locale'], function ($locale) {
+    Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+    Route::group(['prefix' => 'geo-locale'], function () {
         // Country
-        Route::get('/countries', 'CountryController@index')->name('geo-locale.countries');
+        Route::get('/countries', 'CountryController@index');
 
         // State
-        Route::get('/countries/{ciso}/states', 'StateController@getCountryStates')->name('geo-locale.states');
+        Route::get('/countries/{ciso}/states', 'StateController@getCountryStates');
 
         // City
-        Route::get('/countries/{ciso}/states/{siso}/cities', 'CityController@getStateCities')->name('geo-locale.cities');
+        Route::get('/countries/{ciso}/states/{siso}/cities', 'CityController@getStateCities');
 
         // Import
         Route::match(['get', 'post'], 'import', 'GeoLocaleController@import')->name('geolocale.import');
+
     });
+});
 });
 
 Route::group(['prefix' => 'api', 'namespace' => 'Modules\GeoLocale\Http\Controllers\Api\User', 'middleware' => ['locale', 'api']], function () {

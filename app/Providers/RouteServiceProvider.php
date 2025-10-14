@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -88,21 +89,12 @@ class RouteServiceProvider extends ServiceProvider
                 'namespace' => $this->vendorNamespace,
             ]), base_path('routes/vendor.php'));
 
-            Route::middleware(['web', 'website.locale'])
+            Route::middleware(['web', 'localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' , 'localeCookieRedirect'])
                 ->namespace($this->siteNamespace)
-                ->prefix('{locale}')
+                ->prefix(LaravelLocalization::setLocale())
                 ->group(base_path('routes/site.php'));
 
 
-            // Handle root redirect
-            Route::get('/', function () {
-
-                $supportedLocales = cache()->get('app_supported_locales');
-                 // Detect the user's preferred language
-                $locale = request()->getPreferredLanguage($supportedLocales);
-
-                return redirect('/' . $locale);
-            });
 
             foreach ($this->app['modules']->allEnabled() as $module) {
                 Route::group(apply_filters("{$module->getLowerName()}_route_group", [

@@ -29,7 +29,8 @@
         "milon/barcode": "^10.0",
         "spatie/laravel-translatable": "^6.6",
         "joshbrw/laravel-module-installer": "^2.0",
-        "stichoza/google-translate-php": "^5.3"
+        "stichoza/google-translate-php": "^5.3",
+        "mcamara/laravel-localization": "^2.3"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",

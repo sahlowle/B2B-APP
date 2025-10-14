@@ -34,6 +34,10 @@ class WebSiteLocale
         // 5. Set the application's locale for the current request.
         App::setLocale($locale);
 
+        if(filled($locale) && $locale != 'ar'){
+            
+        }
+
         // URL::defaults(['locale' => $locale]);
 
         return $next($request);

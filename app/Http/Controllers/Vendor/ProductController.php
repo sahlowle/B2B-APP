@@ -70,12 +70,7 @@ class ProductController extends Controller
      */
     public function createProduct(Request $request)
     {
-        if ($this->ncpc()) {
-            Session::flush();
-
-            return view('errors.installer-error', ['message' => __('This product is facing license validation issue.<br>Please contact admin to fix the issue.')]);
-        }
-
+    
         do_action('before_vendor_create_product');
 
         if ($request->isMethod('get')) {
@@ -198,14 +193,6 @@ class ProductController extends Controller
          */
         if (! $request->action) {
             return $this->unprocessableResponse([], __('Action name required.'));
-        }
-
-        if ($request->action == 'update_basic_info_web') {
-            if ($this->ncpc()) {
-                Session::flush();
-
-                return view('errors.installer-error', ['message' => __('This product is facing license validation issue.<br>Please contact admin to fix the issue.')]);
-            }
         }
 
         return VendorProductAction::execute($request->action, $request);
@@ -395,33 +382,7 @@ class ProductController extends Controller
         return $vendor ?? null;
     }
 
-    public function ncpc()
-    {
-        return false;
-        
-        if (! g_e_v()) {
-            return true;
-        }
-        if (! g_c_v()) {
-            try {
-                $d_ = g_d();
-                $e_ = g_e_v();
-                $e_ = explode('.', $e_);
-                $c_ = md5($d_ . $e_[1]);
-                if ($e_[0] == $c_) {
-                    p_c_v();
-
-                    return false;
-                }
-
-                return true;
-            } catch (\Exception $e) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    
 
     /**
      * find downloadable products

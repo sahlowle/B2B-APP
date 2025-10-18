@@ -2,54 +2,44 @@
 
 namespace App\Http\Middleware;
 
-use App\Cart\Cart;
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Language;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
+use App\Models\Language;
 
 class Locale
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next)
     {
-        $locale = null;
+        // 1. Determine the locale. Priority is Session > App Config Default.
+        $locale = Session::get('admin_locale', config('app.admin_locale'));
 
-        // 1. The highest priority is the user's choice, stored in their session.
-        if (Session::has('locale')) {
-            $locale = Session::get('locale');
-        } else {
-            // 2. If the user hasn't chosen a language, find the application's default.
-            // This is a good use of cache, as the site's default language is the same for everyone.
-            $defaultLanguage = Cache::remember('app_default_language', 3600, function () {
-                return Language::where('is_default', '1')->where('status', 'Active')->first();
-            });
-
-            // 3. Use the default from the database, or fallback to 'en' if none is set.
-            $locale = $defaultLanguage ? $defaultLanguage->short_name : 'en';
-            
-            // 4. Store this default locale in the session for subsequent requests.
-            Session::put('locale', $locale);
+        // 2. Get all active languages and cache them. 
+        // We fetch the language details to get the direction ('rtl' or 'ltr').
+        $activeLanguages = Cache::rememberForever('active_languages_list', function () {
+            // Use keyBy() to make it easy to look up a language by its short name.
+            return Language::where('status', 'Active')->get()->keyBy('short_name');
+        });
+        
+        // 3. Verify the determined locale is actually an active language.
+        // If not, fall back to the application's default locale.
+        if (! $activeLanguages->has($locale)) {
+            $locale = config('app.fallback_locale', 'en');
         }
 
-        if($locale == 'ar') {
-            Session::put('language_direction', 'rtl');
-        } else {
-            Session::put('language_direction', 'ltr');
-        }
-
-        // 5. Set the application's locale for the current request.
+        // 4. Set the application's locale for the current request.
         App::setLocale($locale);
 
-        URL::defaults(['locale' => $locale]);
+        // 5. Get the language details from our cached collection.
+        $language = $activeLanguages->get($locale);
+        $direction = $language ? $language->direction : 'ltr'; // Default to 'ltr' if something is wrong.
+        
+        // 6. Store the chosen locale and its direction in the session for subsequent requests.
+        // This is now done once, avoiding duplication.
+        Session::put('admin_locale', $locale);
+        Session::put('language_direction', $direction);
 
         return $next($request);
     }

@@ -1,6 +1,7 @@
 <div class="card option-value-rowid ui-sortable-handle transition-none impact_parent common_c">
     <div class="mini-form-holder d-flex d-flx-n align-items-center pr-30p relative">
         <div
+            style="display: none ! important;"
             class="mr-42p mr-19-res mt-10-res div_h virtual-child conditional-dom not-variable-dom not-grouped-dom not-external-dom {{ isset($product) && $product->isSimpleProduct() ? '' : 'd-none' }}">
             <div class="checkbox checkbox-primary p-0 d-inline w-space align-items-center float-left">
                 <input type="hidden" name="meta_virtual" value="0">
@@ -11,6 +12,7 @@
         </div>
 
         <div
+            style="display: none ! important;"
             class="mr-42p div_h download-child conditional-dom not-variable-dom not-grouped-dom not-external-dom {{ isset($product) && $product->isSimpleProduct() ? '' : 'd-none' }}">
             <div class="checkbox checkbox-primary m-0 d-inline w-space align-items-center">
                 <input type="hidden" name="meta_downloadable" value="0">
@@ -21,7 +23,9 @@
                     class="crv sp-title label-res d-unset ml-10-res">{{ __('Downloadable') }}</label>
             </div>
         </div>
-        <div class="w-276p mt-15-res select-child">
+        <div 
+            class="w-276p mt-15-res select-child"
+            style="display: none ! important;">
             <select name="type" class="form-control select2 product-type">
                 @foreach ((new \App\Services\Product\Editor\TypeSelector($productForSelector))->productTypeSelectorOnAdd()['options'] as $selector)
                     @if (isset($selector['visibility']) && $selector['visibility'] != '1')

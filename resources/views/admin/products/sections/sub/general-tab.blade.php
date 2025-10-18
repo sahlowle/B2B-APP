@@ -261,7 +261,7 @@
         </div>
     </div>
     @ifSettings('taxes')
-    <div class="form-group row px-2 mt-4">
+    {{-- <div class="form-group row px-2 mt-4">
         <div class="col-md-5 p-0-res">
             <div class="row">
                 <div class="col-md-4">
@@ -296,6 +296,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     @endifSettings
 </div>

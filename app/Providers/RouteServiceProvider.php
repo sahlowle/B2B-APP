@@ -79,13 +79,13 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::group(apply_filters('admin_route_group', [
                 'prefix' => 'admin',
-                'middleware' => ['web'],
+                'middleware' => ['web','admin.locale'],
                 'namespace' => $this->namespace,
             ]), base_path('routes/web.php'));
 
             Route::group(apply_filters('vendor_route_group', [
                 'prefix' => 'vendor',
-                'middleware' => ['web'],
+                'middleware' => ['web','admin.locale'],
                 'namespace' => $this->vendorNamespace,
             ]), base_path('routes/vendor.php'));
 

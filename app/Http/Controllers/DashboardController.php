@@ -164,7 +164,7 @@ class DashboardController extends Controller
             
             $locale = $request->lang;
 
-            session()->put('locale', $locale);
+            session()->put('admin_locale', $locale);
 
             // Cache::put('user-lang', $locale);
 

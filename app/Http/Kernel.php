@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'customer' => \App\Http\Middleware\RedirectIfNotCustomer::class,
         'permission-api' => \App\Http\Middleware\Api\CheckPermission::class,
         'isLoggedIn' => \App\Http\Middleware\IsLoggedIn::class,
+        'admin.locale' => \App\Http\Middleware\Locale::class,
         'locale' => \App\Http\Middleware\Locale::class,
         'website.locale' => \App\Http\Middleware\WebSiteLocale::class,
         'permission' => \App\Http\Middleware\Permission::class,

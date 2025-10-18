@@ -76,13 +76,13 @@ class Section
             'additional-info' => [
                 'is_left_side' => true,
                 'position' => '70',
-                'visibility' => true,
+                'visibility' => false,
                 'content' => 'admin.products.sections.additional-info',
             ],
             'tags' => [
                 'is_left_side' => true,
                 'position' => '80',
-                'visibility' => true,
+                'visibility' => false,
                 'content' => 'admin.products.sections.tags',
             ],
             'custom-fields' => [

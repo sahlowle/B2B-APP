@@ -47,7 +47,8 @@ class ProductDataTabs
                         </li>',
                 'tab_content' => 'admin.products.sections.sub.inventory-tab',
                 'position' => '20',
-                'visibility' => preference('manage_stock'),
+                // 'visibility' => preference('manage_stock'),
+                'visibility' => false,
             ],
 
             'Shipping & Delivery' => [
@@ -58,7 +59,7 @@ class ProductDataTabs
                         </li>',
                 'tab_content' => 'admin.products.sections.sub.shipping-tab',
                 'position' => '30',
-                'visibility' => true,
+                'visibility' => false,
             ],
 
             'Service' => [
@@ -69,7 +70,7 @@ class ProductDataTabs
                         </li>',
                 'tab_content' => 'admin.products.sections.sub.warranty-tab',
                 'position' => '40',
-                'visibility' => true,
+                'visibility' => false,
             ],
 
             'Attributes' => [
@@ -79,7 +80,7 @@ class ProductDataTabs
                         </li>',
                 'tab_content' => 'admin.products.sections.sub.attributes-tab',
                 'position' => '50',
-                'visibility' => true,
+                'visibility' => false,
             ],
 
             'Attribute Options' => [
@@ -89,7 +90,7 @@ class ProductDataTabs
                 </li>',
                 'tab_content' => 'admin.products.sections.sub.attribute-options-tab',
                 'position' => '60',
-                'visibility' => true,
+                'visibility' => false,
             ],
 
             'Variations' => [
@@ -101,7 +102,7 @@ class ProductDataTabs
                         </li>',
                 'tab_content' => 'admin.products.sections.sub.variations-tab',
                 'position' => '60',
-                'visibility' => true,
+                'visibility' => false,
             ],
 
             'Advanced' => [
@@ -112,7 +113,7 @@ class ProductDataTabs
                         </li>',
                 'tab_content' => 'admin.products.sections.sub.advanced-tab',
                 'position' => '70',
-                'visibility' => true,
+                'visibility' => false,
             ],
         ];
 

@@ -1,0 +1,17 @@
+{
+    "name": "B2B",
+    "alias": "b2b",
+    "version": "1.2",
+    "martvill_version" : "1.3.0",
+    "type" : "premium",
+    "display_name": "Wholesale (B-B)",
+    "description": "The Wholesale Functionality add-on enhances Martvill by introducing wholesale capabilities. This feature allows administrators or sellers to create specific wholesale products and define pricing tiers based on quantity.",
+    "keywords": [],
+    "priority": 0,
+    "providers": [],
+    "aliases": {},
+    "files": [
+        "helper.php"
+    ],
+    "requires": []
+}

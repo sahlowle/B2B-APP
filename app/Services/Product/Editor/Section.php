@@ -58,7 +58,7 @@ class Section
                 'is_main' => true,
                 'is_draggable' => true,
                 'position' => '50',
-                'visibility' => true,
+                'visibility' => false,
                 'content' => 'admin.products.sections.seo',
             ],
             'product-stats' => [

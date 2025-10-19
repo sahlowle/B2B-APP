@@ -35,6 +35,7 @@ class CartController extends Controller
      */
     public function index()
     {
+        return abort(404);
         return $this->cartService->cartList();
     }
 

@@ -10,6 +10,8 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Cart\Facades\Cart;
+use Illuminate\Support\Fluent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAddressRequest;
 use App\Services\Actions\Facades\OrderActionFacade as OrderAction;
@@ -39,11 +41,9 @@ use Modules\Commission\Http\Models\{
     Commission,
     OrderCommission
 };
-use Cart;
-use Auth;
-use DB;
-use Session;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class OrderController extends Controller
@@ -59,6 +59,31 @@ class OrderController extends Controller
         return view('site.myaccount.order.index');
     }
 
+    public function inquiry(Request $request)
+    {
+        
+        Cart::checkCartData();
+        $hasCart = Cart::selectedCartCollection();
+
+        $cartService = new AddToCartService();
+
+
+        if (is_array($hasCart) && count($hasCart) > 0) {
+
+            $products = collect( $cartService->getSelected()['selected_products']);
+
+            $product = new Fluent($products->first());
+
+            $product_dt = Product::find($product->id);
+
+            $seller = $product_dt->shop;
+
+            return view('site.order.inquiry', compact('cartService', 'product', 'seller'));
+        }
+
+        return abort(404);
+    }
+
     /**
      * Order Checkout
      *
@@ -66,16 +91,20 @@ class OrderController extends Controller
      */
     public function checkOut(Request $request)
     {
+        return redirect()->route('site.inquiry');
+
         Cart::checkCartData();
         $hasCart = Cart::selectedCartCollection();
 
         $cartService = new AddToCartService();
 
+        // return $cartService->getSelected();
+
         if (is_array($hasCart) && count($hasCart) > 0) {
             return view('site.order.checkout', compact('cartService'));
         }
 
-        return redirect()->route('site.cart');
+        return abort(404);
     }
 
     public function buynow(Request $request)
@@ -89,18 +118,137 @@ class OrderController extends Controller
         return $cartService->addSelected($request);
     }
 
+    public function store(Request $request)
+    {
+
+       $required_quantity = $request->required_quantity;
+
+        $order = [];
+        $detailData = [];
+        $cartData = Cart::selectedCartCollection();
+        $cartService = new AddToCartService();
+
+        abort_if(!is_array($cartData) || count($cartData) == 0, 404);
+
+    
+        $coupon = 0;
+        
+        $defaultCurrency = Currency::getDefault();
+        
+        $taxShipping = $cartService->getTaxShipping($addressId ?? null, 'order');
+        $totalTax = $taxShipping['tax'];
+        $totalShipping = $taxShipping['shipping'];
+        $cartService->destroySessionAddress();
+        $cartService->destroyShippingIndex();
+        $orderStatus = OrderStatus::getAll()->where('slug', 'pending-payment')->first();
+        $userId = Auth::check() ? Auth::user()->id : null;
+        $order['user_id'] = $userId;
+        $order['order_date'] = DbDateFormat(date('Y-m-d'));
+        $order['currency_id'] = $defaultCurrency->id;
+        $order['shipping_charge'] = $totalShipping;
+        $order['shipping_title'] = $taxShipping['key'] ?? null;
+        $order['tax_charge'] = $totalTax;
+        $order['total'] = 0;
+        $order['total_quantity'] = $required_quantity;
+        $order['paid'] = 0;
+        $order['amount_received'] = 0;
+        $order['other_discount_amount'] = 0;
+        $order['order_status_id'] = $orderStatus->id;
+
+        $reference = Order::getOrderReference(preference('order_prefix', null));
+
+        $order['reference'] = $reference;
+
+        try {
+            DB::beginTransaction();
+            $orderId = (new Order())->store($order);
+            /* initial history add */
+            $history['order_id'] = $orderId;
+            $history['order_status_id'] = $orderStatus->id;
+            (new OrderStatusHistory())->store($history);
+            /* initial history end */
+            if (! empty($orderId)) {
+                $downloadable = [];
+
+                foreach ($cartData as $key => $cart) {
+                    $item = Product::where('id', $cart['id'])->published()->first();
+
+                    $shipping = 0;
+                    $tax = 0;
+                    if (! empty($item)) {
+                        $tax = 0;
+
+                        // if (isActive('Shipping')) {
+                        //     $shipping = $item->shipping(['qty' => $cart['quantity'], 'price' => $cart['price'], 'address' => $addressId, 'from' => 'order']);
+                        //     if (is_array($shipping) && count($shipping) > 0) {
+                        //         $shipping = $shipping[($taxShipping['key'])];
+                        //     } else {
+                        //         $shipping = 0;
+                        //     }
+                        // }
+                    }
+                    $detailData[] = [
+                        'product_id' => $cart['id'],
+                        'parent_id' => $cart['parent_id'],
+                        'order_id' => $orderId,
+                        'vendor_id' => $cart['vendor_id'],
+                        'shop_id' => $cart['shop_id'],
+                        'product_name' => $cart['name'],
+                        'price' => $cart['price'],
+                        'quantity_sent' => 0,
+                        'quantity' => $required_quantity,
+                        'order_status_id' => $orderStatus->id,
+                        'payloads' => null,
+                        'order_by' => $key,
+                        'shipping_charge' => null,
+                        'tax_charge' => $tax,
+                        'is_stock_reduce' => $item->isStockReduce($orderStatus->slug),
+                        'estimate_delivery' => $item->type == 'Variation' ? $item->parentDetail->estimated_delivery : $item->estimated_delivery,
+                    ];
+
+                    if ($item->type == 'Variation') {
+                        $item->parentDetail->updateCategorySalesCount();
+                    } else {
+                        $item->updateCategorySalesCount();
+                    }
+                }
+                (new OrderDetail())->store($detailData);
+                OrderAction::store($existsAddressId ?? null, $userId, $orderId, $downloadable, $request);
+
+                $latestOrder = Order::where('id', $orderId)->first();
+
+                
+
+                if (isActive('Affiliate')) {
+                    \Modules\Affiliate\Entities\ReferralPurchase::purchase($latestOrder, $detailData);
+                }
+
+                DB::commit();
+                Cart::selectedCartProductDestroy();
+
+                // store custom fields
+                CustomFieldService::storeFieldValue($request->custom_fields, $latestOrder->id);
+
+                $route = $this->orderWithoutPayment($latestOrder->reference);
+
+                return redirect($route);
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back();
+        }
+    
+    }
+
     /**
      * order store
      *
      * @return void
      */
-    public function store(StoreAddressRequest $request)
+    public function storeOld(StoreAddressRequest $request)
     {
-        if ($this->c_p_c()) {
-            Session::flush();
-
-            return view('errors.installer-error', ['message' => __('This product is facing license validation issue.<br>Please contact admin to fix the issue.')]);
-        }
+        
         $order = [];
         $detailData = [];
         $cartData = Cart::selectedCartCollection();
@@ -476,8 +624,8 @@ class OrderController extends Controller
                 return redirect()->route('site.cart')->withErrors(__('Payment data not found.'));
             }
 
-            if (! FacadesAuth::id()) {
-                FacadesAuth::onceUsingId($order->user_id);
+            if (! Auth::id()) {
+                Auth::onceUsingId($order->user_id);
             }
 
             if ($log->status == 'completed') {

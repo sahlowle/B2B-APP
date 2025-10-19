@@ -71,7 +71,7 @@
                         </div>
                     @endif
                 @else
-                    <a href="javascript:void(0)" class="add-to-cart cart-details-page w-full" id="item-add-to-cart"
+                    {{-- <a href="javascript:void(0)" class="add-to-cart cart-details-page w-full" id="item-add-to-cart"
                         data-itemCode={{ $code }}>
                         <button class="primary-bg-color font-bold py-2 {{ $buyNow ? '' : 'px-12' }} w-full rounded flex justify-center items-center">
                             <svg class="text-gray-12" width="20" height="19" viewBox="0 0 20 19" fill="none"
@@ -86,7 +86,7 @@
                             <span
                                 class="ltr:pl-2 rtl:pr-2 p-5p dm-bold font-bold text-gray-12 text-lg">{{ __('Add to Cart') }}</span>
                         </button>
-                    </a>
+                    </a> --}}
                 @endif
                 @if (preference('buy_now'))
                     @if (!$product->isGroupedProduct())
@@ -94,47 +94,13 @@
                             <a href="javascript:void(0)" class="buy-now-btn cart-details-page w-full" id="item-buy-now"
                                 data-itemCode={{ $code }} data-itemId="{{ $id }}">
                                 <button class="bg-gray-12 font-bold py-2 w-full rounded flex justify-center items-center">
-                                    <svg class="text-white  w-5 h-5" xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" height="800px"
-                                        width="800px" version="1.1" id="Layer_1" viewBox="0 0 512.004 512.004"
-                                        xml:space="preserve">
-                                        <g>
-                                            <g>
-                                                <circle cx="153.6" cy="448.004" r="12.8" />
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <circle cx="409.6" cy="448.004" r="12.8" />
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path
-                                                    d="M499.2,435.204h-26.889c-5.931-29.21-31.744-51.2-62.711-51.2c-30.959,0-56.781,21.99-62.711,51.2H216.277    c-5.726-28.015-29.824-49.229-59.179-50.85l-42.035-283.827c-0.401-2.722-1.673-5.222-3.61-7.177l-89.6-89.6    C16.853-1.25,8.755-1.25,3.755,3.75c-5,5-5,13.099,0,18.099l86.613,86.596l41.421,279.62    c-24.559,8.951-42.189,32.29-42.189,59.938c0,35.345,28.655,64,64,64c30.959,0,56.781-21.99,62.711-51.2h130.577    c5.931,29.21,31.753,51.2,62.711,51.2s56.781-21.99,62.711-51.2H499.2c7.074,0,12.8-5.726,12.8-12.8    C512,440.93,506.274,435.204,499.2,435.204z M153.6,486.404c-21.171,0-38.4-17.229-38.4-38.4c0-21.171,17.229-38.4,38.4-38.4    c21.171,0,38.4,17.229,38.4,38.4C192,469.175,174.771,486.404,153.6,486.404z M409.6,486.404c-21.171,0-38.4-17.229-38.4-38.4    c0-21.171,17.229-38.4,38.4-38.4s38.4,17.229,38.4,38.4C448,469.175,430.771,486.404,409.6,486.404z" />
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path
-                                                    d="M461.713,240.021L435.2,332.804H197.12l-25.6-179.2h89.941c-2.347-8.26-4.011-16.802-4.813-25.6H171.52    c-7.424,0-14.473,3.217-19.337,8.823s-7.057,13.047-5.999,20.395l25.6,179.2c1.792,12.612,12.595,21.982,25.335,21.982H435.2    c11.426,0,21.478-7.578,24.619-18.569l35.49-124.203C485.419,225.336,474.103,233.553,461.713,240.021z" />
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path
-                                                    d="M396.8,0.004c-63.625,0-115.2,51.576-115.2,115.2s51.575,115.2,115.2,115.2S512,178.829,512,115.204    S460.425,0.004,396.8,0.004z M396.8,204.804c-49.408,0-89.6-40.192-89.6-89.6s40.192-89.6,89.6-89.6    c49.408,0,89.6,40.192,89.6,89.6S446.208,204.804,396.8,204.804z" />
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path
-                                                    d="M455.1,78.955c-5.828-3.891-13.824-2.364-17.749,3.55L396.8,143.33l-40.55-60.826c-3.951-5.914-11.921-7.45-17.749-3.55    c-5.871,3.925-7.475,11.861-3.55,17.749l51.2,76.8c2.372,3.567,6.374,5.7,10.65,5.7c4.275,0,8.277-2.133,10.65-5.7l51.2-76.8    C462.575,90.816,460.971,82.88,455.1,78.955z" />
-                                            </g>
-                                        </g>
-                                    </svg>
+                                  i
+                                    <i class="fas fa-box-open" style="font-size: 20px;color: white;"></i>
                                     <span
-                                        class="ltr:pl-2 rtl:pr-2 p-5p dm-bold font-bold text-white text-lg">{{ __('Order Now') }}</span>
+                                        class="ltr:pl-2 rtl:pr-2 p-5p dm-bold font-bold text-white text-lg">
+                                        {{ __('Order Now') }}
+                                    </span>
+
                                 </button>
                             </a>
                         @endif

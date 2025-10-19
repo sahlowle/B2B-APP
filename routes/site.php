@@ -142,6 +142,9 @@ Route::get('order-confirm/{reference}', 'OrderController@confirmation')->name('s
 Route::get('order-paid', 'OrderController@orderPaid')->name('site.orderpaid');
 Route::post('order-get-shipping-tax', 'OrderController@getShippingTax')->name('site.orderTaxShipping');
 
+Route::get('inquiry', 'OrderController@inquiry')->middleware(['checkGuest', 'themeable'])->name('site.inquiry');
+Route::post('inquiry', 'OrderController@store')->middleware(['checkGuest', 'themeable'])->name('site.inquiryStore');
+
 // Check Out
 Route::get('checkout', 'OrderController@checkOut')->middleware(['checkGuest', 'themeable'])->name('site.checkOut');
 

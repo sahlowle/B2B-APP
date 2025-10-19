@@ -134,7 +134,7 @@
                                         </g>
                                     </svg>
                                     <span
-                                        class="ltr:pl-2 rtl:pr-2 p-5p dm-bold font-bold text-white text-lg">{{ __('Buy Now') }}</span>
+                                        class="ltr:pl-2 rtl:pr-2 p-5p dm-bold font-bold text-white text-lg">{{ __('Order Now') }}</span>
                                 </button>
                             </a>
                         @endif
@@ -323,7 +323,7 @@
             <div class="mt-6 flex justify-between items-center">
                 <div class="w-full">
                     @if ($isSimpleAvailable)
-                        <a href="javascript:void(0)" class="add-to-cart cart-details-page" id="item-add-to-cart">
+                        {{-- <a href="javascript:void(0)" class="add-to-cart cart-details-page" id="item-add-to-cart">
                             <button
                                 class="primary-bg-color font-bold w-full py-2 px-68p rounded flex justify-center items-center">
                                 <svg class="text-gray-12" width="20" height="19" viewBox="0 0 20 19"
@@ -338,7 +338,7 @@
                                 <span
                                     class="ltr:pl-2 rtl:pr-2 p-5p dm-bold font-bold text-gray-12 text-lg">{{ __('Add to Cart') }}</span>
                             </button>
-                        </a>
+                        </a> --}}
                     @endif
                 </div>
             </div>

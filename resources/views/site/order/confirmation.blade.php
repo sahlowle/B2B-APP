@@ -17,13 +17,11 @@
                     <p class="px-7p">/</p>
                 </li>
                 <li class="flex items-center">
-                    <a class="text-gray-12" href="{{ route('site.cart') }}">{{ __('Cart') }}</a>
+                    <a class="text-gray-12" href="{{ route('site.orders') }}">{{ __('Order') }}</a>
                 </li>
             </ol>
         </nav>
-        <div class="flex justify-center items-center mt-5 ltr:-ml-5 ltr:md:-ml-0 rtl:-mr-5 rtl:md:-mr-0">
-            @include('site.layouts.includes.order-steps',['stepsNumber' => 4])
-        </div>
+      
     </section>
     <section class="layout-wrapper px-4 xl:px-0 border border-gray-2 flex flex-col md:flex-row items-center justify-center h-150p mt-116p rounded">
         <span class="text-green-3 ltr:mr-18p rtl:ml-18p">
@@ -36,31 +34,37 @@
 
     <section class="layout-wrapper px-4 xl:px-0 mt-12 break-all">
         <div class="rounded-md grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 mb-7 lg:mb-8 xl:mb-10 gap-5">
+
                 <div class="md:border-gray-2 last:border-0 dm-sans font-medium text-18 text-gray-12 ltr:pr-2 ltr:md:border-r ltr:text-right ltr:md:text-left rtl:pl-2 rtl:md:border-l">
-                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Order Number') }} </span>{{ $order->reference }}
+                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">
+                        {{ __('Order Number') }} 
+                    </span>
+                    {{ $order->reference }}
                 </div >
+
                 <div class="md:border-gray-2 last:border-0 dm-sans font-medium text-18 text-gray-12 ltr:pr-2 ltr:md:pl-3 ltr:md:border-r ltr:text-right ltr:md:text-left rtl:pl-2 rtl:md:pr-3 rtl:md:border-l">
-                        <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Order Date') }} </span>{{ formatDate($order->order_date) }}
+                        <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">
+                            {{ __('Order Date') }} 
+                        </span>
+                        {{ formatDate($order->order_date) }}
                 </div>
+
                 <div class="md:border-gray-2 last:border-0 dm-sans font-medium text-18 text-gray-12 ltr:pr-2 ltr:md:pl-3 ltr:md:border-r ltr:md:text-left rtl:pl-2 rtl:md:pr-3 rtl:md:border-l">
-                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Status') }} </span> {{ optional($order->orderStatus)->name }}
+                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">
+                        {{ __('Status') }} 
+                    </span> 
+                    {{ optional($order->orderStatus)->name }}
                 </div>
+
                 <div class="md:border-gray-2 last:border-0 dm-sans font-medium text-18 text-gray-12 ltr:pr-2 ltr:md:pl-3 ltr:md:border-r ltr:text-right ltr:md:text-left rtl:pl-2 rtl:md:pr-3 rtl:md:border-l">
-                <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Email') }}</span>{{ Auth::check() ? Auth::user()->email : $order->metadata->where('key', 'shipping_address_email')->first()->value }}
+                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">
+                        {{ __('Email') }}
+                    </span>
+                    {{ Auth::check() ? Auth::user()->email : $order->metadata->where('key', 'shipping_address_email')->first()->value }}
                 </div>
-                <div class="md:border-gray-2 last:border-0 dm-sans font-medium text-18 text-gray-12 ltr:pr-2 ltr:xl:pl-0 ltr:md:pl-3 ltr:md:border-r ltr:md:text-left rtl:pl-2 rtl:xl:pr-0 rtl:md:pr-3 rtl:md:border-l">
-                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Total') }} </span>{{ formatNumber($order->total, optional($order->currency)->symbol) }}
-                </div>
-            @if(!is_null(optional($order->paymentMethod)->gateway))
-                <div class=" dm-sans font-medium text-18 text-gray-12 ltr:pr-2 ltr:xl:pl-0 ltr:md:pl-3 ltr:text-right ltr:md:text-left rtl:pl-2 rtl:xl:pr-0 rtl:md:pr-3">
-                <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Payment Method') }} </span>{{ paymentRenamed(optional($order->paymentMethod)->gateway) }}
-                </div>
-            @endif
-            @if(!Auth::check())
-                <div class=" last:border-0 dm-sans font-medium text-18 text-gray-12 xl:pl-0 md:pl-3 text-right md:text-center pr-2">
-                    <span class="uppercase roboto-medium font-medium text-13 text-gray-10 block mb-1.5 md:mb-0 whitespace-nowrap">{{ __('Download Invoice') }} </span><a href="{{ route('site.invoice.print.guest', ['id' => $order->id, 'type' => 'pdf']) }}"><i class="fa fa-download" aria-hidden="true"></i></a>
-                </div>
-            @endif
+
+
+
         </div>
     </section>
 
@@ -90,45 +94,11 @@
                                             <a href="{{ isset($detail->vendor->shops[0]) ? route('site.shop', ['alias' => $detail->vendor->shops[0]->alias]) : 'javascript:void(0)' }}" target="_blank"><span class="block text-xs roboto-medium font-medium text-gray-10 pt-1">{{ __('Vendor') }}: {{ $detail->vendor->name }}</span></a>
                                         @endif
                                     </div>
-                                    <span class="mt-1.5 md:mt-0 {{ $loop->first ? '' : 'align-top'}} dm-sans font-medium text-gray-12 text-sm ltr:md:text-right">{{ formatNumber($detail->price, optional($order->currency)->symbol) }}
-                                    </span>
                                 </div>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <tr class="odd:bg-skin-secondary border-t border-gray-2 dm-sans font-medium text-gray-12">
-                            <td class="py-6">{{ __('Shipping') }}:
-                                @if(!is_null($order->shipping_title))
-                                    ({{ $order->shipping_title }})
-                                @endif
-                            </td>
-                            <td class="ltr:text-right rtl:text-left">{{  formatNumber($order->shipping_charge, optional($order->currency)->symbol) }}  <span class="text-[13px] font-normal ps-1.5 inline-block"></span></td>
-                        </tr>
-                        @if(preference("taxes") == 1)
-                        <tr class="odd:bg-skin-secondary border-t border-gray-2 dm-sans font-medium text-gray-12">
-                            <td class="py-6">{{ __('Tax') }}:</td>
-                            <td class="ltr:text-right rtl:text-left">{{ formatNumber($order->tax_charge, optional($order->currency)->symbol) }} <span class="text-[13px] font-normal ps-1.5 inline-block"></span></td>
-                        </tr>
-                        @endif
-                        @if(isset($order->couponRedeems) && $order->couponRedeems->sum('discount_amount') > 0 && isActive('Coupon'))
-                        <tr class="odd:bg-skin-secondary border-t border-gray-2 dm-sans font-medium text-gray-12">
-                            <td class="py-6">{{ __('Coupon offer') }}:</td>
-                            <td class="ltr:text-right rtl:text-left">{{ formatNumber($order->couponRedeems->sum('discount_amount'), optional($order->currency)->symbol) }} </td>
-                        </tr>
-                        @endif
-                        <tr class="odd:bg-skin-secondary border-t border-gray-2 dm-bold font-bold text-gray-12 text-base md:text-20">
-                            <td class="py-6">{{ __('Grand Total') }}: </td>
-                            <td class="ltr:text-right rtl:text-left">{{  formatNumber($order->total, optional($order->currency)->symbol) }}</td>
-                        </tr>
-                        @if(!empty($order->note))
-                        <tr class="border-t border-gray-2">
-                            <td class="py-6">{{ __('Note') }}: </td>
-                            <td class="ltr:text-right rtl:text-left">{{ $order->note }}</td>
-                        </tr>
-                        @endif
-                    </tfoot>
                 </table>
             </div>
         </div>

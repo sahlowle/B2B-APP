@@ -353,6 +353,25 @@
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ __('Category') }} 
+                                            <span class="text-red-500">*</span>
+                                        </label>
+
+                                        <select 
+                                            multiple
+                                            name="categories[]"
+                                            id="category" 
+                                            required 
+                                            class="w-full px-4 py-3 border border-gray-300 select2-input">
+
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -580,6 +599,16 @@
                 $('#state').val('').trigger('change');
                 $('#country').attr('disabled', 'true');
             }, 2000);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#category').select2({
+                 placeholder: '{{ __('Select Category') }}',
+                 allowClear: true,
+                 width: '100%',
+            });
         });
     </script>
 @endsection

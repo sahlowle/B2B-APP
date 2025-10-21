@@ -138,12 +138,7 @@
         </script>
     @endif
 
-    <script>
-        function changeLanguage(locale) {
-            var url =  "{{ route('change-language')}}?lang="+locale;
-            window.location.href = url;
-        }
-    </script>
+ 
 
     @yield('js')
 </body>

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\StoreSellerRequest;
+use App\Models\Category;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorCategory;
 use App\Models\VendorUser;
 use App\Notifications\SellerRequestToAdminNotification;
 use Illuminate\Http\Request;
@@ -39,7 +41,8 @@ class AuthController extends Controller
 
     public function factoryRegisterForm()
     {
-        return view('site.auth.factory-register');
+        $categories = Category::activeCategories();
+        return view('site.auth.factory-register', compact('categories'));
     }
 
     public function buyerRegister(Request $request)
@@ -141,7 +144,7 @@ class AuthController extends Controller
              $request->merge(['alias' => $alias]);
              
              (new Shop())->store($request->only('commercial_registration_number','name', 'vendor_id', 'email', 'website', 'alias', 'phone', 'address', 'country', 'state', 'city', 'post_code'));
- 
+              
              if (! empty($user_id)) {
                 $roleId = Role::where('slug', 'vendor-admin')->first()->id;
                 $roles = ['user_id' => $user_id, 'role_id' =>  $roleId];
@@ -164,6 +167,16 @@ class AuthController extends Controller
                 'status' => 'Active',
                 'is_default' => 1,
             ]);
+
+            $shop = Shop::where('vendor_id', $vendorId)->first();
+
+            foreach ($request->categories as $category) {
+                VendorCategory::create([
+                    'vendor_id' => $vendorId,
+                    'category_id' => $category,
+                    'shop_id' => $shop->id,
+                ]);
+            }
 
             User::find($user_id)->sendOtpToEmail();
 

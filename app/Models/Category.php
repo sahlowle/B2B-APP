@@ -459,7 +459,11 @@ class Category extends Model
      */
     public static function activeCategories($fields = ['id', 'name'])
     {
-        return parent::where('status', 'Active')->select($fields)->get();
+        return parent::where('status', 'Active')
+            ->where('is_global', 1)
+            ->where('parent_id', null)
+            ->where('id', '!=', 1)
+            ->select($fields)->get();
     }
 
     /**

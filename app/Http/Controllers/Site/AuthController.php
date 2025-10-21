@@ -202,6 +202,7 @@ class AuthController extends Controller
             if ($role == 'admin') {
                 return redirect()->route('dashboard');
             } else if ($role == 'vendor') {
+                session()->put('vendorId', optional($user->vendor())->vendor_id);
                 return redirect()->route('vendor-dashboard');
             }
 
@@ -219,7 +220,7 @@ class AuthController extends Controller
     public function resendVerificationCode($email)
     {
         $user = User::whereEmail($email)->firstOrFail();
-        
+
         $user->sendOtpToEmail();
 
         return redirect()->back()->withSuccess(__('Verification code has been sent to your email.'));

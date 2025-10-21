@@ -45,6 +45,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Modules\Shop\Http\Models\Shop;
 
 class OrderController extends Controller
 {
@@ -72,13 +73,17 @@ class OrderController extends Controller
 
             $products = collect( $cartService->getSelected()['selected_products']);
 
-            $product = new Fluent($products->first());
+            $cartProduct = new Fluent($products->first());
 
-            $product_dt = Product::find($product->id);
+            $photo = $cartProduct->photo;
 
-            $seller = $product_dt->shop;
+            $product = Product::find($cartProduct->id);
 
-            return view('site.order.inquiry', compact('cartService', 'product', 'seller'));
+            $seller = Shop::where('vendor_id', $product->vendor_id)->first();
+
+            // return $seller;
+
+            return view('site.order.inquiry', compact('cartService', 'photo', 'product', 'seller'));
         }
 
         return abort(404);

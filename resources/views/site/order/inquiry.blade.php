@@ -15,16 +15,16 @@
                         <!-- Product Information Section -->
                         <div class="w-full mb-6">
                             <div class="bg-white border border-gray-200 rounded-lg p-6">
-                                <div class="flex items-start space-x-4">
+                                <div class="flex items-start ">
                                     <!-- Product Image -->
                                     <div class="flex-shrink-0">
-                                        <img src="{{ $product->photo ?? asset('public/dist/images/default-product.png') }}" 
+                                        <img src="{{ $photo ?? asset('public/dist/images/default-product.png') }}" 
                                              alt="{{ $product->name ?? 'Product' }}" 
                                              class="w-20 h-20 object-cover rounded border">
                                     </div>
                                     
                                     <!-- Product Details -->
-                                    <div class="flex-1">
+                                    <div class="flex-1 mx-4">
                                         <div class="mb-2">
                                             <label class="text-sm font-medium text-gray-600">{{ __('Product') }}</label>
                                             <h3 class="text-lg font-semibold text-blue-600 hover:text-blue-800">
@@ -63,9 +63,7 @@
                                                name="subject" 
                                                class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                                placeholder="{{ __('Enter inquiry subject') }}"
-                                               maxlength="255"
                                                required>
-                                        <span class="ml-3 text-sm text-gray-500">255 / 255</span>
                                     </div>
                                     <p class="text-xs text-gray-500 mt-1">{{ __('Subject should be between 10 to 255 characters') }}</p>
                                 </div>
@@ -82,10 +80,6 @@
                                               placeholder="{{ __('Enter your inquiry message') }}"
                                               maxlength="3000"
                                               required></textarea>
-                                    <div class="flex justify-between items-center mt-2">
-                                        <a href="#" class="text-blue-600 hover:underline text-sm">+ {{ __('Ask More Information') }}</a>
-                                        <span class="text-sm text-gray-500">{{ __('Characters Remaining: 3000 / 3000') }}</span>
-                                    </div>
                                 </div>
 
                    
@@ -147,53 +141,3 @@
 
 @endsection
 
-@section('js')
-    <script>
-        "use strict";
-        
-        // Character counter for subject field
-        document.addEventListener('DOMContentLoaded', function() {
-            const subjectInput = document.getElementById('subject');
-            const subjectCounter = subjectInput.nextElementSibling;
-            
-            if (subjectInput && subjectCounter) {
-                subjectInput.addEventListener('input', function() {
-                    const remaining = 255 - this.value.length;
-                    subjectCounter.textContent = remaining + ' / 255';
-                });
-            }
-            
-            // Character counter for message field
-            const messageInput = document.getElementById('message');
-            const messageCounter = document.querySelector('.text-sm.text-gray-500:last-child');
-            
-            if (messageInput && messageCounter) {
-                messageInput.addEventListener('input', function() {
-                    const remaining = 3000 - this.value.length;
-                    messageCounter.textContent = 'Characters Remaining: ' + remaining + ' / 3000';
-                });
-            }
-            
-            // Form validation
-            const form = document.getElementById('inquiryForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    const subject = document.getElementById('subject').value.trim();
-                    const message = document.getElementById('message').value.trim();
-                    
-                    if (subject.length < 10) {
-                        e.preventDefault();
-                        alert('{{ __("Subject must be at least 10 characters long.") }}');
-                        return false;
-                    }
-                    
-                    if (message.length < 10) {
-                        e.preventDefault();
-                        alert('{{ __("Message must be at least 10 characters long.") }}');
-                        return false;
-                    }
-                });
-            }
-        });
-    </script>
-@endsection

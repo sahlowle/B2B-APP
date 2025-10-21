@@ -128,6 +128,8 @@ class VendorController extends Controller
         $user = Auth::user();
         Auth::guard('user')->logout();
 
+        session()->flush();
+
         if (isset($user)) {
             (new ActivityLogService())->userLogout('success', 'Logout successful', $user);
         }
@@ -135,8 +137,11 @@ class VendorController extends Controller
         if ($user && isActive('Pos') && version_compare(module('Pos')->get('version'), '2.0', '>=')) {
             expirePosSessionNow($user->id);
         }
+        
 
-        return redirect()->route('site.index')->withCookie($cookie);
+        return redirect()->route('login')->withCookie($cookie);
+
+        // return redirect()->route('site.index')->withCookie($cookie);
     }
 
     /**

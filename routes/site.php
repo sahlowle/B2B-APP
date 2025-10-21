@@ -37,11 +37,10 @@ Route::view('/email-template', 'emails.send-otp')->name('site.email-template');
 
 
 
-Route::get('/send-otp', function(){
-    $alias = generateAliasForShop('Test Shop');
-    dd($alias);
+Route::get('/test-vc', function(){
+  
 
-})->name('send.otp-test');
+});
 
 
 Route::controller(AuthController::class)

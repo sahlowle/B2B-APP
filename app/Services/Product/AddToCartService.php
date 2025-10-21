@@ -121,6 +121,7 @@ class AddToCartService
                 'vendor_id' => isset($product->vendor) ? $data['vendor_id'] : null,
                 'shop_id' => $data['shop_id'],
                 'name' => $data['name'],
+                'summary' => $data['summary'],
                 'quantity' => $request->qty ?? 1,
                 'price' => $price,
                 'actual_price' => $regularPrice,

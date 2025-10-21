@@ -227,7 +227,7 @@ class User extends Authenticatable implements BatchDeletable
 
     public function scopeAdmins($query)
     {
-        return $query->whereHas('role', function ($query) {
+        return $query->whereHas('roles', function ($query) {
             $query->where('type', 'admin');
         });
     }

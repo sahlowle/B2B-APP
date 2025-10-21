@@ -39,10 +39,6 @@ class AuthController extends Controller
 
     public function factoryRegisterForm()
     {
-        // return '
-        //     <h1 style="text-align: center; font-size: 8rem; font-weight: bold; color: #000;"> Coming Soon </h1>
-        // ';
-
         return view('site.auth.factory-register');
     }
 
@@ -141,7 +137,7 @@ class AuthController extends Controller
  
              // Store shop information
              $request['vendor_id'] = $vendorId;
-             $alias = cleanedUrl($request->name);
+             $alias = generateAliasForShop($request->name);
              $request->merge(['alias' => $alias]);
              
              (new Shop())->store($request->only('commercial_registration_number','name', 'vendor_id', 'email', 'website', 'alias', 'phone', 'address', 'country', 'state', 'city', 'post_code'));
@@ -173,16 +169,6 @@ class AuthController extends Controller
 
 
         });
-
-        
-        // $response['status'] = 'success';
-        // $response['message'] = __('Registration successful. Please login to your account.');
-        
-        // $this->setSessionValue($response);
-        
-        // return redirect()->route('login');
-
-        // Session::put('martvill-seller', $user);
 
         return redirect()->route('site.otp-verify', ['email' => $request->email]);
     }
@@ -228,6 +214,15 @@ class AuthController extends Controller
         }
 
         return back()->withInput()->withErrors(['email' => __('Invalid email or password')]);
+    }
+
+    public function resendVerificationCode($email)
+    {
+        $user = User::whereEmail($email)->firstOrFail();
+        
+        $user->sendOtpToEmail();
+
+        return redirect()->back()->withSuccess(__('Verification code has been sent to your email.'));
     }
 
 

@@ -67,11 +67,7 @@ class StoreSellerRequest extends FormRequest
     protected function prepareForValidation()
     {
         $otp = random_int(1111, 9999);
-        // $alias = Shop::whereAlias($alias = Str::slug($this->f_name . ' ' . $this->l_name))->exists() ? $alias . strtolower(Str::random(4)) : $alias;
-        
-        $random = Str::random(4).'-'.Str::random(4);
-        $alias = Str::slug($random);
-
+    
         $status = preference('vendor_default_signup_status') ?? 'Pending';
         
         $this->merge([
@@ -80,7 +76,6 @@ class StoreSellerRequest extends FormRequest
             'status' => $status,
             'activation_code' => Str::random(10),
             'activation_otp' => $otp,
-            'alias' => $alias,
             'gCaptcha' => $this['g-recaptcha-response'],
         ]);
     }

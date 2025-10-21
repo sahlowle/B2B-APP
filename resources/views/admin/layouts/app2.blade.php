@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ App::getLocale() }}" dir="{{ languageDirection() }}">
 
 <head>
     <title>{{ trimWords(preference('company_name'), 17) }} | @yield('page_title', env('APP_NAME', ''))</title>
@@ -74,6 +74,8 @@
     <script src="{{ asset('public/datta-able/js/pcoded.min.js') }}"></script>
     <script src="{{ asset('public/dist/js/custom/site/login.min.js')}}"></script>
     <script src="{{ asset('public/dist/js/custom/site/be-seller.min.js')}}"></script>
+
+    @stack('scripts')
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Shop\Http\Models\Shop;
+
 if (! function_exists('array2string')) {
     function array2string($data)
     {
@@ -134,6 +136,25 @@ if (! function_exists('cleanedUrl')) {
 
         return strtolower(str_replace($prohibited, $replace, $url));
     }
+}
+
+if (! function_exists('generateAliasForShop')) {
+
+    function generateAliasForShop($name)
+    {
+        $baseAlias = \Illuminate\Support\Str::slug(cleanedUrl($name));
+    
+        // Quickly check if it already exists
+        if (!Shop::where('alias', $baseAlias)->exists()) {
+            return $baseAlias;
+        }
+    
+        // Count similar aliases
+        $count = Shop::where('alias', 'LIKE', "{$baseAlias}%")->count();
+    
+        return "{$baseAlias}-" . ($count + 1);
+    }
+    
 }
 
 if (! function_exists('trimWords')) {

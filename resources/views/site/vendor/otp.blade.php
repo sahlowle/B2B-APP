@@ -65,9 +65,9 @@
                                 <!-- Resend Code Section -->
                                 <div class="text-center mb-4">
                                     <p class="text-muted small mb-2">{{ __("Didn't receive the code yet?") }}</p>
-                                    <button type="button" class="btn btn-link text-decoration-none p-0 resend-verification-code-seller">
+                                    <a href="{{ route('site.resend-otp', $user->email) }}" class="btn btn-link text-decoration-none p-0">
                                         {{ __('Resend Code') }}
-                                    </button>
+                                    </a>
                                 </div>
                         
                                 <!-- Submit Button -->
@@ -178,3 +178,4 @@
         });
     </script>
 @endsection
+

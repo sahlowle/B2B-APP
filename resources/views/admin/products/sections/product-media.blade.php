@@ -66,11 +66,18 @@
                             @endforeach
                         @endif
                     </div>
+
+
+                    <div class="d-flx mt-20p">
+                        <a href="javascript:void(0);" class="btn-confirms media-store" id="btnSubmit">
+                            {{ __('Save') }}
+                        </a>
+                    </div>
                 </div>
             </div>
 
 
-            <div class="form-group row mt-20p">
+            {{-- <div class="form-group row mt-20p">
                 <label class="col-md-2 px-2 col-form-label label-title">{{ __('Video') }}</label>
 
                 <div class="col-md-10 preview-parent">
@@ -164,7 +171,8 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
+
         </div>
     </div>
 </div>

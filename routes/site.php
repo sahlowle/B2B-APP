@@ -38,9 +38,8 @@ Route::view('/email-template', 'emails.send-otp')->name('site.email-template');
 
 
 Route::get('/send-otp', function(){
-    Mail::to('sahlowle@gmail.com')->send(new SendOtp(User::first(),1234));
-
-    return '<h1>success</h1>';
+    $alias = generateAliasForShop('Test Shop');
+    dd($alias);
 
 })->name('send.otp-test');
 
@@ -50,7 +49,8 @@ Route::controller(AuthController::class)
 ->middleware(['guest','themeable'])
 ->group(function () {
     Route::get('otp-verify', 'otpForm')->name('site.otp-verify');
-    Route::post('otp-verify', 'otpVerification')->name('otp-verify');
+    Route::post('otp-verify', 'otpVerification')->name('otp-verify')->middleware('throttle:5,1');
+    Route::get('resend-otp/{email}', 'resendVerificationCode')->name('site.resend-otp')->middleware('throttle:3,5');
     Route::get('login', 'showLoginForm')->name('login');
     Route::get('login', 'showLoginForm')->name('site.login');
     Route::post('login', 'login')->name('login');

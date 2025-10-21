@@ -23,7 +23,7 @@ class Category extends Model
     use hasFiles;
     use HasTranslations;
 
-    protected $fillable = ['name', 'slug', 'order_by'];
+    protected $guarded = ['id'];
 
     public $translatable = ['name', 'slug'];
 

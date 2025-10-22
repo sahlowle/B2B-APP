@@ -224,22 +224,22 @@
                                                                     <p class="text-start wb-all">
                                                                         @switch($meta->type)
                                                                             @case('select')
-                                                                                {{ $meta->title . ': ' . $meta->value }}
+                                                                                {{ trans($meta->title). ': ' . $meta->value }}
                                                                                 @break
                                                                             @case('multi-select')
-                                                                                {{ $meta->title . ': ' . implode(', ', array_unique(json_decode($meta->value, true))) }}
+                                                                                {{ trans($meta->title). ': ' . implode(', ', array_unique(json_decode($meta->value, true))) }}
                                                                                 @break
                                                                             @case('bool')
-                                                                                {{ $meta->title }}
+                                                                                @lang($meta->title)
                                                                                 @break
                                                                             @case('text')
-                                                                                {{ $meta->title }}
+                                                                                @lang($meta->title)
                                                                                 @break
                                                                             @case('number')
                                                                                 @if ($meta->title_position == 'before')
-                                                                                    {{ $meta->title . ': ' }} {{ ($meta->value == -1) ? __('Unlimited') : $meta->value }}
+                                                                                    {{ trans($meta->title). ': ' }} {{ ($meta->value == -1) ? __('Unlimited') : $meta->value }}
                                                                                 @else
-                                                                                    {{ ($meta->value == -1 ? __('Unlimited') : $meta->value) }} {{ $meta->title }}
+                                                                                    {{ ($meta->value == -1 ? __('Unlimited') : $meta->value) }} {{ trans($meta->title)}}
                                                                                 @endif
                                                                                 @break
                                                                             @default

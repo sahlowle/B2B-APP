@@ -27,10 +27,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-uppercase fragment-url font-bold" id="vendor-info-tab" data-bs-toggle="tab"
                                 data-rel="{{ $user->id }}" href="#vendor-info" role="tab" aria-controls="vendor-info"
-                                aria-selected="false">{{ __(':x Information',['x' => __('Vendor')]) }}</a>
+                                aria-selected="false">{{ __(':x Information',['x' => __('Factory')]) }}</a>
                         </li>
                     </ul>
                     <div class="col-sm-12 tab-content" id="myTabContent">
+
                         <div class="tab-pane fade show active" id="user-info" role="tabpanel" aria-labelledby="user-info-tab">
                             <form action='{{ route("user.update", ["id" => Auth::user()->id]) }}' method="post" class="form-horizontal" id="userEdit" enctype="multipart/form-data">
                                 @csrf
@@ -316,6 +317,7 @@
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>

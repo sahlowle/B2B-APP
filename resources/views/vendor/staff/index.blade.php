@@ -9,11 +9,11 @@
     <div class="col-sm-12 list-container" id="vendor-role-list-container">
         <div class="card">
             <div class="card-body row ps-0">
-                <div class="col-lg-3 col-12 z-index-10 pe-0">
+                {{-- <div class="col-lg-3 col-12 z-index-10 pe-0">
                     @include('vendor.layouts.includes.account_settings_menu')
-                </div>
+                </div> --}}
                 
-                <div class="col-lg-9 col-12 ps-3 ps-lg-0 rtl:pe-0 pe-0">
+                <div class="col-lg-12 col-12 ps-3 ps-lg-0 rtl:pe-0 pe-0">
                     <div class="card card-info shadow-none mb-0">
                         <div class="card-header pt-xs-0 p-t-20 border-bottom mb-2">
                             <div class="mt-xs-0 mt-21p"></div>

@@ -61,12 +61,12 @@ class Report extends Model
     public function reportTypeForVendor()
     {
         $reportType = [
-            'CouponReport' => __('Coupons Report'),
+            // 'CouponReport' => __('Coupons Report'),
             'CustomerOrderReport' => __('Customers Order Report'),
-            'CommissionReport' => __('Commissions Report'),
-            'BrandedProductReport' => __('Branded Products Report'),
-            'ProductStockReport' => __('Product Stock Report'),
-            'TaggedProductReport' => __('Tagged Products Report'),
+            // 'CommissionReport' => __('Commissions Report'),
+            // 'BrandedProductReport' => __('Branded Products Report'),
+            // 'ProductStockReport' => __('Product Stock Report'),
+            // 'TaggedProductReport' => __('Tagged Products Report'),
             'SaleReport' => __('Sale Report'),
         ];
 

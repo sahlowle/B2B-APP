@@ -27,21 +27,21 @@ class AccountSettings
                 'position' => '10',
                 'visibility' => auth()->user()?->hasPermission('App\Http\Controllers\Vendor\StaffController@index'),
             ],
-            [
-                'label' => __('Roles'),
-                'name' => 'role',
-                'href' => route('vendor.roles.index'),
-                'position' => '20',
-                'visibility' => auth()->user()?->hasPermission('App\Http\Controllers\Vendor\RoleController@index'),
-            ],
-            [
-                'label' => __('Permissions'),
-                'name' => 'permission',
-                'href' => route('vendor.permission.index'),
-                'position' => '30',
-                'visibility' => auth()->user()?->hasPermission('App\Http\Controllers\Vendor\PermissionController@index')
-                                && Role::getAll()->where('vendor_id', session('vendorId') ?: auth()->user()->vendor()->vendor_id)->count(),
-            ],
+            // [
+            //     'label' => __('Roles'),
+            //     'name' => 'role',
+            //     'href' => route('vendor.roles.index'),
+            //     'position' => '20',
+            //     'visibility' => auth()->user()?->hasPermission('App\Http\Controllers\Vendor\RoleController@index'),
+            // ],
+            // [
+            //     'label' => __('Permissions'),
+            //     'name' => 'permission',
+            //     'href' => route('vendor.permission.index'),
+            //     'position' => '30',
+            //     'visibility' => auth()->user()?->hasPermission('App\Http\Controllers\Vendor\PermissionController@index')
+            //                     && Role::getAll()->where('vendor_id', session('vendorId') ?: auth()->user()->vendor()->vendor_id)->count(),
+            // ],
         ];
 
         $items = apply_filters('vendor_sidebar_configuration_account_settings_menu', $items);

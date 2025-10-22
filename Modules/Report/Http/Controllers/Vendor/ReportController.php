@@ -22,9 +22,10 @@ class ReportController extends Controller
         $data['orderStatus'] = (new OrderStatus())->get();
         $data['shippingMethod'] = (new ShippingClass())->get();
         $data['report'] = [];
-        if (request()->type) {
+
+        if ($request->filled('type')) {
             $header = (new Report())->tableRow();
-            $class = 'Modules\Report\Reports' . '\\' . request()->type;
+            $class = 'Modules\Report\Reports' . '\\' . $request->type;
 
             if (class_exists($class, true)) {
                 $report = $class::getReports();

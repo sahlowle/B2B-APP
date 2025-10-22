@@ -20,7 +20,7 @@ use App\Models\{
     User,
     Vendor,
 };
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class VendorController extends Controller
@@ -32,11 +32,16 @@ class VendorController extends Controller
      */
     public function profile()
     {
-        $userId = Auth::guard('user')->user()->id;
-        $data['user'] = isset($userId) && ! empty($userId) ? User::with('vendors')->get()->where('id', $userId)->first() : null;
+        $user = Auth::guard('user')->user();
+
+        $data['user'] = $user->load('vendors');
+
         $data['roleIds'] = $data['user']->roles()->pluck('id')->toArray();
+
         $data['roles'] = Role::getAll();
+
         $data['vendor'] = $data['user']->vendors->first();
+
 
         return view('vendor.profile.index', $data);
     }

@@ -75,6 +75,12 @@ class PackageSubscription extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+
+    public function isActive()
+    {
+        return $this->status == 'Active';
+    }
 
     /**
      * Relation with SubscriptionDetails model

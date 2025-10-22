@@ -91,6 +91,7 @@ class SubscriptionController extends Controller
             $renewal = $request->billing_cycle == 'lifetime' ? 'manual' : preference('subscription_renewal');
 
             DB::beginTransaction();
+            
 
             $response = $this->subscriptionService->storePackage($request->package_id, Auth::user()?->id, $request->billing_cycle);
 

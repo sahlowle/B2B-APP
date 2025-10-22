@@ -42,7 +42,6 @@ class VendorController extends Controller
 
         $data['vendor'] = $data['user']->vendors->first();
 
-
         return view('vendor.profile.index', $data);
     }
 

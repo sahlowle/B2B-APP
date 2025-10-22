@@ -218,12 +218,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        {{-- <div class="form-group row">
                                             <label for="phone" class="col-sm-3 col-form-label">{{ __('Commission') }}(%)</label>
                                             <div class="col-sm-9">
                                                 <span class="form-control inputFieldDesign">{{ $vendor->sell_commissions }}</span>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="form-group row">
                                             <label for="Status" class="col-sm-3 col-form-label require">{{ __('Status') }}</label>

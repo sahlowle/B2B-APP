@@ -256,6 +256,7 @@
                                                     $isDownPlan = $subscription?->package?->sale_price[$subscription?->billing_cycle] >= $package['sale_price'][$billing_cycle];
                                                     $isDowngradeable = preference('subscription_change_plan') && preference('subscription_downgrade');
                                                 @endphp
+                                                
                                                 @if (!$isStaff)
                                                 <form action="{{ route('vendor.subscription.store') }}" method="POST">
                                                     @csrf

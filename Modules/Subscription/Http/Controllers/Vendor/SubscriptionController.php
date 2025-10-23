@@ -196,12 +196,16 @@ class SubscriptionController extends Controller
 
             $packageSubscriptionDetail?->user?->notify(new SubscriptionInvoiceNotification($packageSubscriptionDetail));
 
-            Session::flash('success', __('You have successfully paid for the subscription.'));
+            if($packageSubscriptionDetail && $packageSubscriptionDetail->status == 'Active'& $packageSubscriptionDetail->payment_status == 'Paid'){
+                return redirect()->route('vendor.subscription.index')->withSuccess(__('You have successfully paid for the subscription.'));
+            } else {
+                $packageSubscriptionDetail?->subscription()?->forceDelete();
+                $packageSubscriptionDetail?->forceDelete();
+                return redirect()->route('vendor.subscription.index')->withErrors(__('You have not successfully paid for the subscription.'));
+            }
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
+            return redirect()->route('vendor.subscription.index')->withErrors($e->getMessage());
         }
-
-        return redirect()->route('vendor.subscription.index');
     }
 
     /**

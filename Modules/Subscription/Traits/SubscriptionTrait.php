@@ -86,7 +86,11 @@ use Modules\Subscription\Entities\PackageSubscriptionMeta;
         if ($newInstance || is_null(static::$instance) || static::$oldSubscriptionId != $id) {
             static::$oldSubscriptionId = $id;
 
-            static::$instance = PackageSubscription::where($type, $id)->first();
+            $filteredInstance = PackageSubscription::where($type, $id)->orderBy('id', 'desc')->first();
+
+            // dd($filteredInstance);
+
+            static::$instance = $filteredInstance;
         }
 
         return static::$instance;

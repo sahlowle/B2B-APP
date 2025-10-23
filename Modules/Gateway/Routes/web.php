@@ -17,7 +17,7 @@ Route::group([
     'prefix' => 'gateway',
     'as' => 'gateway.',
     'namespace' => 'Modules\Gateway\Http\Controllers',
-    'middleware' => ['locale', 'web'],
+    'middleware' => ['web', 'admin.locale'],
 ], function () {
     Route::get('payment/confirmation', 'GatewayController@paymentConfirmation')->name('confirmation');
     Route::get('payment/failed-payment', 'GatewayController@paymentFailed')->name('failed');

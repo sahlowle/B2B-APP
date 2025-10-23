@@ -13,6 +13,8 @@ use App\Models\Model;
 use App\Models\User;
 use Modules\Subscription\Traits\SubscriptionTrait;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class PackageSubscription extends Model
 {
     use SubscriptionTrait;
@@ -54,6 +56,11 @@ class PackageSubscription extends Model
     public function metadata()
     {
         return $this->hasMany(PackageSubscriptionMeta::class);
+    }
+
+    public function scopeActivePackage(Builder $query)
+    {
+       return $query->where('status', 'Active')->where('payment_status', 'Paid');
     }
 
     /**

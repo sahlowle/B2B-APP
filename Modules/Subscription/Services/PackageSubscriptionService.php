@@ -113,6 +113,82 @@ use Modules\Subscription\Console\Commands\Subscription;
         return $this->store($data);
     }
 
+    public function storeNewPackage($packageId, $userId, $billing_cycle)
+    {
+        $package = Package::find($packageId);
+        $days = ['weekly' => 7, 'monthly' => 30, 'yearly' => 365, 'days' => $package->duration, 'lifetime' => 0];
+        $billed = $package->discount_price[$billing_cycle] > 0 ? $package->discount_price[$billing_cycle] : $package->sale_price[$billing_cycle];
+        
+        $next_billing = $days[$billing_cycle];
+        if ($package->trial_day && !$this->isUsedTrial($package->id)) {
+            $next_billing = $package->trial_day;
+            $billed = 0;
+        }
+
+        $data = [
+            "package_id" => $package->id,
+            "user_id" => $userId,
+            "billing_price" => $billed,
+            "billing_cycle" => $billing_cycle,
+            "meta" => [
+                [
+                    "duration" => $package->duration,
+                    'trial' => $this->isUsedTrial($package->id) ? 0 : $package->trial_day
+                ],
+            ],
+            "activation_date" => date('Y-m-d'),
+            "billing_date" => date('Y-m-d'),
+            "next_billing_date" => date('Y-m-d', strtotime(date('Y-m-d') . ' + ' . $next_billing . ' days')),
+            "amount_billed" => $billed,
+            "amount_received" => "0",
+            "amount_due" => $billed,
+            "is_customized" => "0",
+            "renewable" => $package->renewable ?? 0,
+            "payment_status" => "Unpaid",
+            "status" => "Pending"
+        ];
+
+        return $this->storeNew($data);
+        
+    }
+
+    public function storeNew(array $data): array
+    {
+        $data['code'] =  strtoupper(\Str::random(10));
+        $userId = $data['user_id'];
+        // unset($data['user_id']);
+
+        if ($renew = $this->isRenew($data, $userId)) {
+            if ($renew === 'nonrenewable') {
+                return [
+                    'status' => 'fail',
+                    'message' => __('The package is not renewable.')
+                ];
+            }
+            return $this->saveSuccessResponse() + ['subscription' => $this->subscription];
+        }
+
+        $subscription = PackageSubscription::create($data);
+
+        if ($subscription) {
+                $subscription = $subscription->fresh();
+                $this->storeMeta($subscription->id, $subscription->package_id, $data['meta']);
+
+                $this->updateProductCount($subscription->id, $userId);
+
+                $this->updateLocationCount($subscription->id, $userId);
+
+                $this->updateStaffCount($subscription->id, $userId);
+
+                return $this->saveSuccessResponse() + ['subscription' => $subscription];
+        }
+
+        
+
+
+        return $this->saveFailResponse();
+    }
+
     /**
      * Store Package Subscription
      *
@@ -807,7 +883,7 @@ use Modules\Subscription\Console\Commands\Subscription;
      */
     public function isExpired(int|null $userId = null): bool
     {
-        $subscription = $this->getUserSubscription($userId);
+        $subscription = PackageSubscription::activePackage()->where('user_id', $vendorId ?? auth()->user()->id)->with('metadata')->first();
 
         if ($subscription->billing_cycle == 'lifetime' && !$this->isTrialMode($subscription->id)) {
             return false;
@@ -870,7 +946,7 @@ use Modules\Subscription\Console\Commands\Subscription;
             ];
         }
 
-        $subscription = $this->getUserSubscription($userId);
+        $subscription = PackageSubscription::activePackage()->where('user_id', $vendorId ?? auth()->user()->id)->with('metadata')->first();
 
         $this->sellerProductCount($userId);
 
@@ -975,14 +1051,17 @@ use Modules\Subscription\Console\Commands\Subscription;
      *
      * @return object
      */
-    public function storeSubscriptionDetails(int|null $userId = null, string|null $paymentMethod = null, $uniqCode = null)
+    public function storeSubscriptionDetails(int|null $userId = null, string|null $paymentMethod = null, $uniqCode = null, $packageSubscription = null)
     {
-        $packageSubscription = $this->getUserSubscription($userId, true);
+        if(is_null($packageSubscription)) {
+            $packageSubscription = $this->getUserSubscription($userId, true);
+        }
+
         $features = $this->getFeatureList();
 
         $data = $this->prepareData($packageSubscription, $features, $paymentMethod, $uniqCode);
 
-        SubscriptionDetails::where('user_id', $userId)->where('status', 'Active')->update(['status' => 'Expired']);
+        // SubscriptionDetails::where('user_id', $userId)->where('status', 'Active')->update(['status' => 'Expired']);
 
         return SubscriptionDetails::create($data);
     }
@@ -1061,6 +1140,7 @@ use Modules\Subscription\Console\Commands\Subscription;
         }
 
         $packageSubscription = PackageSubscription::where('code', $packageSubscriptionDetail->code)->first();
+        
         $log = GatewayHelper::getPaymentLog($code);
 
         if (!$log) {
@@ -1073,6 +1153,12 @@ use Modules\Subscription\Console\Commands\Subscription;
         }
 
         if ($log->status == 'completed') {
+
+            PackageSubscription::where('user_id', $packageSubscriptionDetail->user_id)
+                // ->where('status', 'Active')
+                ->where('id', '!=', $packageSubscription->id)
+                ->forceDelete();
+
             SubscriptionDetails::where('user_id', $packageSubscriptionDetail->user_id)->where('status', 'Active')->update(['status' => 'Expired']);
 
             $data = json_decode($log->response);
@@ -1203,6 +1289,15 @@ use Modules\Subscription\Console\Commands\Subscription;
 
         $details->update(['payment_status' => 'Paid', 'status' => 'Active']);
         $subscription->update(['payment_status' => 'Paid', 'status' => 'Active']);
+
+        SubscriptionDetails::where('user_id', $details->user_id)
+            ->where('status', 'Active')
+            ->where('id', '!=', $details->id)
+            ->update(['status' => 'Expired']);
+
+            PackageSubscription::where('user_id', $details->user_id)
+            ->where('id', '!=', $subscription->id)
+            ->forceDelete();
     }
 
     /**

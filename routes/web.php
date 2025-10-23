@@ -426,7 +426,9 @@ Route::group(['middleware' => ['auth', 'locale', 'permission']], function () {
 
 Route::group(['middleware' => ['isLoggedIn']], function () {
     Route::get('files/download/{id}', 'FilesController@downloadAttachment');
-    Route::post('change-lang', 'DashboardController@switchLanguage')->middleware(['checkForDemoMode']);
+    Route::post('change-lang', 'DashboardController@switchLanguage')
+    ->name('change-language-admin')
+    ->middleware(['checkForDemoMode']);
 
     Route::get('is-valid-file-size', 'FilesController@isValidFileSize');
 });

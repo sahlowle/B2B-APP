@@ -10,6 +10,9 @@
 @endsection
 
 @section('content')
+    
+    @include('moyasar::notes')
+
     <p class="para-6">{{ __('Fill in the required information') }}</p>
     <div class="straight-line"></div>
 

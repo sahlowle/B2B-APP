@@ -62,7 +62,13 @@ class SubscriptionController extends Controller
             $vendorId = getStaffVendorUserId();
         }
 
-        $data['subscription'] = PackageSubscription::where('user_id', $vendorId ?? auth()->user()->id)->with('metadata')->first();
+        // return PackageSubscription::where('user_id', $vendorId ?? auth()->user()->id)->get();
+
+        $subscription = PackageSubscription::activePackage()->where('user_id', $vendorId ?? auth()->user()->id)->with('metadata')->first();
+        
+        // return $subscription;
+
+        $data['subscription'] = $subscription;
 
         foreach ($data['packages'] as $package) {
             $data['features'][$package->id] = PackageService::editFeature($package);
@@ -78,13 +84,50 @@ class SubscriptionController extends Controller
         return view('subscription::vendor.index', $data);
     }
 
+
+    public function store(Request $request)
+    {
+        try {
+            
+            return DB::transaction(function () use ($request) {
+
+                $paymentType = ['automate' => 'recurring', 'manual' => 'single', 'customer_choice' => null];
+                $renewal = $request->billing_cycle == 'lifetime' ? 'manual' : preference('subscription_renewal');
+
+                $response = $this->subscriptionService->storeNewPackage($request->package_id, Auth::user()?->id, $request->billing_cycle);
+
+                if ($response['status'] != 'success') {
+                    throw new \Exception(__('Subscription fail.'));
+                }
+                
+                $subscription = $response['subscription'];
+
+                $subscriptionDetails = $this->subscriptionService->storeSubscriptionDetails(packageSubscription: $subscription);
+
+                if ($subscriptionDetails->is_trial ||  $subscriptionDetails->billing_price == 0) {
+                    $this->subscriptionService->activatedSubscription($subscriptionDetails->id);
+                    return redirect()->route('vendor.subscription.index')->withSuccess($response['message']);
+                }
+
+                request()->query->add(['payer' => 'user', 'to' => techEncrypt('vendor.subscription.paid')]);
+
+                $route = GatewayRedirect::paymentRoute($subscriptionDetails, $subscriptionDetails->amount_billed, $subscriptionDetails->currency, $subscriptionDetails->id, $request, null, $paymentType[$renewal]);
+
+                return redirect($route);
+            });
+
+        } catch (\Exception $e) {
+            return redirect()->route('vendor.subscription.index')->withErrors($e->getMessage());
+        }
+    }
+
     /**
      * Store subscription data
      *
      * @param Request $request
      * @return redirect
      */
-    public function store(Request $request)
+    public function storeOld(Request $request)
     {
         try {
             $paymentType = ['automate' => 'recurring', 'manual' => 'single', 'customer_choice' => null];

@@ -35,12 +35,13 @@
         </section>
         <section>
             <p class="font-medium leading-5 text-neutral-500 mt-9">{{ __("A quick overview of your account.") }}</p>
-            <div class="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 w-full mt-3">
-                <a href="{{ route('site.cart') }}"
+            <div class="grid lg:grid-cols-3 sm:grid-cols-3 grid-cols-1 gap-3 w-full mt-3">
+                {{-- <a href="{{ route('site.cart') }}"
                     class="cursor-pointer border-gray-300 bg-gray-100 border rounded sm:px-5 px-4 min-h-20 flex justify-between items-center sm:gap-4 gap-1">
                     <p class="text-black text-lg x:text-sm font-medium">{{ __("Cart") }}</p>
                     <p class="text-black text-3xl x:text-base font-semibold">{{ Cart::cartCollection()->count() }}</p>
-                </a>
+                </a> --}}
+
                 <a href="{{ route('site.wishlist') }}"
                     class="cursor-pointer border-gray-300 bg-gray-100 border rounded sm:px-5 px-4 min-h-20 flex justify-between items-center sm:gap-4 gap-1">
                     <p class="text-black text-lg x:text-sm font-medium">{{ __("Wishlist") }}</p>

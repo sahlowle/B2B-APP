@@ -22,7 +22,7 @@
             @if ($menu->icon == 'fas fa-universal-access')
                 @continue
             @endif
-            <a href="{{ $menu->url('myaccount') }}" class="flex justify-start items-center text-black  {{ $menu->isLinkActive() ? 'bg-yellow-300 ' : 'hover:bg-gray-11' }} rounded md:py-4 py-3 px-5 gap-3 font-medium leading-5 cursor-pointer">
+            <a href="{{ LaravelLocalization::localizeUrl($menu->url('myaccount')) }}" class="flex justify-start items-center text-black  {{ $menu->isLinkActive() ? 'bg-yellow-300 ' : 'hover:bg-gray-11' }} rounded md:py-4 py-3 px-5 gap-3 font-medium leading-5 cursor-pointer">
                 <i class="{{ $menu->icon }} {{ !$menu->isLinkActive() ? 'text-gray-7' : '' }}"></i>
             <span>{{ $menu->label_name }}</span>
             </a>

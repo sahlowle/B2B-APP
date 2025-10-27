@@ -6,11 +6,8 @@
 {{-- All the contents will be placed here --}}
 @section('parent-content')
 
-    <div class="mb-4 mt-4">
-
-        @yield('content')
-
-    </div>
+  
+    @yield('content')
 
     @if (isActive('Ticket') && preference('chat'))
         @include('ticket::message')

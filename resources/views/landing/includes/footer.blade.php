@@ -11,30 +11,57 @@
                 
                 <!-- Useful Links -->
                 <div class="footer-section">
-                    <h3 class="footer-title text-xl font-semibold mb-6 text-white">Useful Links</h3>
+                    <h3 class="footer-title text-xl font-semibold mb-6 text-white">
+                        @lang('Useful Links')
+                    </h3>
                     <ul class="footer-links list-none p-0 m-0 space-y-3">
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Factories</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Price Quotes</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Products</a></li>
+                        <li><a href="{{ route('site.about-us') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                            @lang('About Us')
+                        </a></li>
+                        <li><a href="{{ route('site.shop.index') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                            @lang('Factories')
+                        </a></li>
+                        <li><a href="{{ route('site.quotations.create') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                            @lang('Price Quotes')
+                        </a></li>
+                        <li><a href="{{ route('site.productSearch',['categories' => '']) }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                            @lang('Products')
+                        </a></li>
                     </ul>
                 </div>
                 
                 <!-- Help & Terms -->
                 <div class="footer-section">
-                    <h3 class="footer-title text-xl font-semibold mb-6 text-white">Help & Terms</h3>
+                    <h3 class="footer-title text-xl font-semibold mb-6 text-white">
+                        @lang('Help & Terms')
+                    </h3>
                     <ul class="footer-links list-none p-0 m-0 space-y-3">
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Terms & Conditions (Factories)</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Terms & Conditions (Importers)</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Food & Health</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">Arts & Patents</a></li>
+                        <li>
+                            <a href="{{ route('site.privacy-policy') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                                @lang('Privacy Policy')
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('site.terms-and-conditions-of-seller') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                                @lang('Terms & Conditions (Factories)')
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('site.terms-and-conditions-of-buyer') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                                @lang('Terms & Conditions (Importers)')
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
                 
                 <!-- Contact Us -->
                 <div class="footer-section">
-                    <h3 class="footer-title text-xl font-semibold mb-6 text-white">Contact Us</h3>
+                    <h3 class="footer-title text-xl font-semibold mb-6 text-white">
+                        @lang('Contact Us')
+                    </h3>
                     <ul class="footer-links list-none p-0 m-0 space-y-4">
                         <li class="flex items-start gap-3">
                             <svg class="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,10 +133,10 @@
                 <div class="footer-section">
                     <h3 class="footer-title text-xl font-semibold mb-6 text-white text-right">روابط مفيدة</h3>
                     <ul class="footer-links list-none p-0 m-0 space-y-3">
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">من نحن</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">المصانع</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">عروض الأسعار</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">عرض المنتجات</a></li>
+                        <li><a href="{{ route('site.about-us') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">من نحن</a></li>
+                        <li><a href="{{ route('site.shop.index') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">المصانع</a></li>
+                        <li><a href="{{ route('site.quotations.create') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">عروض الأسعار</a></li>
+                        <li><a href="{{ route('site.productSearch',['categories' => '']) }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">عرض المنتجات</a></li>
                     </ul>
                 </div>
                 
@@ -117,11 +144,9 @@
                 <div class="footer-section">
                     <h3 class="footer-title text-xl font-semibold mb-6 text-white text-right">المساعدة والشروط</h3>
                     <ul class="footer-links list-none p-0 m-0 space-y-3">
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">سياسة الخصوصية</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الشروط والأحكام (المصانع)</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الشروط والأحكام (المستوردين)</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الاطعمة والصحة</a></li>
-                        <li><a href="#" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الفنون والبراءات</a></li>
+                        <li><a href="{{ route('site.privacy-policy') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">سياسة الخصوصية</a></li>
+                        <li><a href="{{ route('site.terms-and-conditions-of-seller') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الشروط والأحكام (المصانع)</a></li>
+                        <li><a href="{{ route('site.terms-and-conditions-of-buyer') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الشروط والأحكام (المستوردين)</a></li>
                     </ul>
                 </div>
                 
@@ -179,7 +204,7 @@
                     </a>
                 </div>
                 
-                <p class="copyright text-gray-400 text-base text-center md:text-right m-0">جميع الحقوق محفوظة لشركة اكسبورت فالي © 2025</p>
+                <p class="copyright text-gray-400 text-base text-center md:text-right m-0">جميع الحقوق محفوظة لشركة اكسبورت فالي © {{ date('Y') }}</p>
             </div>
         </div>
     </footer>

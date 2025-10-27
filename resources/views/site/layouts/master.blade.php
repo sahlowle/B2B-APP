@@ -182,7 +182,7 @@
     @doAction('after_site_bottom_nav')
     <!-- Bottom nav section End-->
 
-    <div class="main-body">
+    <div class="main-body" style="margin-bottom: 2rem;">
         <div class="page-wrapper">
             <!-- Main content -->
             @doAction('before_site_content')

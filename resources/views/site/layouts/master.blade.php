@@ -2,14 +2,18 @@
 <html lang="{{ App::getLocale() }}" dir="{{ languageDirection() }}">
 
 <head>
+
     @doAction('after_site_head')
+
     @includeIf('googleanalytics::partials.google_analytics_header')
 
     <title>{{ trimWords(preference('company_name'), 17) }} | @yield('page_title', env('APP_NAME', ''))</title>
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     @yield('seo')
+    
     @php
         $themeOption = \Modules\CMS\Http\Models\ThemeOption::getAll();
 
@@ -39,13 +43,13 @@
     @endif
 
    <style>
-    :root {
-        --primary-color: {{ $primaryColor }};
-        --global-font: {{ $fontFamily . ',' . $genericFamily }};
-        --semi-primary-color: {{ $primaryColor . '11' }};
-        --sw-anchor-active-primary-color: {{ $primaryColor }} !important;
-        --sw-anchor-done-primary-color: {{ lighten_color($primaryColor, 50) }} !important;
-    }
+        :root {
+            --primary-color: {{ $primaryColor }};
+            --global-font: {{ $fontFamily . ',' . $genericFamily }};
+            --semi-primary-color: {{ $primaryColor . '11' }};
+            --sw-anchor-active-primary-color: {{ $primaryColor }} !important;
+            --sw-anchor-done-primary-color: {{ lighten_color($primaryColor, 50) }} !important;
+        }
     </style>
     
     <link rel="stylesheet" href="{{ asset('public/dist/css/intl-tel-input/intlTelInput.min.css') }}">
@@ -56,13 +60,16 @@
     <link rel="stylesheet" href="{{ asset('public/frontend/assets/css/google-font-roboto.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/datta-able/fonts/fontawesome/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/dist/plugins/jQueryUI/jquery-ui.min.css') }}" type="text/css" />
+    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 
     @php
         $favicon = App\Models\Preference::getFavicon();
     @endphp
+
     @if (!empty($favicon))
         <link rel='shortcut icon' href="{{ $favicon }}" type='image/x-icon' />
     @endif
+
     <!--Custom CSS that was written on view-->
     @doAction("before_site_css_{$view_name}")
 
@@ -80,6 +87,8 @@
     @if (File::exists('Modules/CMS/Resources/assets/css/user-custom.css'))
         <link rel="stylesheet" href="{{ asset('Modules/CMS/Resources/assets/css/user-custom.css?v=' . time()) }}">
     @endif
+
+
     
     @if (file_exists(base_path('public/js/lang/' . config('app.locale') . '.js')))
         <script src="{{ asset('public/js/lang/' . config('app.locale') . '.js') }}"></script>
@@ -125,6 +134,8 @@
     <!-- Required Js -->
     <script src="{{ asset('public/dist/js/jquery.min.js') }}"></script>
     <!-- Affiliate Code Common Header -->
+
+    
     
     @doAction('before_site_head')
 
@@ -133,7 +144,9 @@
 
 
 <body <?php echo apply_filters('site_body_tag', 'class="antialiased min-h-screen"'); ?> x-data="{ 'layout': 'grid' }" x-cloak>
+
     @doAction('after_site_body')
+
     @php
         $header = option($layout . '_template_header', '');
         $footer = option($layout . '_template_footer', '');
@@ -153,22 +166,18 @@
     @endphp
     <!-- Top nav start -->
     @doAction('before_site_top_nav')
-
-    
-    @include('../site/layouts.includes.header-top')
     
     <!-- Top nav end -->
 
     <!-- header section start -->
     @doAction('before_site_header')
-    @include('../site/layouts.includes.header')
+    @include('site/layouts.includes.header')
     
     <!-- header section end -->
 
     <!-- Bottom nav section start-->
     @doAction('before_site_bottom_nav')
     
-    @include('../site/layouts.includes.header-bottom')
     
     @doAction('after_site_bottom_nav')
     <!-- Bottom nav section End-->
@@ -196,7 +205,7 @@
     <!-- section footer start -->
     @doAction('before_site_footer')
     
-    @include('../site/layouts.includes.footer')
+    @include('landing.includes.footer')
     
 
     @doAction('after_site_footer')
@@ -224,6 +233,8 @@
     <script src="{{ asset('public/frontend/assets/js/sweet-alert2.min.js') }}"></script>
     <script src="{{ asset('public/dist/js/custom/site/site.min.js?v=2.9.3') }}"></script>
     <script src="{{ asset('public/frontend/assets/js/main.min.js?v=3.2.1') }}"></script>
+
+    <script src="{{ asset('public/new-landing/script.js') }}" ></script>
 
     @doAction("before_site_js_{$view_name}")
 

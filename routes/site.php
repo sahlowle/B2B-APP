@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::view('/landing', 'landing.index')->name('site.landing-page');
+Route::view('/new-landing', 'landing.new')->name('site.landing-page');
 Route::view('/email-template', 'emails.send-otp')->name('site.email-template');
 
 
@@ -188,6 +189,7 @@ Route::controller(PageController::class)
 ->middleware('themeable')
 ->group(function () {
     Route::get('/about-us', 'aboutUs')->name('site.about-us');
+    Route::get('/contact-us', 'contactUs')->name('site.contact-us');
     Route::get('/privacy-policy', 'privacyPolicy')->name('site.privacy-policy');
     Route::get('/terms-and-conditions-of-seller', 'termsAndConditionsOfSeller')->name('site.terms-and-conditions-of-seller');
     Route::get('/terms-and-conditions-of-buyer', 'termsAndConditionsOfBuyer')->name('site.terms-and-conditions-of-buyer');
@@ -196,7 +198,7 @@ Route::controller(PageController::class)
 Route::get('/get-component-product', 'SiteController@getComponentProduct')->name('ajax-product')->middleware('themeable');
 
 // all categories
-Route::get('/categories', 'SiteController@allCategories')->name('all.categories')->middleware('themeable');
+Route::get('/categories', 'SiteController@allCategories')->name('site.categories')->middleware('themeable');
 
 // payment link
 Route::get('/order/payment/{reference}', 'SiteController@orderPayment')->name('site.order.custom.payment');

@@ -5,10 +5,17 @@
 
 {{-- All the contents will be placed here --}}
 @section('parent-content')
-    @yield('content')
+
+    <div class="mb-4 mt-4">
+
+        @yield('content')
+
+    </div>
+
     @if (isActive('Ticket') && preference('chat'))
         @include('ticket::message')
     @endif
+
 @endsection
 
 {{-- All the styles will be injected here --}}

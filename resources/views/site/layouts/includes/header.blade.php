@@ -130,23 +130,39 @@
         <!-- Mobile Menu - Hidden by default -->
         <div class="hidden mobile-menu fixed top-16 left-0 right-0 bottom-0 h-[calc(100vh-4rem)] z-49 overflow-y-auto bg-white border-t border-gray-200 flex flex-col justify-between">
             <nav class="flex flex-col gap-6 p-8">
-                <a href="#categories" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">Categories</a>
-                <a href="#factories" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">Factories</a>
-                <a href="#quotes" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">Quote Requests</a>
-                <a href="#contact" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">Contact Us</a>
+                <a href="{{ route('site.categories') }}" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">
+                    @lang('Categories')
+                </a>
+                <a href="{{ route('site.shop.index') }}" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">
+                    @lang('Factories')
+                </a>
+                <a href="{{ route('site.quotations.create') }}" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">
+                    @lang('RFQs')
+                </a>
+                <a href="{{ route('site.about-us') }}" class="mobile-nav-link text-lg font-medium text-gray-900 opacity-80 hover:opacity-100 transition py-3 text-right rtl:text-right">
+                    @lang('Contact Us')
+                </a>
             </nav>
             
             <div class="flex flex-col gap-3 p-6 border-t border-gray-200 bg-white">
-                <button class="mobile-sign-in-btn w-full gap-2 bg-gradient-to-r from-orange-600 to-orange-500 text-white border-none rounded-full py-3 px-6 text-base font-medium shadow-lg transition hover:from-orange-700 hover:to-orange-600 hover:shadow-xl flex items-center justify-center">
-                    <span>Sign In</span>
+                <a href="{{ route('login') }}" class="mobile-sign-in-btn w-full gap-2 bg-gradient-to-r from-orange-600 to-orange-500 text-white border-none rounded-full py-3 px-6 text-base font-medium shadow-lg transition hover:from-orange-700 hover:to-orange-600 hover:shadow-xl flex items-center justify-center">
+                    <span>@lang('Login')</span>
+
+                    @if (languageDirection() == 'ltr')
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
-                </button>
-                <button class="mobile-contact-btn w-full gap-2 border-2 border-gray-200 bg-transparent text-gray-900 rounded-full py-3 px-6 text-base font-medium transition hover:bg-gray-100 flex items-center justify-center">
-                    <span>Contact Us</span>
+                    @else
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    @endif
+
+                </a>
+                <a href="{{ route('site.contact-us') }}" class="mobile-contact-btn w-full gap-2 border-2 border-gray-200 bg-transparent text-gray-900 rounded-full py-3 px-6 text-base font-medium transition hover:bg-gray-100 flex items-center justify-center">
+                    <span>@lang('Contact Us')</span>
                     <img src="{{ asset('public/new-landing/img/material-symbols_arrow-insert-rounded.svg') }}" >
-                </button>
+                </a>
             </div>
         </div>
     </div>

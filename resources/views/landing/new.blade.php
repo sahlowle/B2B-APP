@@ -27,9 +27,11 @@
 @section('page_title', $page->name)
 
 @section('seo')
+
     @php
-        $fileUrl = $page->fileUrlQuery();
+        $fileUrl = asset("public/frontend/img/logo.png");
     @endphp
+
     <meta name="robots" content="index, follow">
     <meta name="title" content="{{ $page->meta_title ?? $page->title }}">
     <meta name="description" content="{{ $page->meta_description }}" />

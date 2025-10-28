@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     @yield('seo')
+    <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
     
     @php
         $themeOption = \Modules\CMS\Http\Models\ThemeOption::getAll();
@@ -67,7 +68,7 @@
     @endphp
 
     @if (!empty($favicon))
-        <link rel='shortcut icon' href="{{ $favicon }}" type='image/x-icon' />
+        <link rel='icon' href="{{ $favicon }}" type='image/x-icon' />
     @endif
 
     <!--Custom CSS that was written on view-->
@@ -138,8 +139,6 @@
     
     
     @doAction('before_site_head')
-
-    <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
 </head>
 
 

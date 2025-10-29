@@ -179,7 +179,7 @@
                                 @foreach ($packages as $package)
                                     @foreach ($package['billing_cycle'] as $billing_cycle => $value)
                                         @continue($value == 0)
-                                        <div class="plan-parent plan-{{ $billing_cycle }} pricing-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp {{ $billing_cycle == $activeBillingCycle ? '' : 'd-none' }}" data-wow-delay="800ms">
+                                        <div class="plan-parent plan-{{ $billing_cycle }} pricing-block col-lg-6 col-md-6 col-sm-12 wow fadeInUp {{ $billing_cycle == $activeBillingCycle ? '' : 'd-none' }}" data-wow-delay="800ms">
                                             <div class="inner-box">
                                                 <div class="price-box">
                                                     <div class="title wb-all"><h2>{{ $package->name }}</h2></div>

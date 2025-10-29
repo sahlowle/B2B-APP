@@ -10,7 +10,7 @@
                     <img src="{{ asset('public/new-landing/img/hero.jpg') }}" alt="Shipping Containers" class="hero-img absolute inset-0 w-full h-full object-cover rounded-2xl shadow-2xl bg-gradient-to-br from-orange-400 to-orange-600">
                 </div>
             </div>
-            <div class="hero-text w-full md:w-1/2 text-left">
+            <div class="hero-text w-full md:w-1/2">
                 <h1 class="hero-title text-4xl md:text-5xl font-bold mb-6 text-orange-600">
                     @lang('Exports Valley')
                 </h1>

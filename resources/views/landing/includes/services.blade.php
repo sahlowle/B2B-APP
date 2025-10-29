@@ -24,12 +24,7 @@
                     <!-- Service Cards for Factories -->
                     <div class="service-card bg-white border border-gray-200 rounded-2xl p-8 pt-16 transition-all duration-300 min-h-64 flex flex-col justify-center items-center relative hover:bg-[#F1592A] hover:border-[#F1592A] group">
                         <div class="service-icon absolute top-6 left-6 w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center group-hover:bg-white group-hover:border-white">
-                            <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6">
-                                <rect x="5" y="8" width="14" height="10" rx="2" fill="#F4A89F" class="group-hover:fill-white"/>
-                                <path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="#FF6B4A" stroke-width="2" fill="none" class="group-hover:stroke-white"/>
-                                <circle cx="8" cy="16" r="1.5" fill="#FF6B4A" class="group-hover:fill-white"/>
-                                <circle cx="16" cy="16" r="1.5" fill="#FF6B4A" class="group-hover:fill-white"/>
-                            </svg>
+                            <img src="{{ asset('public/new-landing/img/services/factories/01.svg') }}" alt="@lang('E-Store')" class="w-10 h-10">
                         </div>
                         <h4 class="service-title text-xl font-bold mb-3 w-full text-left group-hover:text-white">
                             @lang('E-Store')
@@ -41,11 +36,7 @@
                     
                     <div class="service-card bg-white border border-gray-200 rounded-2xl p-8 pt-16 transition-all duration-300 min-h-64 flex flex-col justify-center items-center relative hover:bg-[#F1592A] hover:border-[#F1592A] group">
                         <div class="service-icon absolute top-6 left-6 w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center group-hover:bg-white group-hover:border-white">
-                            <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6">
-                                <rect x="4" y="3" width="16" height="14" rx="2" fill="#F4A89F" class="group-hover:fill-white"/>
-                                <path d="M4 10h16" stroke="#FF6B4A" stroke-width="1.5" class="group-hover:stroke-white"/>
-                                <path d="M4 14h16" stroke="#FF6B4A" stroke-width="1.5" class="group-hover:stroke-white"/>
-                            </svg>
+                            <img src="{{ asset('public/new-landing/img/services/factories/02.svg') }}" alt="@lang('Product Catalog Inquiry')" class="w-10 h-10">
                         </div>
                         <h4 class="service-title text-xl font-bold mb-3 w-full text-left group-hover:text-white">
                             @lang('Product Catalog Inquiry')
@@ -57,10 +48,7 @@
                     
                     <div class="service-card bg-white border border-gray-200 rounded-2xl p-8 pt-16 transition-all duration-300 min-h-64 flex flex-col justify-center items-center relative hover:bg-[#F1592A] hover:border-[#F1592A] group">
                         <div class="service-icon absolute top-6 left-6 w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center group-hover:bg-white group-hover:border-white">
-                            <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#F4A89F" class="group-hover:fill-white"/>
-                                <circle cx="12" cy="12" r="3" fill="#FF6B4A" class="group-hover:fill-white"/>
-                            </svg>
+                            <img src="{{ asset('public/new-landing/img/services/factories/03.svg') }}" alt="@lang('Direct Contact with Importers')" class="w-10 h-10">
                         </div>
                         <h4 class="service-title text-xl font-bold mb-3 w-full text-left group-hover:text-white">
                             @lang('Direct Contact with Importers')
@@ -74,10 +62,7 @@
                     
                     <div class="service-card bg-white border border-gray-200 rounded-2xl p-8 pt-16 transition-all duration-300 min-h-64 flex flex-col justify-center items-center relative hover:bg-[#F1592A] hover:border-[#F1592A] group">
                         <div class="service-icon absolute top-6 left-6 w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center group-hover:bg-white group-hover:border-white">
-                            <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6">
-                                <rect x="3" y="3" width="18" height="14" rx="2" fill="#F4A89F" class="group-hover:fill-white"/>
-                                <path d="M8 17h8M10 21h4" stroke="#FF6B4A" stroke-width="1.5" stroke-linecap="round" class="group-hover:stroke-white"/>
-                            </svg>
+                            <img src="{{ asset('public/new-landing/img/services/factories/04.svg') }}" alt="@lang('Display Products for Each Platform Visitor')" class="w-10 h-10">
                         </div>
                         <h4 class="service-title text-xl font-bold mb-3 w-full text-left group-hover:text-white">
                             @lang('Display Products for Each Platform Visitor')
@@ -89,12 +74,7 @@
                     
                     <div class="service-card bg-white border border-gray-200 rounded-2xl p-8 pt-16 transition-all duration-300 min-h-64 flex flex-col justify-center items-center relative hover:bg-[#F1592A] hover:border-[#F1592A] group">
                         <div class="service-icon absolute top-6 left-6 w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center group-hover:bg-white group-hover:border-white">
-                            <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6">
-                                <rect x="2" y="8" width="14" height="10" rx="1" fill="#F4A89F" class="group-hover:fill-white"/>
-                                <path d="M16 8v10M18 10h4v6h-4" stroke="#FF6B4A" stroke-width="1.5" fill="none" class="group-hover:stroke-white"/>
-                                <circle cx="6" cy="18" r="1.5" fill="#FF6B4A" class="group-hover:fill-white"/>
-                                <circle cx="14" cy="18" r="1.5" fill="#FF6B4A" class="group-hover:fill-white"/>
-                            </svg>
+                            <img src="{{ asset('public/new-landing/img/services/factories/05.svg') }}" alt="@lang('Integrated Logistics Services')" class="w-10 h-10">
                         </div>
                         <h4 class="service-title text-xl font-bold mb-3 w-full text-left group-hover:text-white">
                             @lang('Integrated Logistics Services')
@@ -106,10 +86,7 @@
 
                     <div class="service-card bg-white border border-gray-200 rounded-2xl p-8 pt-16 transition-all duration-300 min-h-64 flex flex-col justify-center items-center relative hover:bg-[#F1592A] hover:border-[#F1592A] group">
                         <div class="service-icon absolute top-6 left-6 w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center group-hover:bg-white group-hover:border-white">
-                            <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6">
-                                <path d="M12 2L15.09 8.26H22L17.55 12.5L19.64 18.76L12 14.51L4.36 18.76L6.45 12.5L2 8.26H8.91L12 2Z" fill="#F4A89F" class="group-hover:fill-white"/>
-                                <path d="M12 5L13.5 8.5H17L14.25 10.5L15.75 14L12 12L8.25 14L9.75 10.5L7 8.5H10.5L12 5Z" fill="#FF6B4A" class="group-hover:fill-white"/>
-                            </svg>
+                            <img src="{{ asset('public/new-landing/img/services/factories/06.svg') }}" alt="@lang('Factory Certification')" class="w-10 h-10">
                         </div>
                         <h4 class="service-title text-xl font-bold mb-3 w-full text-left group-hover:text-white">
                             @lang('Factory Certification')

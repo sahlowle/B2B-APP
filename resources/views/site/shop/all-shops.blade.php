@@ -167,7 +167,7 @@
         <!-- Page Title -->
         <div class="text-center mb-12">
             <h2 class="page-title text-3xl md:text-4xl mb-4">{{ __('Our Partner Factories') }}</h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">{{ __('Browse through our carefully curated list of verified manufacturers and suppliers') }}</p>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">{{ __('Explore a curated network of verified and trusted factories') }}</p>
         </div>
 
         <!-- Shops Grid -->

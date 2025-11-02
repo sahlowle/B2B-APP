@@ -44,7 +44,7 @@ class PackageSubscriptionDataTable extends DataTable
             ->editColumn('next_billing_date', function ($subscription) {
                 return timeZoneFormatDate($subscription->next_billing_date);
             })->addColumn('billing_cycle', function ($subscription) {
-                return ucfirst($subscription->billing_cycle);
+                return ucfirst($subscription->billing_cycle ?? 'Unknown');
             })->editColumn('status', function ($subscription) {
                 return statusBadges(lcfirst($subscription->status));
             })->addColumn('action', function ($subscription) {

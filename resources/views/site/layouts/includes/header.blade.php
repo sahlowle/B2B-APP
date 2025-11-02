@@ -1,3 +1,108 @@
+<style>
+            
+    .hero-img, .industry-img {
+        transition: opacity 1s;
+    }
+    
+    .hero-img.active, .industry-img.active {
+        opacity: 1;
+    }
+    
+    .mobile-menu {
+        transition: all 0.3s ease;
+    }
+    
+    .faq-answer {
+        transition: all 0.3s ease;
+    }
+    
+    .blob {
+        animation: blob 7s infinite;
+    }
+    
+    @keyframes blob {
+        0%, 100% {
+            transform: translate(0, 0) scale(1);
+        }
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+    }
+    
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1);
+    }
+    
+    .service-card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-icon-img {
+        transform: rotate(90deg);
+    }
+    
+    [dir="rtl"] .btn-icon-img {
+        transform: rotate(0deg);
+    }
+
+    
+    [dir="rtl"] .service-icon {
+        right: 1.5rem;
+        left: auto;
+    }
+
+    
+    [dir="rtl"] .service-title,
+    [dir="rtl"] .service-description {
+        text-align: right;
+    }
+
+    [dir="rtl"] .hero-text,
+    [dir="rtl"] .industry-text,
+    [dir="rtl"] .vision-text {
+        text-align: right;
+    }
+
+    [dir="rtl"] .faq-title,
+    [dir="rtl"] .faq-question span,
+    [dir="rtl"] .faq-answer p {
+        text-align: right;
+    }
+
+    /* Account dropdown styles */
+    #account-dropdown-menu {
+        transition: all 0.2s ease-in-out;
+    }
+    
+    #account-dropdown-menu.hidden {
+        display: none !important;
+    }
+    
+    #account-dropdown-menu:not(.hidden) {
+        display: block;
+    }
+    
+    #account-dropdown-menu.opacity-0 {
+        opacity: 0;
+    }
+    
+    #account-dropdown-menu.opacity-100 {
+        opacity: 1;
+    }
+    
+    #account-dropdown-menu.-translate-y-2 {
+        transform: translateY(-0.5rem);
+    }
+    
+    #account-dropdown-menu.translate-y-0 {
+        transform: translateY(0);
+    }
+
+</style> 
+
  <!-- Header Section -->
  <header class="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur-sm">
     <div class="container max-w-6xl mx-auto px-4">
@@ -169,109 +274,3 @@
 </header>
 
 
-@push('styles')
-    <style>
-            
-        .hero-img, .industry-img {
-            transition: opacity 1s;
-        }
-        
-        .hero-img.active, .industry-img.active {
-            opacity: 1;
-        }
-        
-        .mobile-menu {
-            transition: all 0.3s ease;
-        }
-        
-        .faq-answer {
-            transition: all 0.3s ease;
-        }
-        
-        .blob {
-            animation: blob 7s infinite;
-        }
-        
-        @keyframes blob {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            33% {
-                transform: translate(30px, -50px) scale(1.1);
-            }
-            66% {
-                transform: translate(-20px, 20px) scale(0.9);
-            }
-        }
-        
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1);
-        }
-        
-        .service-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-icon-img {
-            transform: rotate(90deg);
-        }
-        
-        [dir="rtl"] .btn-icon-img {
-            transform: rotate(0deg);
-        }
-
-        
-        [dir="rtl"] .service-icon {
-            right: 1.5rem;
-            left: auto;
-        }
-
-        
-        [dir="rtl"] .service-title,
-        [dir="rtl"] .service-description {
-            text-align: right;
-        }
-
-        [dir="rtl"] .hero-text,
-        [dir="rtl"] .industry-text,
-        [dir="rtl"] .vision-text {
-            text-align: right;
-        }
-
-        [dir="rtl"] .faq-title,
-        [dir="rtl"] .faq-question span,
-        [dir="rtl"] .faq-answer p {
-            text-align: right;
-        }
-
-        /* Account dropdown styles */
-        #account-dropdown-menu {
-            transition: all 0.2s ease-in-out;
-        }
-        
-        #account-dropdown-menu.hidden {
-            display: none !important;
-        }
-        
-        #account-dropdown-menu:not(.hidden) {
-            display: block;
-        }
-        
-        #account-dropdown-menu.opacity-0 {
-            opacity: 0;
-        }
-        
-        #account-dropdown-menu.opacity-100 {
-            opacity: 1;
-        }
-        
-        #account-dropdown-menu.-translate-y-2 {
-            transform: translateY(-0.5rem);
-        }
-        
-        #account-dropdown-menu.translate-y-0 {
-            transform: translateY(0);
-        }
-
-    </style> 
-@endpush

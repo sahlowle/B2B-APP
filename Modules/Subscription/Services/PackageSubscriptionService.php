@@ -885,6 +885,10 @@ use Modules\Subscription\Console\Commands\Subscription;
     {
         $subscription = PackageSubscription::activePackage()->where('user_id', $vendorId ?? auth()->user()->id)->with('metadata')->first();
 
+        if (!$subscription) {
+            return true;
+        }
+
         if ($subscription->billing_cycle == 'lifetime' && !$this->isTrialMode($subscription->id)) {
             return false;
         }

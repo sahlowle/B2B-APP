@@ -344,7 +344,19 @@
     <main class="container mx-auto px-6 py-12">
         <div class="max-w-4xl mx-auto">
             <!-- Form Card -->
+
             <div class="bg-white rounded-2xl card-shadow p-8 animate-fade-in">
+
+                @if ($errors->any())
+                <div class="alert alert-danger text-red-500">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-500">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
                 <form method="post" action="#" 
                     enctype="multipart/form-data" 
                     onsubmit="return formValidation()"
@@ -427,7 +439,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <select class="form-select input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
-                                        name="country_id" 
+                                        name="country" 
                                         required>
                                         <option value=""> {{ __("Enter Your :x", ['x' => __('Country')]) }} </option>
 

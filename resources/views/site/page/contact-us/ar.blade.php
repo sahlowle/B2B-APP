@@ -1,29 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', __('Contact Us'))
-
-@section('seo')
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta name="description" content="{{ __('تواصل معنا في وادي التصدير. اتصل بنا للحصول على الدعم أو الاستفسارات أو فرص الشراكة.') }}" />
-    <meta name="keywords" content="تواصل, دعم, استفسار, شراكة, وادي التصدير">
-
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta itemprop="description" content="{{ __('تواصل معنا في وادي التصدير. اتصل بنا للحصول على الدعم أو الاستفسارات أو فرص الشراكة.') }}">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta property="og:description" content="{{ __('تواصل معنا في وادي التصدير. اتصل بنا للحصول على الدعم أو الاستفسارات أو فرص الشراكة.') }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta property="twitter:description" content="{{ __('تواصل معنا في وادي التصدير. اتصل بنا للحصول على الدعم أو الاستفسارات أو فرص الشراكة.') }}">
-@endsection
+<x-seo :seo="$seo" />
 
 @section('content')
     <section class="layout-wrapper px-4 xl:px-0">

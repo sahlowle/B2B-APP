@@ -24,7 +24,7 @@
     }
 @endphp
 
-@section('page_title', $page->name)
+@section('page_title', $page->meta_title)
 
 @section('seo')
 

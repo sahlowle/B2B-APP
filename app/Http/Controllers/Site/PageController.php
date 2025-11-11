@@ -30,7 +30,14 @@ class PageController extends Controller
        $homeService = $homeService = new \Modules\CMS\Service\HomepageService();
        $page = $homeService->home();
 
-       return view($view,compact('languages', 'currentLang', 'page'));
+       $seo = [
+        'title' => trans('About Us'),
+        'meta_title' => trans('About Us'),
+        'meta_description' => trans('About Us'),
+        'image' => asset('public/frontend/img/logo.png'),
+       ];
+
+       return view($view,compact('languages', 'currentLang', 'page', 'seo'));
 
     }
 
@@ -57,7 +64,14 @@ class PageController extends Controller
        $homeService = $homeService = new \Modules\CMS\Service\HomepageService();
        $page = $homeService->home();
 
-       return view($view,compact('languages', 'currentLang', 'page'));
+       $seo = [
+        'title' => trans('Privacy Policy'),
+        'meta_title' => trans('Privacy Policy'),
+        'meta_description' => trans('Privacy Policy'),
+        'image' => asset('public/frontend/img/logo.png'),
+       ];
+
+       return view($view,compact('languages', 'currentLang', 'page', 'seo'));
     }
 
     public function termsAndConditionsOfSeller()
@@ -79,7 +93,14 @@ class PageController extends Controller
 
        $currentLang = $lang;
 
-       return view($view,compact('currentLang'));
+       $seo = [
+        'title' => trans('Terms and Conditions of Seller'),
+        'meta_title' => trans('Terms and Conditions of Seller'),
+        'meta_description' => trans('Terms and Conditions of Seller'),
+        'image' => asset('public/frontend/img/logo.png'),
+       ];
+
+       return view($view,compact('currentLang', 'seo'));
     }
 
     public function termsAndConditionsOfBuyer()
@@ -101,7 +122,14 @@ class PageController extends Controller
 
        $currentLang = $lang;
 
-       return view($view,compact('currentLang'));
+       $seo = [
+        'title' => trans('Contact Us'),
+        'meta_title' => trans('Contact Us'),
+        'meta_description' => trans('Contact Us'),
+        'image' => asset('public/frontend/img/logo.png'),
+       ];
+
+       return view($view,compact('currentLang', 'seo'));
     }
 
     public function contactUs()
@@ -127,6 +155,14 @@ class PageController extends Controller
        $homeService = $homeService = new \Modules\CMS\Service\HomepageService();
        $page = $homeService->home();
 
-       return view($view,compact('languages', 'currentLang', 'page'));
+       
+       $seo = [
+        'title' => trans('Contact Us'),
+        'meta_title' => trans('Contact Us'),
+        'meta_description' => trans('Contact Us'),
+        'image' => asset('public/frontend/img/logo.png'),
+       ];
+
+       return view($view,compact('languages', 'currentLang', 'page', 'seo'));
     }
 }

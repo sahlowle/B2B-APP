@@ -1,29 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', __('Contact Us'))
-
-@section('seo')
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta name="description" content="{{ __('Get in touch with Exports Valley. Contact us for support, inquiries, or partnership opportunities.') }}" />
-    <meta name="keywords" content="contact, support, inquiry, partnership, exports valley">
-
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta itemprop="description" content="{{ __('Get in touch with Exports Valley. Contact us for support, inquiries, or partnership opportunities.') }}">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta property="og:description" content="{{ __('Get in touch with Exports Valley. Contact us for support, inquiries, or partnership opportunities.') }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="{{ __('Contact Us') }} - {{ preference('company_name') }}">
-    <meta property="twitter:description" content="{{ __('Get in touch with Exports Valley. Contact us for support, inquiries, or partnership opportunities.') }}">
-@endsection
+<x-seo :seo="$seo" />
 
 @section('content')
     <section class="layout-wrapper px-4 xl:px-0">

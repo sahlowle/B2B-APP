@@ -2,17 +2,23 @@
 <html lang="{{ App::getLocale() }}" dir="{{ languageDirection() }}">
 
 <head>
+    
+    <x-google-seo-head />
 
     @doAction('after_site_head')
 
     @includeIf('googleanalytics::partials.google_analytics_header')
 
-    <title>{{ trimWords(preference('company_name'), 17) }} | @yield('page_title', env('APP_NAME', ''))</title>
+    <title>
+        {{ trimWords(preference('company_name'), 17) }} | @yield('page_title', env('APP_NAME', ''))
+    </title>
+
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     @yield('seo')
+
     <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
     
     @php

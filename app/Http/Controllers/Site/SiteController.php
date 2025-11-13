@@ -12,7 +12,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductDetailResource;
-use App\Models\{Brand, Category, CustomField, File, Order, OrderMeta, Product, Review, Search};
+use App\Models\{Brand, Category, CustomField, File, Language, Order, OrderMeta, Product, Review, Search};
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Auth;
@@ -41,6 +41,26 @@ class SiteController extends Controller
     public function index()
     {
         return view('landing.new');
+    }
+
+    public function allCategoriesAjax(Request $request)
+    {
+        $query = Category::query();
+
+        $languages = Language::where('status', 'Active')->get()->pluck('short_name')->toArray();
+
+        if ($request->filled('q')) {
+            foreach ($languages as $language) {
+                $query->orWhere('name->'.$language, 'like', '%'.$request->q.'%');
+            }
+        }
+
+        return response()->json($query->take(3)->get()->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'text' => $category->name,
+            ];
+        }));
     }
 
     /**

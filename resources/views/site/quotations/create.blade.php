@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __("Create RFQs") }}</title>
+    
+    <x-google-seo-head />
 
     @php
     if (!isset($page->layout)) {
@@ -16,7 +18,10 @@
       
   @endphp
   
-    <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
+     {{-- Select2  --}}
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/erimicel/select2-tailwindcss-theme/dist/select2-tailwindcss-theme-plain.min.css">
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/css/intlTelInput.css">
     <!-- Tailwind CSS CDN -->
@@ -435,10 +440,8 @@
                                     {{ __("Country") }} <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <svg class="input-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <select class="form-select input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
+                                    
+                                    <select class="form-select select2 input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
                                         name="country" 
                                         required>
                                         <option value=""> {{ __("Enter Your :x", ['x' => __('Country')]) }} </option>
@@ -512,11 +515,10 @@
                                 {{ __("Category") }} <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <svg class="input-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                                </svg>
+                                
                                 <select class="form-select input-with-icon w-full py-3 rounded-lg text-gray-700 focus:outline-none" 
                                     name="category" 
+                                    id="category"
                                     required>
                                     <option value="">{{ __("Select") }}</option>
                                     @foreach ($categories as $category)
@@ -870,22 +872,65 @@
         });
     </script>
 
-<script>
-    // Limit input to numeric values only and restrict length
-    document.getElementById('phoneNumberInput').addEventListener('input', function (e) {
-      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 12);
-    });
-  </script>
+    <script>
+        // Limit input to numeric values only and restrict length
+        document.getElementById('phoneNumberInput').addEventListener('input', function (e) {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 12);
+        });
+    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/js/intlTelInput.min.js"></script>
-<script>
-  const input = document.querySelector("#phoneNumberInput");
-  window.intlTelInput(input, {
-    initialCountry: "sa",
-    hiddenInput: () => ({ phone: "phone_number", country: "country_code" }),
-    loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/js/utils.js"),
-  });
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/js/intlTelInput.min.js"></script>
+    <script>
+    const input = document.querySelector("#phoneNumberInput");
+        window.intlTelInput(input, {
+            initialCountry: "sa",
+            hiddenInput: () => ({ phone: "phone_number", country: "country_code" }),
+            loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.6/build/js/utils.js"),
+        });
+    </script>
+
+    <script src="{{ asset('public/datta-able/plugins/bootstrap-v5/js/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2(
+                {
+                    theme: 'tailwindcss-3',
+                    placeholder: '{{ __("Select Country") }}',
+                    allowClear: true,
+                    width: '100%',
+                    height: '100%',
+                }
+            );
+        });
+
+        $(document).ready(function() {
+                $('#category').select2({
+                    placeholder: '{{ __("Type to search for a category using HS codes") }}',
+                    allowClear: true,
+                    width: '100%',
+                    minimumInputLength: 2,
+                    ajax: {
+                        url: '{{ route("categories.ajax") }}',
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (data) {
+                            return {
+                            results:  $.map(data, function (item) {
+                                    return {
+                                        text: item.text,
+                                        id: item.id
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+            });
+        });
+    
+    </script>
 </body>
 </html>
 

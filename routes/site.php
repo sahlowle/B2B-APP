@@ -196,6 +196,7 @@ Route::controller(PageController::class)
 });
 
 Route::get('/get-component-product', 'SiteController@getComponentProduct')->name('ajax-product')->middleware('themeable');
+Route::get('/categories/ajax', 'SiteController@allCategoriesAjax')->name('categories.ajax')->middleware('themeable');
 
 // all categories
 Route::get('/categories', 'SiteController@allCategories')->name('site.categories')->middleware('themeable');

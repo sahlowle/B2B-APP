@@ -27,6 +27,7 @@ Homestead.json
 
 /public/build
 /storage/pail
+/storage/framework/laravel-excel
 .env.backup
 .env.production
 .phpactor.json

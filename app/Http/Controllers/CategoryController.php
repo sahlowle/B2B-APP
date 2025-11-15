@@ -14,6 +14,7 @@ use App\Models\Language;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Modules\Commission\Http\Models\Commission;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -44,6 +45,8 @@ class CategoryController extends Controller
         $subChildren = [];
         $categories = Category::parents('admin')->where('id', '!=', 1)->sortBy('order_by');
 
+        $length = 50;
+
         foreach ($categories as $category) {
             $categoriesChild = $category->childrenCategories->where('is_global', 1)->sortBy('order_by');
 
@@ -52,7 +55,7 @@ class CategoryController extends Controller
 
                 foreach ($subChilds as $subChild) {
                     $subChildren[$subChild->parent_id][] = [
-                        'text' => $subChild->getTranslated('name', request()->input('lang', config('app.locale'))),
+                        'text' => Str::limit($subChild->getTranslated('name', request()->input('lang', config('app.locale'))), $length),
                         'id' => $subChild->id,
                         'parent_id' => $subChild->parent_id,
                         'create_child' => 0,
@@ -60,7 +63,7 @@ class CategoryController extends Controller
                 }
 
                 $children[$child->parent_id][] = [
-                    'text' =>  $child->getTranslated('name', request()->input('lang', config('app.locale'))),
+                    'text' =>  Str::limit($child->getTranslated('name', request()->input('lang', config('app.locale'))), $length),
                     'id' => $child->id,
                     'state' => [
                         'opened' => false,
@@ -72,7 +75,7 @@ class CategoryController extends Controller
             }
 
             $data[] = [
-                'text' => $category->getTranslated('name', request()->input('lang', config('app.locale'))),
+                'text' => Str::limit($category->getTranslated('name', request()->input('lang', config('app.locale'))), $length),
                 'id' => $category->id,
                 'state' => [
                     'opened' => true,

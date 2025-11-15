@@ -27,7 +27,7 @@ class ImportHSCategoriesSubCommand extends Command
     public function handle()
     {
         $this->output->title('Starting import');
-        (new HSCategoriesSubImport)->withOutput($this->output)->import(storage_path('app/HS_Codes_Complete_Database.xlsx'));
+        (new HSCategoriesSubImport)->withOutput($this->output)->import(storage_path('app/HS_Codes_Complete_Database.csv'));
         $this->output->success('Import successful');
     }
 }

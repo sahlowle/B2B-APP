@@ -12,8 +12,9 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\RemembersRowNumber;
+use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
 
-class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInserts,WithProgressBar,WithStartRow
+class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInserts,WithProgressBar,WithStartRow,WithSkipDuplicates
 {
     use Importable,RemembersRowNumber;
     
@@ -22,6 +23,7 @@ class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInsert
 
         $hsCode = $this->filter($row[0]);
         $enName = $row[1];
+        $arName = $row[2];
 
         if (Str::length($hsCode) <= 2) {
             return null;
@@ -35,12 +37,15 @@ class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInsert
             return null;
         }
         
+        
         return new Category([
             'name' => [
                         'en' => $hsCode . ' - ' . $enName,
+                        'ar' => $hsCode . ' - ' . $arName,
             ],
             'slug' => [
                 'en' => Str::slug($hsCode . ' - ' . $enName),
+                // 'ar' => Str::slug($hsCode . ' - ' . $arName),
             ],
             'parent_id' => $parentCategory->id,
             'order_by' =>   $this->getRowNumber() + 1,
@@ -73,5 +78,10 @@ class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInsert
         $value = Str::remove('[', $value);
         $value = Str::remove(']', $value);
         return $value;
+    }
+
+    public function uniqueBy()
+    {
+        return 'name';
     }
 }

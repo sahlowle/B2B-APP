@@ -73,7 +73,8 @@
                                             <label for="slug" class="control-label require ltr:ps-3 rtl:pe-3">{{ __('Slug') }}
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" placeholder="{{ __('Slug') }}"
+                                                <input type="text" readonly placeholder="{{ __('Slug') }}"
+                                                    style="cursor: not-allowed;"
                                                     class="form-control form-width inputFieldDesign" id="slug"
                                                     name="slug" required
                                                     oninvalid="this.setCustomValidity('{{ __('This field is required.') }}')"

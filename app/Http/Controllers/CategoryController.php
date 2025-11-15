@@ -45,7 +45,7 @@ class CategoryController extends Controller
         $subChildren = [];
         $categories = Category::parents('admin')->where('id', '!=', 1)->sortBy('order_by');
 
-        $length = 50;
+        $length = 30;
 
         foreach ($categories as $category) {
             $categoriesChild = $category->childrenCategories->where('is_global', 1)->sortBy('order_by');

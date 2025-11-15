@@ -49,10 +49,10 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel"
                                 aria-labelledby="home-tab">
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div id="evts" class="demo"></div>
                                     </div>
-                                    <div class="col-sm-6" id="formBlock">
+                                    <div class="col-sm-5" id="formBlock">
                                         <div class="form-group row">
                                             <label for="name" class="control-label require ltr:ps-3 rtl:pe-3">{{ __('Name') }}
                                             </label>

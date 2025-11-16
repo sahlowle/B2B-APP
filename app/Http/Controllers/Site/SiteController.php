@@ -589,8 +589,10 @@ class SiteController extends Controller
      */
     public function allCategories()
     {
-        $data['homeService'] = $homeService = new \Modules\CMS\Service\HomepageService();
+        $homeService = new \Modules\CMS\Service\HomepageService();
         $data['page'] = $homeService->home();
+
+        $data['mainCategories'] = Category::parents();
 
         return view('site.categories', $data);
     }

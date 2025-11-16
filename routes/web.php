@@ -157,7 +157,7 @@ Route::group(['middleware' => ['auth', 'locale', 'permission']], function () {
     // Category
     Route::get('categories', 'CategoryController@index')->name('categories.index');
     Route::post('categories/store', 'CategoryController@store')->name('categories.store');
-    Route::get('categories/get-data', 'CategoryController@getData');
+    Route::get('categories/get-data', 'CategoryController@getData')->name('categories.get-data');
     Route::post('categories/get-parent-data', 'CategoryController@getParentData');
     Route::post('categories/move-node', 'CategoryController@moveNode');
     Route::post('categories/edit', 'CategoryController@edit');

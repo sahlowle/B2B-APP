@@ -59,23 +59,54 @@
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
              @foreach($categories as $category)
              
-                 <!-- Parent Category (clickable to show children) -->
-                 <a href="#" 
-                    class="block p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg hover:shadow-lg transition transform hover:-translate-y-1">
-                     <div class="flex items-start justify-between">
-                         <div class="flex-1">
-                             <div class="text-sm font-semibold text-blue-600 mb-1">{{ $category->code }}</div>
-                             <div class="text-gray-800 font-medium">{{ $category->name }}</div>
-                             <div class="text-xs text-gray-500 mt-2">
-                                 {{ $category->available_main_category_count }} 
-                                 {{ __('Sub Category') }}
+                 <!-- Parent Category (collapsible) -->
+                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg overflow-hidden">
+                     <!-- Collapsible Header -->
+                     <div class="collapsible-header cursor-pointer p-4 hover:shadow-lg transition transform hover:-translate-y-1" 
+                          role="button" 
+                          tabindex="0"
+                          aria-expanded="false"
+                          aria-controls="category-{{ $category->id }}"
+                          id="header-{{ $category->id }}">
+                         <div class="flex items-start justify-between">
+                             <div class="flex-1">
+                                 <div class="text-sm font-semibold text-blue-600 mb-1">{{ $category->code }}</div>
+                                 <div class="text-gray-800 font-medium">{{ $category->name }}</div>
+                                 <div class="text-xs text-gray-500 mt-2">
+                                     {{ $category->available_main_category_count }} 
+                                     {{ __('Sub Category') }}
+                                 </div>
                              </div>
+                             <svg class="w-5 h-5 text-blue-600 flex-shrink-0 transition-transform duration-300 transform" 
+                                  fill="none" 
+                                  stroke="currentColor" 
+                                  viewBox="0 0 24 24"
+                                  aria-hidden="true">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                             </svg>
                          </div>
-                         <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                         </svg>
                      </div>
-                 </a>
+                     
+                     <!-- Collapsible Content -->
+                     @if($category->childrenCategories && $category->childrenCategories->count() > 0)
+                     <div class="collapsible-content" 
+                          id="category-{{ $category->id }}"
+                          role="region"
+                          aria-labelledby="header-{{ $category->id }}">
+                         <div class="px-4 pb-4 space-y-2">
+                             @foreach($category->childrenCategories as $childCategory)
+                             <a href="#" 
+                                class="block p-3 bg-white border border-gray-200 rounded-md hover:bg-gray-50 hover:shadow-sm transition">
+                                 <div class="text-sm font-medium text-gray-700">{{ $childCategory->name }}</div>
+                                 @if($childCategory->code)
+                                 <div class="text-xs text-gray-500 mt-1">{{ $childCategory->code }}</div>
+                                 @endif
+                             </a>
+                             @endforeach
+                         </div>
+                     </div>
+                     @endif
+                 </div>
              
              @endforeach
          </div>
@@ -94,5 +125,40 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('public/dist/js/custom/site/all-categories.min.js') }}"></script>
+   <script>
+        $(document).ready(function() {
+            // Initially hide the content
+            $('.collapsible-content').hide();
+
+            // Add a click event to the header
+            $('.collapsible-header').on('click', function(e) {
+                e.preventDefault();
+                const $header = $(this);
+                const $content = $header.next('.collapsible-content');
+                const $icon = $header.find('svg');
+                const isExpanded = $header.attr('aria-expanded') === 'true';
+                
+                // Toggle the visibility of the content
+                $content.slideToggle(300, function() {
+                    // Update ARIA attributes
+                    $header.attr('aria-expanded', !isExpanded);
+                    
+                    // Rotate the icon
+                    if (!isExpanded) {
+                        $icon.css('transform', 'rotate(90deg)');
+                    } else {
+                        $icon.css('transform', 'rotate(0deg)');
+                    }
+                });
+            });
+
+            // Support keyboard navigation (Enter and Space)
+            $('.collapsible-header').on('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    $(this).trigger('click');
+                }
+            });
+        });
+   </script>
 @endsection

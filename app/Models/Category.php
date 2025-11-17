@@ -109,6 +109,7 @@ class Category extends Model
     public static function parents($type = 'web')
     {
         $categories = Category::whereNull('parent_id')->where('is_global', 1)->with('childrenCategories');
+        
         if ($type == 'web') {
             $categories = $categories->where('status', 'Active');
         }

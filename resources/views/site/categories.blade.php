@@ -53,63 +53,43 @@
                 </ol>
             </nav>
         </div>
-        @php
-            $uncategorized = App\Models\Category::parents();
-            $categories = $uncategorized->where('id', '!=', 1);
-        @endphp
-        <div class="grid md:grid-cols-4 grid-cols-1 gap-30p w-full">
-            @foreach ($categories as $category)
-                @php $checkChildCategory =count($category->childrenCategories) @endphp
-                <div>
-                    <img class="primary-bg-color w-16 h-16 rounded mb-30p mt-6" src="{{ $category->fileUrl() }}"
-                        alt="">
-                    <p class="text-gray-12 text-lg dm-sans font-medium leading-5 mb-22p">{{ $category->name }}</p>
-                    <div id="navigation">
-                        @if ($checkChildCategory)
-                            <ul class="dm-sans font-medium text-15 text-gray-10">
-                                @foreach ($category->childrenCategories as $childCategory)
-                                    <li class="py-2">
-                                        <div class="flex items-center">
-                                            <p class="mr-2">
-                                                <a
-                                                    href="{{ route('site.productSearch', ['categories' => $childCategory->slug]) }}">{{ $childCategory->name }}</a>
-                                            </p>
-                                            @if ($childCategory->categories->count() > 0)
-                                                <h3>
-                                                    <a class="click rotates" href="javascript:void(0)">
-                                                        <svg class="click rotates rtl:ml-2 rtl:mr-2 neg-transition-scale"
-                                                            width="5" height="9" viewBox="0 0 5 9" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                d="M0.870679 3.60997e-07L-3.02758e-07 0.948839L3.25864 4.5L3.18147e-07 8.05116L0.87068 9L5 4.5L0.870679 3.60997e-07Z"
-                                                                fill="#898989" />
-                                                        </svg>
-                                                    </a>
-                                                </h3>
-                                            @endif
-                                        </div>
-                                        @if ($childCategory->categories->count() > 0)
-                                            <ul class="mt-3 ltr:pr-3 rtl:pl-3 pl-8">
-                                                @foreach ($childCategory->categories as $grandChildCategory)
-                                                    <li class="py-2">
-                                                        <div class="flex items-center">
-                                                            <p>
-                                                                <a
-                                                                    href={{ route('site.productSearch', ['categories' => $grandChildCategory->slug]) }}>{{ $grandChildCategory->name }}</a>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
+        
+         <!-- Categories Grid -->
+         @if($categories->count() > 0)
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+             @foreach($categories as $category)
+             
+                 <!-- Parent Category (clickable to show children) -->
+                 <a href="#" 
+                    class="block p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg hover:shadow-lg transition transform hover:-translate-y-1">
+                     <div class="flex items-start justify-between">
+                         <div class="flex-1">
+                             <div class="text-sm font-semibold text-blue-600 mb-1">{{ $category->code }}</div>
+                             <div class="text-gray-800 font-medium">{{ $category->name }}</div>
+                             <div class="text-xs text-gray-500 mt-2">
+                                 {{ $category->availableMainCategory->count() }} 
+                                 {{ __('Sub Category') }}
+                             </div>
+                         </div>
+                         <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                         </svg>
+                     </div>
+                 </a>
+             
+             @endforeach
+         </div>
+ 
+       
+         @else
+         <div class="text-center py-12">
+             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+             </svg>
+             <h3 class="mt-2 text-sm font-medium text-gray-900">No categories found</h3>
+             <p class="mt-1 text-sm text-gray-500">Try adjusting your search or filter.</p>
+         </div>
+         @endif
     </section>
 @endsection
 

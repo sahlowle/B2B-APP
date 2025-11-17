@@ -593,11 +593,8 @@ class SiteController extends Controller
         $data['page'] = $homeService->home();
 
         $data['categories'] = Category::whereNull('parent_id')->where('is_global', 1)
-            ->withCount('availableMainCategory')
-            ->with(['childrenCategories' => function($query) {
-                $query->where('status', 'Active')->orderBy('order_by');
-            }])
-            ->get();
+            ->with('availableMainCategory')
+            ->paginate(12);
 
         return view('site.categories', $data);
     }

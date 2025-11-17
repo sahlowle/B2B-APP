@@ -56,69 +56,115 @@
         
          <!-- Categories Grid -->
          @if($categories->count() > 0)
-         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-             @foreach($categories as $category)
+         <div class="mt-8 mb-8">
              
-                 <!-- Parent Category (collapsible) -->
-                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg overflow-hidden">
-                     <!-- Collapsible Header -->
-                     <div class="collapsible-header cursor-pointer p-4 hover:shadow-lg transition transform hover:-translate-y-1" 
-                          role="button" 
-                          tabindex="0"
-                          aria-expanded="false"
-                          aria-controls="category-{{ $category->id }}"
-                          id="header-{{ $category->id }}">
-                         <div class="flex items-start justify-between">
-                             <div class="flex-1">
-                                 <div class="text-sm font-semibold text-blue-600 mb-1">{{ $category->code }}</div>
-                                 <div class="text-gray-800 font-medium">{{ $category->name }}</div>
-                                 <div class="text-xs text-gray-500 mt-2">
-                                     {{ $category->available_main_category_count }} 
-                                     {{ __('Sub Category') }}
+             
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 @foreach($categories as $category)
+                 
+                     <!-- Parent Category (collapsible) -->
+                     <div class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                         <!-- Collapsible Header -->
+                         <div class="collapsible-header cursor-pointer p-5 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 hover:from-blue-100 hover:via-indigo-100 hover:to-purple-100 transition-all duration-300" 
+                              role="button" 
+                              tabindex="0"
+                              aria-expanded="false"
+                              aria-controls="category-{{ $category->id }}"
+                              id="header-{{ $category->id }}">
+                             <div class="flex items-start justify-between gap-3">
+                                 <div class="flex-1 min-w-0">
+                                     
+                                     <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-blue-600 transition-colors">
+                                         {{ $category->name }}
+                                     </h3>
+                                     @if($category->availableMainCategory->count() > 0)
+                                     <div class="flex items-center gap-1.5 text-sm text-gray-600">
+                                         <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                         </svg>
+                                         <span class="font-medium">{{ $category->availableMainCategory->count() }}</span>
+                                         <span>{{ __('Sub Category') }}</span>
+                                     </div>
+                                     @else
+                                     <div class="text-sm text-gray-500 italic">{{ __('No subcategories') }}</div>
+                                     @endif
                                  </div>
-                             </div>
-                             <svg class="w-5 h-5 text-blue-600 flex-shrink-0 transition-transform duration-300 transform" 
-                                  fill="none" 
-                                  stroke="currentColor" 
-                                  viewBox="0 0 24 24"
-                                  aria-hidden="true">
-                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                             </svg>
-                         </div>
-                     </div>
-                     
-                     <!-- Collapsible Content -->
-                     @if($category->childrenCategories && $category->childrenCategories->count() > 0)
-                     <div class="collapsible-content" 
-                          id="category-{{ $category->id }}"
-                          role="region"
-                          aria-labelledby="header-{{ $category->id }}">
-                         <div class="px-4 pb-4 space-y-2">
-                             @foreach($category->childrenCategories as $childCategory)
-                             <a href="#" 
-                                class="block p-3 bg-white border border-gray-200 rounded-md hover:bg-gray-50 hover:shadow-sm transition">
-                                 <div class="text-sm font-medium text-gray-700">{{ $childCategory->name }}</div>
-                                 @if($childCategory->code)
-                                 <div class="text-xs text-gray-500 mt-1">{{ $childCategory->code }}</div>
+                                 @if($category->availableMainCategory && $category->availableMainCategory->count() > 0)
+                                 <div class="flex-shrink-0 mt-1">
+                                     <svg class="w-6 h-6 text-blue-600 transition-transform duration-300 transform rotate-0" 
+                                          fill="none" 
+                                          stroke="currentColor" 
+                                          viewBox="0 0 24 24"
+                                          aria-hidden="true">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                                     </svg>
+                                 </div>
                                  @endif
-                             </a>
-                             @endforeach
+                             </div>
                          </div>
+                         
+                         <!-- Collapsible Content -->
+                         @if($category->availableMainCategory && $category->availableMainCategory->count() > 0)
+                         <div class="collapsible-content border-t border-gray-100" 
+                              id="category-{{ $category->id }}"
+                              role="region"
+                              aria-labelledby="header-{{ $category->id }}">
+                             <div class="p-4 space-y-2 bg-gray-50">
+                                 @foreach($category->availableMainCategory as $index => $childCategory)
+                                 <a href="{{ route('site.productSearch', ['categories' => $childCategory->slug]) }}" 
+                                    class="group/item block p-3.5 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 hover:shadow-md transition-all duration-200 transform hover:translate-x-1">
+                                     <div class="flex items-start justify-between gap-2">
+                                         <div class="flex-1 min-w-0">
+                                             <div class="flex items-center gap-2 mb-1">
+                                                 <div class="w-1.5 h-1.5 rounded-full bg-blue-400 group-hover/item:bg-blue-600 transition-colors"></div>
+                                                 <div class="text-sm font-semibold text-gray-800 group-hover/item:text-blue-700 transition-colors">
+                                                     {{ $childCategory->name }}
+                                                 </div>
+                                             </div>
+                                             @if($childCategory->code)
+                                             <div class="text-xs text-gray-500 ml-3.5 group-hover/item:text-gray-600">
+                                                 {{ $childCategory->code }}
+                                             </div>
+                                             @endif
+                                         </div>
+                                         <svg class="w-4 h-4 text-gray-400 group-hover/item:text-blue-600 opacity-0 group-hover/item:opacity-100 transition-all flex-shrink-0 mt-0.5" 
+                                              fill="none" 
+                                              stroke="currentColor" 
+                                              viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                         </svg>
+                                     </div>
+                                 </a>
+                                 @endforeach
+                             </div>
+                         </div>
+                         @endif
                      </div>
-                     @endif
-                 </div>
-             
-             @endforeach
+                 
+                 @endforeach
+             </div>
+             <div class="mt-4">
+                 {{ $categories->links('pagination::tailwind') }}
+             </div>
          </div>
- 
+
        
          @else
-         <div class="text-center py-12">
-             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-             </svg>
-             <h3 class="mt-2 text-sm font-medium text-gray-900">No categories found</h3>
-             <p class="mt-1 text-sm text-gray-500">Try adjusting your search or filter.</p>
+         <div class="text-center py-16 px-4">
+             <div class="max-w-md mx-auto">
+                 <div class="relative">
+                     <svg class="mx-auto h-20 w-20 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                     </svg>
+                     <div class="absolute inset-0 flex items-center justify-center">
+                         <div class="w-16 h-16 bg-gray-100 rounded-full opacity-50"></div>
+                     </div>
+                 </div>
+                 <h3 class="mt-6 text-xl font-semibold text-gray-900">{{ __('No categories found') }}</h3>
+                 <p class="mt-2 text-sm text-gray-500 max-w-sm mx-auto">
+                     {{ __('We couldn\'t find any categories at the moment. Please check back later.') }}
+                 </p>
+             </div>
          </div>
          @endif
     </section>
@@ -138,14 +184,14 @@
                 const $icon = $header.find('svg');
                 const isExpanded = $header.attr('aria-expanded') === 'true';
                 
-                // Toggle the visibility of the content
+                // Toggle the visibility of the content with smooth animation
                 $content.slideToggle(300, function() {
                     // Update ARIA attributes
                     $header.attr('aria-expanded', !isExpanded);
                     
-                    // Rotate the icon
+                    // Rotate the chevron icon (180 degrees for down arrow)
                     if (!isExpanded) {
-                        $icon.css('transform', 'rotate(90deg)');
+                        $icon.css('transform', 'rotate(180deg)');
                     } else {
                         $icon.css('transform', 'rotate(0deg)');
                     }
@@ -158,6 +204,13 @@
                     e.preventDefault();
                     $(this).trigger('click');
                 }
+            });
+
+            // Add focus styles for better accessibility
+            $('.collapsible-header').on('focus', function() {
+                $(this).addClass('ring-2 ring-blue-500 ring-offset-2');
+            }).on('blur', function() {
+                $(this).removeClass('ring-2 ring-blue-500 ring-offset-2');
             });
         });
    </script>

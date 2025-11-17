@@ -67,7 +67,7 @@
                              <div class="text-sm font-semibold text-blue-600 mb-1">{{ $category->code }}</div>
                              <div class="text-gray-800 font-medium">{{ $category->name }}</div>
                              <div class="text-xs text-gray-500 mt-2">
-                                 {{ $category->availableMainCategory->count() }} 
+                                 {{ $category->available_main_category_count }} 
                                  {{ __('Sub Category') }}
                              </div>
                          </div>

@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Schema;
+use Illuminate\Support\Facades\Schema;
 use App\Models\{
      Preference
 };
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Guard $auth)
     {
         Schema::defaultStringLength(191);
+        
         error_reporting(E_ALL);
 
         // Check if the app is installed or not & if the request is not from console
@@ -40,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->bind(config('cache.prefix') . '.' . 'preferences', function () {
-            return \Cache::rememberForever(config('cache.prefix') . '.' . 'preferences', function () {
+            return Cache::rememberForever(config('cache.prefix') . '.' . 'preferences', function () {
                 return Preference::pluck('value', 'field');
             });
         });
@@ -54,11 +57,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('all-image', function () {
-            return \Storage::disk()->allFiles('public/uploads');
+            return Storage::disk()->allFiles('public/uploads');
         });
 
         $this->app->singleton('image-directories', function () {
-            return \Storage::disk()->allDirectories('public');
+            return Storage::disk()->allDirectories('public');
         });
     }
 }

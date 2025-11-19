@@ -28,5 +28,8 @@
     "Multilanguage": true,
     "B2B": true,
     "Subscription": true,
-    "Moyasar": true
+    "Moyasar": true,
+    "SitemapManager": true,
+    "StorageDriver": true,
+    "ResetDb": true
 }

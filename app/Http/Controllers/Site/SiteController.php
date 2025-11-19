@@ -40,7 +40,9 @@ class SiteController extends Controller
      */
     public function index()
     {
-        return view('landing.new');
+        $homeService = new \Modules\CMS\Service\HomepageService();
+        $page = $homeService->home();
+        return view('landing.new', compact('page'));
     }
 
     public function allCategoriesAjax(Request $request)
@@ -399,11 +401,8 @@ class SiteController extends Controller
     {
         $data['page_title'] = __('Products');
 
-        if (! empty($request->all())) {
-            return view('site.filter.index', $data);
-        } else {
-            return redirect()->back();
-        }
+        return view('site.filter.index', $data);
+       
     }
 
     /**

@@ -7,7 +7,7 @@
         <div class="hero-content flex flex-col md:flex-row items-center gap-12 relative z-10">
             <div class="hero-image w-full md:w-1/2 md:order-1">
                 <div class="image-container relative aspect-square max-w-lg mx-auto">
-                    <img src="{{ asset('public/new-landing/img/hero.jpg') }}" alt="Shipping Containers" class="hero-img absolute inset-0 w-full h-full object-cover rounded-2xl shadow-2xl bg-gradient-to-br from-orange-400 to-orange-600">
+                    <img src="{{ asset('public/new-landing/img/hero4.jpg') }}" alt="Shipping Containers" class="hero-img absolute inset-0 w-full h-full object-cover rounded-2xl shadow-2xl bg-gradient-to-br from-orange-400 to-orange-600">
                 </div>
             </div>
             <div class="hero-text w-full md:w-1/2">

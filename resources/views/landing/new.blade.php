@@ -3,25 +3,13 @@
     $displayPrice = preference('display_price_in_shop');
     
     $homeService = new \Modules\CMS\Service\HomepageService();
-    if (isset($slug)) { // if this is not default home page
-        $slides = \Modules\CMS\Http\Models\Slide::whereHas('slider', function ($query) {
-            $query->where(['slug' => 'home-page', 'status' => 'Active']);
-        })->get();
-        
-        $page = Modules\CMS\Entities\Page::where('slug', $slug)->with(['components' => function ($q) {
-            $q->with(['properties', 'layout:id,file'])->orderBy('level', 'asc');
-        }])->first();
-    } else {            
-        $slides = \Modules\CMS\Http\Models\Slide::whereHas('slider', function ($query) {
-            $query->where(['slug' => option('default_template_page', 'home-slider')['slider'], 'status' => 'Active']);
-        })->get();
-        
-        $page = $homeService->home();
+                  
+    $page = $homeService->home();
 
-        if (! auth()->check() && isActive('Affiliate')) {
-            \Modules\Affiliate\Entities\Referral::userClickUpdate();
-        }
+    if (! auth()->check() && isActive('Affiliate')) {
+        \Modules\Affiliate\Entities\Referral::userClickUpdate();
     }
+    
 @endphp
 
 @section('page_title', $page->meta_title)

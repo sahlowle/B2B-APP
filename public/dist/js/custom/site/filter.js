@@ -19,6 +19,7 @@ if ($('.main-body .page-wrapper').find('#item-filter-container-mobile').length |
     var keyWordChange = '';
     var brandClick = false, ratingClick = false, attributesClick = false, priceRangeClick = false, categoryClick = false, sortByClick = false, showingClick = false, b2bClick = false;
     var related_ids = '';
+    var globalParams = '';
 
     setDefaultData();
     getFilterData();
@@ -287,18 +288,23 @@ if ($('.main-body .page-wrapper').find('#item-filter-container-mobile').length |
         if (showingClick == false) {
             showing = typeof url.searchParams.get("showing") != "undefined" && url.searchParams.get("showing") != null ? url.searchParams.get("showing") : defaultShowing;
         }
-
+// alert(params);
         setParams(params);
         ajaxCall("/products", page);
     }
 
     function setParams(params = null)
     {
+        var paramsUrl = '';
         if (params != null) {
-            window.history.replaceState(null, null, params+"&rating="+rating+"&sort_by="+sortBy+"&showing="+showing);
+            paramsUrl=params+"&rating="+rating+"&sort_by="+sortBy+"&showing="+showing;
+            // window.history.replaceState(null, null, url);
         } else {
-            window.history.replaceState(null, null, "?rating="+rating+"&sort_by="+sortBy+"&showing="+showing);
+            paramsUrl = "?rating="+rating+"&sort_by="+sortBy+"&showing="+showing;
+            // window.history.replaceState(null, null, url);
         }
+
+        globalParams = paramsUrl;
     }
 
     $(document).on('click', '.page-link', function(event) {
@@ -337,7 +343,8 @@ if ($('.main-body .page-wrapper').find('#item-filter-container-mobile').length |
                 $('#itemSearch').val('');
             }
         }
-        let params = window.location.search.replace('?', '');
+        let params = globalParams;
+        params = params.startsWith('?') ? params.substring(1) : params;
         $.ajax({
             url: SITE_URL + url,
             data: params+'&from=web&page='+page+'&user_id='+authUserId,

@@ -1,5 +1,5 @@
 @extends('../site/layouts.app')
-@section('page_title', __('Filter'))
+@section('page_title', __('Browse Products'))
 @section('content')
     {{-- $brand get from controller --}}
     <!-- Top product section start -->
@@ -44,7 +44,7 @@
         var isActiveB2B = {{ isActive('B2B') ? 1 : 0 }};
     </script>
     <script src="{{ asset('public/dist/js/custom/site/wishlist.min.js') }}"></script>
-    <script src="{{ asset('public/dist/js/custom/site/filter.min.js?v=2.5') }}"></script>
+    <script src="{{ asset('public/dist/js/custom/site/filter.js?v=2.5') }}"></script>
     <script src="{{ asset('public/dist/js/custom/site/compare.min.js') }}"></script>
 
     {{-- category select deselect --}}

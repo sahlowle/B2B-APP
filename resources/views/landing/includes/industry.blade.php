@@ -19,7 +19,7 @@
                     </p>
 
                     <button
-                        onclick="window.location.href = '{{ route('site.productSearch',['categories' => '']) }}'"
+                        onclick="window.location.href = '{{ route('site.productSearch') }}'"
                         class="btn-primary bg-gradient-to-r from-orange-600 to-orange-500 text-white border-none rounded-full py-3 px-6 text-base font-medium shadow-lg transition hover:from-orange-700 hover:to-orange-600 hover:shadow-xl flex items-center justify-center gap-2 group">
                         <span>@lang('Browse Products')</span>
                         <img src="{{ asset("public/new-landing/img/material-symbols_arrow-insert-rounded.svg") }}" alt="Browse Products" class="w-6 h-6 filter invert brightness-0 group-hover:filter-none transition-all duration-300 ltr:rotate-90 ">

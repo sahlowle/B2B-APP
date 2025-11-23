@@ -21,9 +21,12 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Modules\Inventory\Entities\Location;
 use Modules\Shop\Http\Models\Shop;
+use App\Traits\HasCrmForm;
 
 class AuthController extends Controller
 {
+    use HasCrmForm;
+
     public function showLoginForm()
     {
         return view('site.auth.login');
@@ -51,13 +54,15 @@ class AuthController extends Controller
             abort(404);
         }
 
-        $data = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|min:3|max:191',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email:rfc,dns|unique:users,email',
             'password' => 'required|confirmed|max:20',
             'phone' => 'required|min:7|max:15|unique:users,phone',
             'commercial_registration_number' => 'required',
         ]);
+
+        $data = $validatedData;
 
         $status = preference('user_default_signup_status') ?? 'Pending';
 
@@ -83,6 +88,8 @@ class AuthController extends Controller
             $user->sendOtpToEmail();
             return redirect()->route('site.otp-verify', ['email' => $request->email]);
         }
+
+        $this->sendToForm('buyer_register', $validatedData);
 
         $response['status'] = 'success';
         $response['message'] = __('Registration successful. Please login to your account.');
@@ -177,6 +184,23 @@ class AuthController extends Controller
                     'shop_id' => $shop->id,
                 ]);
             }
+
+            $formData = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->phone,
+                'commercial_registration_number' => $request->commercial_registration_number,
+                'factory_name' => $request->shop_name,
+                'country' => 'Saudi Arabia',
+                'state' => $request->state,
+                'city' => $request->city,
+                'post_code' => $request->post_code,
+                'status' => $request->status,
+            ];
+            
+
+            $this->sendToForm('factory_register', $formData);
 
             User::find($user_id)->sendOtpToEmail();
 

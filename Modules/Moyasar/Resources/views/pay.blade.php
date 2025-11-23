@@ -42,6 +42,9 @@
         callback_url: '{{ route('gateway.callback', withOldQueryIntegrity(['gateway' => moduleConfig('moyasar.alias')])) }}',
         supported_networks: ['visa', 'mastercard', 'mada'],
         methods: ['creditcard'],
+        credit_card: {
+            save_card: true,
+        },
         on_completed: async function (payment) {
             await savePaymentOnBackend(payment);
         },

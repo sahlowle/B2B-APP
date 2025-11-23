@@ -39,7 +39,7 @@ class MoyasarView implements PaymentViewInterface
             return view('moyasar::pay', [
                 'publishableKey' => $moyasar->publishableKey,
                 'instruction' => $moyasar->instruction,
-                'purchaseData' => $helper->getPurchaseData($key),
+                'purchaseData' => $purchaseData,
                 'price' => $price,
             ]);
             

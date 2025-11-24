@@ -8,11 +8,15 @@ use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Modules\GeoLocale\Entities\Country;
 use App\Models\File;
+use App\Traits\HasCrmForm;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
 class QuotationController extends Controller
 {
+
+    use HasCrmForm;
+    
     public function create()
     {
         $data['categories'] = Category::parents();
@@ -34,13 +38,13 @@ class QuotationController extends Controller
             'last_name' => 'required',
             'country' => 'required|exists:geolocale_countries,id',
             'phone_number' => 'required|min:9|max:15',
-            'email' => 'required|email',
+            'email' => 'required|email:rfc,dns',
             'category' => 'required|exists:categories,id',
             'notes' => 'nullable',
             'pdf_file' => 'required|file|mimes:pdf|max:10240',
         ]);
   
-        DB::transaction(function () use ($request, $data) {
+        $quotation = DB::transaction(function () use ($request, $data) {
 
             $quotation = Quotation::create([
                 'first_name' => $data['first_name'],
@@ -59,7 +63,15 @@ class QuotationController extends Controller
                 $quotation->pdf_file = $quotation->fileUrl();
                 $quotation->save();
             }
+
+            return $quotation;
         });
+
+
+        $data['country'] = Country::find($data['country'])?->name;
+        $data['category'] = Category::find($data['category'])?->name;
+        $data['pdf_file'] = $quotation->pdf_file;
+        $this->sendToForm('rfq', $data);
 
         return redirect()->route('site.index')->with('success', __('Quotation submitted successfully'));
     }

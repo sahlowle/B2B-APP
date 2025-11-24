@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\ModelTrait;
 use App\Traits\ModelTraits\hasFiles;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Image;
 use Response;
 
@@ -52,7 +52,7 @@ class File extends Model
      */
     public function store($files = null, $uploadPath = null, $options = [], $uploadFrom = 'web')
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         $ids = [];
         $urls = [];
         $params = [];

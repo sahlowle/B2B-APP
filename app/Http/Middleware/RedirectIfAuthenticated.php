@@ -16,10 +16,17 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, $guard = null)
     {
-        if ($guard == 'user' && Auth::guard('user')->check() && Auth::user()->role()->type == 'admin') {
-            return redirect()->intended(route('dashboard'));
-        } elseif ($guard == 'user' && Auth::guard('user')->check() && Auth::user()->role()->type == 'vendor') {
-            return redirect()->intended(route('vendor-dashboard'));
+        if(Auth::check()){
+            $user = Auth::user();
+
+            if($user->isAdmin()){
+                return redirect()->intended(route('dashboard'));
+            }elseif($user->isVendor()){
+                return redirect()->intended(route('vendor-dashboard'));
+            }
+            elseif($user->isCustomer()){
+                 return redirect()->intended(route('site.dashboard'));
+            }
         }
 
         return $next($request);

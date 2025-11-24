@@ -195,6 +195,15 @@ class User extends Authenticatable implements BatchDeletable
         return false;
     }
 
+    public function isCustomer()
+    {
+        if ($this->role()) {
+            return $this->role()->type === 'customer';
+        }
+
+        return false;
+    }
+
     /**
      * Relation with Role model
      *

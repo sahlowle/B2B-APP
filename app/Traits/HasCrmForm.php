@@ -19,8 +19,15 @@ trait HasCrmForm
 
         $response = Http::post($url, $data);
 
+        Log::info("{$name} Form Response", [
+            'name' => $name,
+            'url' => $url,
+            'status' => $response->status(),
+            'response' => $response->body(),
+        ]);
+
         if ($response->failed()) {
-            Log::error('Crm Form Error', [
+            Log::error("{$name} Form Error", [
                 'url' => $url,
                 'response' => $response->body(),
             ]);

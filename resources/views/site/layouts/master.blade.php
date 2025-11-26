@@ -10,7 +10,7 @@
     @includeIf('googleanalytics::partials.google_analytics_header')
 
     <title>
-        @lang('Exports Valley') - @yield('page_title', env('APP_NAME', ''))
+        @yield('main_title', trans('Exports Valley')) - @yield('page_title', env('APP_NAME', ''))
     </title>
 
     <meta charset="UTF-8" />

@@ -250,35 +250,84 @@
                                                         @endif
                                                     @endforeach
                                                 </div>
-
                                                 @php
-                                                    $isUpPlan = $subscription?->package?->sale_price[$subscription?->billing_cycle] < $package['sale_price'][$billing_cycle];
-                                                    $isDownPlan = $subscription?->package?->sale_price[$subscription?->billing_cycle] >= $package['sale_price'][$billing_cycle];
-                                                    $isDowngradeable = preference('subscription_change_plan') && preference('subscription_downgrade');
+                                                    // Extract current and target package prices for the respective billing cycles
+                                                    $currentPrice = $subscription?->package?->sale_price[$subscription?->billing_cycle] ?? 0;
+                                                    $targetPrice = $package['sale_price'][$billing_cycle] ?? 0;
+                                                    
+                                                    // Determine plan change type
+                                                    $isUpgrade = $currentPrice < $targetPrice;
+                                                    $isDowngrade = $currentPrice >= $targetPrice;
+                                                    
+                                                    // Check if plan changes are allowed
+                                                    $canChangePlan = preference('subscription_change_plan');
+                                                    // $canDowngrade = $canChangePlan && preference('subscription_downgrade');
+                                                    $canDowngrade = $canChangePlan && preference('subscription_downgrade');
+                                                    
+                                                    // Check if user has active subscription and current plan details
+                                                    $hasSubscription = !empty($subscription?->package?->id);
+                                                    $isCurrentPlan = $hasSubscription && 
+                                                                    $subscription->package->id === $package['id'] && 
+                                                                    $subscription->billing_cycle === $billing_cycle;
+                                                    
+                                                    // Trial eligibility check
+                                                    $hasTrialAvailable = $package->trial_day && 
+                                                                        !subscription('isUsedTrial', $package->id);
+                                                    
+                                                    $canUseTrial = $hasTrialAvailable && (
+                                                        !$hasSubscription || 
+                                                        ($canChangePlan && $isUpgrade) || 
+                                                        ($canDowngrade && $isDowngrade)
+                                                    );
                                                 @endphp
-                                                
+
                                                 @if (!$isStaff)
-                                                <form action="{{ route('vendor.subscription.store') }}" method="POST">
-                                                    @csrf
-                                                    <div class="btn-box price-btn">
-                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                    <form action="{{ route('vendor.subscription.store') }}" method="POST">
+                                                        @csrf
                                                         <input type="hidden" name="package_id" value="{{ $package->id }}">
                                                         <input type="hidden" name="billing_cycle" value="{{ $billing_cycle }}">
-                                                        @if ($package->trial_day && !subscription('isUsedTrial', $package->id) && (!$subscription?->package?->id || (preference('subscription_change_plan') && $isUpPlan) || ($isDowngradeable && $isDownPlan)))
-                                                            <button type="submit" class="btn btn-outline-primary">{{ __(':x Days Trial', ['x' => $package->trial_day]) }}</button>
-                                                        @elseif (!$subscription?->package?->id)
-                                                            <button type="submit" class="btn btn-outline-primary">{{ __('Subscribe Now') }}</button>
-                                                        @elseif ($subscription?->package?->id == $package['id'] && $billing_cycle == $subscription?->billing_cycle)
-                                                            @if ($subscription?->package?->renewable)
-                                                                <button type="submit" class="btn btn-outline-primary">{{ __('Renew Plan') }}</button>
+                                                        
+                                                        <div class="btn-box price-btn">
+                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                            
+                                                            @if ($canUseTrial)
+                                                                {{-- Show trial button when trial is available and conditions are met --}}
+                                                                <button type="button" class="btn btn-outline-primary" aria-label="{{ __('Start :x days trial', ['x' => $package->trial_day]) }}">
+                                                                    {{ __(':x Days Trial', ['x' => $package->trial_day]) }}
+                                                                </button>
+                                                                
+                                                            @elseif (!$hasSubscription)
+                                                                {{-- New subscription --}}
+                                                                <button type="submit" class="btn btn-outline-primary" aria-label="{{ __('Subscribe to this plan') }}">
+                                                                    {{ __('Subscribe Now') }}
+                                                                </button>
+                                                                
+                                                            @elseif ($isCurrentPlan)
+                                                                {{-- Current active plan - show renew if renewable --}}
+                                                                @if (subscription('isExpired', $subscription->user_id) && $subscription->package->renewable)
+                                                                    <button type="submit" class="btn btn-outline-primary" aria-label="{{ __('Renew current plan') }}">
+                                                                        {{ __('Renew Plan') }}
+                                                                    </button>
+                                                                @else
+                                                                   <button type="button" class="btn btn-success pe-none" aria-label="{{ __('Current Plan') }}">
+                                                                        <i class="feather icon-check me-1"></i>{{ __('Current Plan') }}
+                                                                   </button>
+                                                                @endif
+                                                                
+                                                            @elseif ($canChangePlan && $isUpgrade)
+                                                                {{-- Upgrade to higher-tier plan --}}
+                                                                <button type="submit" class="btn btn-outline-primary" aria-label="{{ __('Upgrade to this plan') }}">
+                                                                    {{ __('Upgrade Plan') }}
+                                                                </button>
+                                                                
+                                                            @elseif ($canDowngrade && $isDowngrade)
+                                                                {{-- Downgrade to lower-tier plan --}}
+                                                                <button type="submit" class="btn btn-outline-primary" aria-label="{{ __('Downgrade to this plan') }}">
+                                                                    {{ __('Downgrade Plan') }}
+                                                                </button>
                                                             @endif
-                                                        @elseif (preference('subscription_change_plan') && $isUpPlan)
-                                                            <button type="submit" class="btn btn-outline-primary">{{ __('Upgrade Plan') }}</button>
-                                                        @elseif ($isDowngradeable && $isDownPlan)
-                                                            <button type="submit" class="btn btn-outline-primary">{{ __('Downgrade Plan') }}</button>
-                                                        @endif
-                                                    </div>
-                                                </form>
+                                                        </div>
+                                                    </form>
                                                 @endif
                                             </div>
                                         </div>

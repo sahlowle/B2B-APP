@@ -1,32 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', 'Terms and Conditions for Buyers')
-
-@section('seo')
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="Terms and Conditions for Buyers - Exports Valley">
-    <meta name="description" content="Terms and Conditions for Buyers of Exports Valley - B2B Digital Commerce Platform" />
-    <meta name="keywords" content="buyer terms, buyer conditions, Exports Valley, B2B platform, terms and conditions">
-
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="Terms and Conditions for Buyers - Exports Valley">
-    <meta itemprop="description" content="Terms and Conditions for Buyers of Exports Valley - B2B Digital Commerce Platform">
-    <meta itemprop="image" content="{{ asset('images/logo.png') }}">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="Terms and Conditions for Buyers - Exports Valley">
-    <meta property="og:description" content="Terms and Conditions for Buyers of Exports Valley - B2B Digital Commerce Platform">
-    <meta property="og:image" content="{{ asset('images/logo.png') }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="Terms and Conditions for Buyers - Exports Valley">
-    <meta property="twitter:description" content="Terms and Conditions for Buyers of Exports Valley - B2B Digital Commerce Platform">
-    <meta property="twitter:image" content="{{ asset('images/logo.png') }}">
-@endsection
+<x-seo :seo="$seo" />
 
 @section('content')
     <section class="layout-wrapper px-4 xl:px-0">

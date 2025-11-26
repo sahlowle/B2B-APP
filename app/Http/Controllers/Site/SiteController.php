@@ -588,12 +588,19 @@ class SiteController extends Controller
      */
     public function allCategories()
     {
-        $homeService = new \Modules\CMS\Service\HomepageService();
-        $data['page'] = $homeService->home();
-
         $data['categories'] = Category::whereNull('parent_id')->where('is_global', 1)
             ->with('availableMainCategory')
             ->paginate(12);
+        
+        $main_title = trans('Categories');
+        $title =trans('Exports Valley') . ' ' . trans('Best website for exporting from Saudi Arabia');
+        $data['seo'] = [
+        'main_title' => $main_title,
+        'title' => $title,
+        'meta_title' => $main_title . " ". $title,
+        'meta_description' => trans("The categories on Exports Valley bring together export-ready products and services, making it easier for companies to discover the best opportunities and markets through one of the best export websites from Saudi Arabia."),
+        'image' => asset('public/frontend/img/logo.png'),
+       ];
 
         return view('site.categories', $data);
     }

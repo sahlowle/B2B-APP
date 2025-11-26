@@ -28,6 +28,13 @@ class QuotationController extends Controller
         $data['countries'] = $countries;
         $data['calling_code'] = $countries->pluck('callingcode');
 
+        $data['seo'] = [
+            'title' => trans('Create RFQs') . ' - ' . trans('Exports Valley') . ' ' . trans('Saudi Exports'),
+            'meta_title' => trans('Create RFQs') . ' - ' . trans('Exports Valley') . '' . trans('Saudi Exports'),
+            'meta_description' => trans("Create a price quote through Exports Valley to get reliable export offers from Saudi Arabia, connect with suppliers, compare prices, and start your journey to global markets."),
+            'image' => asset('public/frontend/img/logo.png'),
+       ];
+
         return view('site.quotations.create', $data);
     }
 
@@ -69,7 +76,7 @@ class QuotationController extends Controller
 
 
         $data['country'] = Country::find($data['country'])?->name;
-        $data['category'] = Category::find($data['category'])?->name;
+        $data['category'] = Category::find($data['category'])?->hs_code;
         $data['pdf_file'] = $quotation->pdf_file;
         $this->sendToForm('rfq', $data);
 

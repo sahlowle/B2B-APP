@@ -1,32 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', __('Categories'))
-
-@section('seo')
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="{{ __('Categories') }}">
-    <meta name="description" content="{{ __('Categories') }}" />
-    <meta name="keywords" content="">
-
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="{{ __('Categories') }}">
-    <meta itemprop="description" content="{{ __('Categories') }}">
-    <meta itemprop="image" content="{{ $page->fileUrl() }}">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ __('Categories') }}">
-    <meta property="og:description" content="{{ __('Categories') }}">
-    <meta property="og:image" content="{{ $page->fileUrl() }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="{{ $page->meta_title ?? $page->title }}">
-    <meta property="twitter:description" content="{{ $page->meta_description }}">
-    <meta property="twitter:image" content="{{ $page->fileUrl() }}">
-@endsection
+<x-seo :seo="$seo" />
 
 @section('content')
     <section class="layout-wrapper px-4 xl:px-0">

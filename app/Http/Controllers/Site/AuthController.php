@@ -197,7 +197,7 @@ class AuthController extends Controller
                 'city' => $request->city,
                 'post_code' => $request->post_code,
                 'status' => $request->status,
-                'category' => Category::find($request->categories)?->first()?->name
+                'category' => Category::find($request->categories)?->first()?->hs_code
             ];
             
 

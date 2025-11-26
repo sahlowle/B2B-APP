@@ -19,7 +19,26 @@ class SellerController extends Controller
 
     public function index()
     {
-        return view('site.shop.all-shops');
+        $vendors = \App\Models\Vendor::with(['shop', 'reviews'])
+            ->where('status', 'Active')
+            ->whereHas('shop')
+            ->paginate(24);
+            
+        // Calculate stats for the hero section
+        $totalShops = $vendors->total();
+        $totalProducts = \App\Models\Product::where('status', 'Active')->count();
+        $avgRating = \App\Models\Review::avg('rating') ?? 0;
+
+
+        $seo = [
+            // 'main_title' => trans('Factories'),
+            'title' => trans('Factories'),
+            'meta_title' => trans('Factories'),
+            'meta_description' => trans('Factories'),
+            'image' => asset('public/frontend/img/logo.png'),
+       ];
+
+        return view('site.shop.all-shops', compact('vendors', 'totalShops', 'totalProducts', 'avgRating', 'seo'));
     }
 
     /**

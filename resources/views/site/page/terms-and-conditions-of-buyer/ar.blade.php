@@ -1,32 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', 'الشروط والأحكام للمشتري')
-
-@section('seo')
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="الشروط والأحكام للمشتري - إكسبورتس فالي">
-    <meta name="description" content="الشروط والأحكام الخاصة بالمشترين في منصة إكسبورتس فالي - منصة التجارة الرقمية بين الشركات" />
-    <meta name="keywords" content="شروط المشتري, أحكام المشتري, إكسبورتس فالي, منصة التجارة, B2B">
-
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="الشروط والأحكام للمشتري - إكسبورتس فالي">
-    <meta itemprop="description" content="الشروط والأحكام الخاصة بالمشترين في منصة إكسبورتس فالي - منصة التجارة الرقمية بين الشركات">
-    <meta itemprop="image" content="{{ asset('images/logo.png') }}">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="الشروط والأحكام للمشتري - إكسبورتس فالي">
-    <meta property="og:description" content="الشروط والأحكام الخاصة بالمشترين في منصة إكسبورتس فالي - منصة التجارة الرقمية بين الشركات">
-    <meta property="og:image" content="{{ asset('images/logo.png') }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="الشروط والأحكام للمشتري - إكسبورتس فالي">
-    <meta property="twitter:description" content="الشروط والأحكام الخاصة بالمشترين في منصة إكسبورتس فالي - منصة التجارة الرقمية بين الشركات">
-    <meta property="twitter:image" content="{{ asset('images/logo.png') }}">
-@endsection
+<x-seo :seo="$seo" />
 
 @section('content')
     <section class="layout-wrapper px-4 xl:px-0">

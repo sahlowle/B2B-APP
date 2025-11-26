@@ -25,6 +25,7 @@ class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInsert
         $enName = $row[1];
         $arName = $row[2];
 
+        //skip first parent categories
         if (Str::length($hsCode) <= 2) {
             return null;
         }
@@ -39,6 +40,7 @@ class HSCategoriesSubImport implements ToModel, WithChunkReading,WithBatchInsert
         
         
         return new Category([
+            'hs_code' => $hsCode,
             'name' => [
                         'en' => $hsCode . ' - ' . $enName,
                         'ar' => $hsCode . ' - ' . $arName,

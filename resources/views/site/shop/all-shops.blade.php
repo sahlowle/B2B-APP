@@ -1,10 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', __('All Shops'))
-
-{{-- @section('seo')
-    @include('site.shop.seo', ['page' => null])
-@endsection --}}
+<x-seo :seo="$seo" />
 
 @section('css')
 <style>
@@ -152,17 +148,7 @@
             </nav>
         </div>
 
-        @php
-            $vendors = \App\Models\Vendor::with(['shop', 'reviews'])
-                ->where('status', 'Active')
-                ->whereHas('shop')
-                ->paginate(24);
-                
-            // Calculate stats for the hero section
-            $totalShops = $vendors->total();
-            $totalProducts = \App\Models\Product::where('status', 'Active')->count();
-            $avgRating = \App\Models\Review::avg('rating') ?? 0;
-        @endphp
+      
 
         <!-- Page Title -->
         <div class="text-center mb-12">

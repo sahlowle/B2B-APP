@@ -2,6 +2,10 @@
 
 @section('page_title', $seo['title'])
 
+@if(isset($seo['main_title']))
+    @section('main_title', $seo['main_title'])
+@endif
+
 @section('seo')
     <meta name="robots" content="index, follow">
     <meta name="title" content="{{ $seo['meta_title'] }}">

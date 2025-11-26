@@ -31,9 +31,10 @@ class PageController extends Controller
        $page = $homeService->home();
 
        $seo = [
-        'title' => trans('About Us'),
-        'meta_title' => trans('About Us'),
-        'meta_description' => trans('About Us'),
+        'main_title' => trans('About Us'),
+        'title' => trans('Exports Valley') . ' ' . trans('Saudi Exports Services'),
+        'meta_title' => trans('Exports Valley') . ' ' . trans('Saudi Exports Services'),
+        'meta_description' => trans('Exports Valley is a Saudi company specialized in export services and support for exporters, including consultations, market research, logistics, and international shipping for the success of products outside the Kingdom of Saudi Arabia.'),
         'image' => asset('public/frontend/img/logo.png'),
        ];
 
@@ -65,9 +66,10 @@ class PageController extends Controller
        $page = $homeService->home();
 
        $seo = [
-        'title' => trans('Privacy Policy'),
-        'meta_title' => trans('Privacy Policy'),
-        'meta_description' => trans('Privacy Policy'),
+        'main_title' => trans('Privacy Policy'),
+        'title' => trans('Exports Valley') . ' ' . trans('Saudi Exports Program'),
+        'meta_title' => trans('Exports Valley') . ' ' . trans('Saudi Exports Program'),
+        'meta_description' => trans("Learn about Exports Valley's privacy policy and how we protect company and exporter data within the Saudi Export Program according to the highest standards of security and transparency."),
         'image' => asset('public/frontend/img/logo.png'),
        ];
 
@@ -94,9 +96,10 @@ class PageController extends Controller
        $currentLang = $lang;
 
        $seo = [
-        'title' => trans('Terms and Conditions of Seller'),
-        'meta_title' => trans('Terms and Conditions of Seller'),
-        'meta_description' => trans('Terms and Conditions of Seller'),
+        'main_title' => trans('Terms and Conditions of Seller'),
+        'title' => trans('Exports Valley') . ' ' . trans('Saudi Exports'),
+        'meta_title' => trans('Exports Valley') . ' ' . trans('Saudi Exports'),
+        'meta_description' => trans("The terms and conditions for sellers at Exports Valley clarify the rights and obligations of sellers, the sales mechanism, policies, and guarantees of compliance with Saudi export regulations and standards."),
         'image' => asset('public/frontend/img/logo.png'),
        ];
 
@@ -122,10 +125,11 @@ class PageController extends Controller
 
        $currentLang = $lang;
 
-       $seo = [
-        'title' => trans('Contact Us'),
-        'meta_title' => trans('Contact Us'),
-        'meta_description' => trans('Contact Us'),
+      $seo = [
+        'main_title' => trans('Terms and Conditions of Buyer'),
+        'title' => trans('Exports Valley') . ' ' . trans('Saudi Exports'),
+        'meta_title' => trans('Exports Valley') . ' ' . trans('Saudi Exports'),
+        'meta_description' => trans("Learn about Exports Valley's buyer terms and conditions, purchasing rights and responsibilities, and payment, shipping, and return policies in accordance with Saudi export regulations."),
         'image' => asset('public/frontend/img/logo.png'),
        ];
 

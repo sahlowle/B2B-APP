@@ -1,32 +1,6 @@
 @extends('site.layouts.app')
 
-@section('page_title', 'Privacy Policy')
-
-@section('seo')
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="Privacy Policy - Exports Valley">
-    <meta name="description" content="Exports Valley Privacy Policy - Digital B2B Trading Platform" />
-    <meta name="keywords" content="privacy policy, Exports Valley, data protection, privacy">
-
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="Privacy Policy - Exports Valley">
-    <meta itemprop="description" content="Exports Valley Privacy Policy - Digital B2B Trading Platform">
-    <meta itemprop="image" content="{{ asset('images/logo.png') }}">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="Privacy Policy - Exports Valley">
-    <meta property="og:description" content="Exports Valley Privacy Policy - Digital B2B Trading Platform">
-    <meta property="og:image" content="{{ asset('images/logo.png') }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="Privacy Policy - Exports Valley">
-    <meta property="twitter:description" content="Exports Valley Privacy Policy - Digital B2B Trading Platform">
-    <meta property="twitter:image" content="{{ asset('images/logo.png') }}">
-@endsection
+<x-seo :seo="$seo" />
 
 @section('content')
     <section class="layout-wrapper px-4 xl:px-0">

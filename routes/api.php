@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckApiAccess;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -102,3 +103,6 @@ Route::get('preferences', 'PreferenceController@preference');
 
 // Vendor specification
 Route::get('vendor/{id}', 'VendorController@detail');
+
+
+Route::get('hs-codes', 'HSCodeController@index')->middleware(CheckApiAccess::class);

@@ -30,7 +30,7 @@ class CheckApiAccess
         // Check if access token is required
         if (preference('access_token_required', 0))
         {
-            
+
             if(!$request->hasHeader('API-KEY')) {
                 $data['message'] = __('API Key is required');
 
@@ -46,6 +46,10 @@ class CheckApiAccess
                 return response()->json(['response' => $data], 403);
             }
         }
+        
+        $locale =$request->header('Accept-Language','en');
+        session()->put('locale', $locale);
+        app()->setLocale($locale);
 
         return $next($request);
     }

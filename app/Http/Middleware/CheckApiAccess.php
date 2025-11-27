@@ -28,7 +28,15 @@ class CheckApiAccess
         }
 
         // Check if access token is required
-        if (preference('access_token_required', 0)) {
+        if (preference('access_token_required', 0))
+        {
+            
+            if(!$request->hasHeader('API-KEY')) {
+                $data['message'] = __('API Key is required');
+
+                return response()->json(['response' => $data], 403);
+            }
+
             $apiKey = $request->header('API-KEY');
 
             // Validate the access token

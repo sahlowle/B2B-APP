@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Modules\Addons\Entities\Addon;
 use Modules\Moyasar\Entities\Moyasar;
 use Modules\Stripe\Entities\StripeBody;
@@ -93,6 +94,8 @@ class MoyasarController extends Controller
         $user->cards()->create([
             'token' => $request->id,
         ]);
+
+        Log::info('Moyasar save card webhook', $request->all());
 
         return true;
      }

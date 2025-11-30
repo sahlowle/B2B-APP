@@ -184,12 +184,29 @@
                                                 <div class="price-box">
                                                     <div class="title wb-all"><h2>{{ $package->name }}</h2></div>
                                                     <div>
+                                                        @php
+                                                            $original = $package->sale_price[$billing_cycle] ?? 0;
+                                                            $discount = $package->discount_price[$billing_cycle] ?? null;
+
+                                                            // Pick the correct displayed price
+                                                            $price = $discount && $discount > 0 ? $discount : $original;
+                                                        @endphp
+
                                                         <h4 class="text-secondary charge-text">
-                                                            @empty($package->discount_price[$billing_cycle])
-                                                                {{ $package->sale_price[$billing_cycle] == 0 ? formatNumber((float) 0) : formatNumber((float) $package->sale_price[$billing_cycle]) }}
-                                                            @else
-                                                            {{ $package->discount_price[$billing_cycle] == 0 ? formatNumber((float) 0) : formatNumber((float) $package->discount_price[$billing_cycle]) }}
-                                                            @endempty
+
+                                                             {{-- Show old/original price only if discount exists --}}
+                                                            @if ($discount && $discount < $original)
+                                                                <p>
+                                                                    <span class="text-muted text-decoration-line-through ms-2">
+                                                                    {{ formatNumber((float) $original) }}
+                                                                </span>
+                                                                </p>
+                                                            @endif
+
+                                                            {{-- Current price --}}
+                                                            {{ formatNumber((float) $price) }}
+
+                                                           
 
                                                             <span class="d-inline t-duration">
                                                                 /
@@ -199,7 +216,9 @@
                                                                     {{ ucfirst($billing_cycle) }}
                                                                 @endif
                                                             </span>
+
                                                         </h4>
+
                                                     </div>
                                                 </div>
 

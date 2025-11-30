@@ -282,7 +282,7 @@
                                                 @endphp
 
                                                 @if (!$isStaff)
-                                                    <form action="{{ route('vendor.subscription.store') }}" method="POST">
+                                                    <form action="{{ route('vendor.subscription.store') }}" method="POST" id="subscriptionForm{{ $package->id }}" >
                                                         @csrf
                                                         <input type="hidden" name="package_id" value="{{ $package->id }}">
                                                         <input type="hidden" name="billing_cycle" value="{{ $billing_cycle }}">
@@ -292,9 +292,15 @@
                                                             
                                                             @if ($canUseTrial)
                                                                 {{-- Show trial button when trial is available and conditions are met --}}
-                                                                <button type="button" class="btn btn-outline-primary" aria-label="{{ __('Start :x days trial', ['x' => $package->trial_day]) }}">
-                                                                    {{ __(':x Days Trial', ['x' => $package->trial_day]) }}
-                                                                </button>
+                                                                @if (Auth::user()->doseNotHaveActiveCard())
+                                                                    <button data-bs-toggle="modal" data-bs-target="#paymentModal{{ $package->id }}" type="button" class="btn btn-outline-primary" aria-label="{{ __('Start :x days trial', ['x' => $package->trial_period]) }}">
+                                                                        {{ $package->getTrialPeriod() }}
+                                                                    </button>
+                                                                @else
+                                                                    <button type="submit" class="btn btn-outline-primary" aria-label="{{ __('Subscribe to this plan') }}">
+                                                                        {{ __('Subscribe Now') }}
+                                                                    </button>
+                                                                @endif
                                                                 
                                                             @elseif (!$hasSubscription)
                                                                 {{-- New subscription --}}
@@ -328,6 +334,26 @@
                                                             @endif
                                                         </div>
                                                     </form>
+
+                                                    @if ($canUseTrial)
+                                                        <!-- Modal -->
+                                                        <div class="modal fade " id="paymentModal{{ $package->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        {{ __('Add Payment Card') }}
+                                                                    </h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    @include('subscription::vendor.add-card')
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    @endif
+
                                                 @endif
                                             </div>
                                         </div>
@@ -346,6 +372,243 @@
 
 @section('js')
     <script src="{{ asset('Modules/Subscription/Resources/assets/js/subscription.min.js') }}"></script>
+
+    <script>
+        const form = document.querySelector('.payment-form');
+        const holderNameInput = document.querySelector('input[name="holder_name"]');
+        const cardNumberInput = document.querySelector('input[name="card_number"]');
+        const expiryDateInput = document.querySelector('input[name="expiry_date"]');
+        const cvvInput = document.querySelector('input[name="cvv"]');
+        const nameError = document.querySelector('.name-error');
+        const cardError = document.querySelector('.card-error');
+        const expiryError = document.querySelector('.expiry-error');
+        const cvvError = document.querySelector('.cvv-error');
+
+        // name
+        holderNameInput.addEventListener('input', function(e) {
+            validateHolderName();
+        });
+
+        // Format card number with spaces
+        cardNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            value = value.replace(/\D/g, '');
+            
+            let formattedValue = value.match(/.{1,4}/g);
+            e.target.value = formattedValue ? formattedValue.join(' ') : value;
+            
+            validateCardNumber();
+        });
+
+        // Format expiry date
+        expiryDateInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            
+            e.target.value = value;
+            validateExpiryDate();
+        });
+
+        // CVV validation - numbers only
+        cvvInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+            validateCVV();
+        });
+
+          // Validation functions
+        function validateHolderName() {
+            const value = holderNameInput.value;
+
+            if (value.length === 0) {
+                showError(holderNameInput, nameError, 'Holder name is required');
+                return false;
+            }
+            
+            // Check if value has at least two names (first name and last name)
+            const names = value.split(/\s+/); // Split by one or more spaces
+            if (names.length < 2) {
+                showError(holderNameInput, nameError, 'Please enter both first and last name');
+                return false;
+            }
+            
+            // Optional: Check if each name has at least 2 characters
+            if (names.some(name => name.length < 2)) {
+                showError(holderNameInput, nameError, 'Each name must be at least 2 characters');
+                return false;
+            }
+            
+            showSuccess(holderNameInput, nameError); // Fixed: should be holderNameInput and nameError
+            return true;
+        }
+
+        // Validation functions
+        function validateCardNumber() {
+            const value = cardNumberInput.value.replace(/\s/g, '');
+            
+            if (value.length === 0) {
+                showError(cardNumberInput, cardError, 'Card number is required');
+                return false;
+            }
+            
+            if (value.length < 13 || value.length > 19) {
+                showError(cardNumberInput, cardError, 'Card number must be between 13-19 digits');
+                return false;
+            }
+            
+            if (!luhnCheck(value)) {
+                showError(cardNumberInput, cardError, 'Invalid card number');
+                return false;
+            }
+            
+            showSuccess(cardNumberInput, cardError);
+            return true;
+        }
+
+        function validateExpiryDate() {
+            const value = expiryDateInput.value;
+            
+            if (value.length === 0) {
+                showError(expiryDateInput, expiryError, 'Expiry date is required');
+                return false;
+            }
+            
+            if (value.length !== 5) {
+                showError(expiryDateInput, expiryError, 'Expiry date must be MM/YY format');
+                return false;
+            }
+            
+            const parts = value.split('/');
+            const month = parseInt(parts[0]);
+            const year = parseInt('20' + parts[1]);
+            
+            if (month < 1 || month > 12) {
+                showError(expiryDateInput, expiryError, 'Invalid month');
+                return false;
+            }
+            
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1;
+            
+            if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                showError(expiryDateInput, expiryError, 'Card has expired');
+                return false;
+            }
+            
+            showSuccess(expiryDateInput, expiryError);
+            return true;
+        }
+
+        function validateCVV() {
+            const value = cvvInput.value;
+            
+            if (value.length === 0) {
+                showError(cvvInput, cvvError, 'CVV is required');
+                return false;
+            }
+            
+            if (value.length < 3 || value.length > 4) {
+                showError(cvvInput, cvvError, 'CVV must be 3-4 digits');
+                return false;
+            }
+            
+            showSuccess(cvvInput, cvvError);
+            return true;
+        }
+
+        // Luhn algorithm for card validation
+        function luhnCheck(cardNumber) {
+            let sum = 0;
+            let isEven = false;
+            
+            for (let i = cardNumber.length - 1; i >= 0; i--) {
+                let digit = parseInt(cardNumber[i]);
+                
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+                
+                sum += digit;
+                isEven = !isEven;
+            }
+            
+            return sum % 10 === 0;
+        }
+
+        function showError(input, errorElement, message) {
+            input.classList.remove('success');
+            input.classList.add('error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show text-danger');
+        }
+
+        function showSuccess(input, errorElement) {
+            input.classList.remove('error');
+            input.classList.add('success');
+            errorElement.textContent = '';
+            errorElement.classList.remove('show');
+        }
+
+        submitBtn = form.querySelector('button[type="submit"]');
+
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+   
+            var parentFormID = formData.get("parent_form_id");
+
+            
+            const isHolderNameValid = validateHolderName();
+            const isCardValid = validateCardNumber();
+            const isExpiryValid = validateExpiryDate();
+            const isCVVValid = validateCVV();
+            
+            if (isCardValid && isHolderNameValid && isExpiryValid && isCVVValid) {
+                addCard(parentFormID);
+                // Here you would normally send the data to your server
+            } else {
+                alert('Please fix the errors in the form');
+            }
+        });
+
+        // Validate on blur
+        cardNumberInput.addEventListener('blur', validateCardNumber);
+        expiryDateInput.addEventListener('blur', validateExpiryDate);
+        cvvInput.addEventListener('blur', validateCVV);
+        holderNameInput.addEventListener('blur', validateHolderName);
+
+
+        function addCard(parentFormID) {
+            $.ajax({
+                url: '{{ route("vendor.subscription.add-card") }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    holder_name: holderNameInput.value,
+                    card_number:  cardNumberInput.value.replace(/\s/g, ''),
+                    expiry_date: expiryDateInput.value,
+                    cvv: cvvInput.value,
+                },
+                success: function(response) {
+                    $("#" + parentFormID).submit();
+                },
+                error: function(response) {
+                    alert('Failed to add card!');
+                }
+            });
+        }
+    </script>
 @endsection
 
 

@@ -2,9 +2,11 @@
 
 namespace Modules\Moyasar\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Http;
 use Modules\Addons\Entities\Addon;
 use Modules\Moyasar\Entities\Moyasar;
 use Modules\Stripe\Entities\StripeBody;
@@ -51,4 +53,47 @@ class MoyasarController extends Controller
             200
         );
     }
+
+
+     public function addCard($holderName, $cardNumber, $month, $year, $cvv) :bool
+     {
+
+         $moyasar = Moyasar::firstWhere('alias', 'moyasar')->data;
+         $publicKey = $moyasar->publishableKey;
+         
+         $response = Http::withBasicAuth($publicKey, '')
+        ->asForm()
+        ->post('https://api.moyasar.com/v1/tokens', [
+            'name' => $holderName,
+            'number' => $cardNumber,
+            'month' => $month,
+            'year' => $year,
+            'cvc' => $cvv,
+            'callback_url' => route('moyasar.save-card-webhook', auth()->id()),
+        ]);
+
+        if (filled($response->json('id'))) {
+
+            $token = $response->json('id');
+
+            auth()->user()->cards()->create([
+                'token' => $token,
+            ]);
+
+            return true;
+        }
+
+        return false;
+     }
+
+     public function saveCardWebHook(Request $request, User $user)
+     {
+        abort_if($request->isNotFilled(['id']), 400, 'User not found');
+
+        $user->cards()->create([
+            'token' => $request->id,
+        ]);
+
+        return true;
+     }
 }

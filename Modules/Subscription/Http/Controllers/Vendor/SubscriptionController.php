@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\{
     DB, Auth, Session
 };
 use Modules\Gateway\Redirect\GatewayRedirect;
+use Modules\Moyasar\Http\Controllers\MoyasarController;
 use Modules\Subscription\DataTables\VendorSubscriptionHistoryDataTable;
 use Modules\Subscription\Notifications\SubscriptionInvoiceNotification;
 
@@ -90,7 +91,7 @@ class SubscriptionController extends Controller
         try {
             
             return DB::transaction(function () use ($request) {
-
+                $user = Auth::user();
                 $paymentType = ['automate' => 'recurring', 'manual' => 'single', 'customer_choice' => null];
                 $renewal = $request->billing_cycle == 'lifetime' ? 'manual' : preference('subscription_renewal');
 
@@ -105,6 +106,12 @@ class SubscriptionController extends Controller
                 $subscriptionDetails = $this->subscriptionService->storeSubscriptionDetails(packageSubscription: $subscription);
 
                 if ($subscriptionDetails->is_trial ||  $subscriptionDetails->billing_price == 0) {
+
+                    if($user->doseNotHaveActiveCard()) {
+                        $subscriptionDetails->delete();
+                        return redirect()->route('vendor.subscription.index')->withErrors(__('Please add a payment method.'));
+                    }
+
                     $this->subscriptionService->activatedSubscription($subscriptionDetails->id);
                     return redirect()->route('vendor.subscription.index')->withSuccess($response['message']);
                 }
@@ -349,6 +356,41 @@ class SubscriptionController extends Controller
         });
         
         return $cycles;
+    }
+
+
+    public function addCard(Request $request, MoyasarController $moyasar)
+    {
+        $request->validate([
+            'card_number' => 'required',
+            'expiry_date' => 'required',
+            'cvv' => 'required',
+        ]);
+
+        $holder_name = $request->holder_name;
+        $card_number = $request->card_number;
+        $expiry_date = $request->expiry_date;
+        $cvv = $request->cvv;
+
+        $card_number = str_replace(' ', '', $card_number);
+        $expiry_date = explode('/', $expiry_date);
+        $month = $expiry_date[0];
+        $year = $expiry_date[1];
+
+        $response = $moyasar->addCard($holder_name, $card_number, $month, $year, $cvv);
+
+        if ($response) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $response,
+                'message' => 'Card added successfully',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Card added failed',
+        ]);
     }
 
 }

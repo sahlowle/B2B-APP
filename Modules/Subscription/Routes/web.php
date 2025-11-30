@@ -54,6 +54,7 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Modules\Subscription\Http\Co
     // Vendor Subscription
     Route::get('/subscription', 'SubscriptionController@index')->name('vendor.subscription.index');
     Route::post('subscription/store', 'SubscriptionController@store')->name('vendor.subscription.store');
+    Route::post('subscription/add-card', 'SubscriptionController@addCard')->name('vendor.subscription.add-card');
     Route::get('subscription/paid', 'SubscriptionController@paid')->name('vendor.subscription.paid');
     Route::get('subscription/history', 'SubscriptionController@history')->name('vendor.subscription.history');
     Route::get('subscription/history/invoice/{id}', 'SubscriptionController@invoice')->name('vendor.subscription.invoice');

@@ -66,6 +66,17 @@ class Package extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getTrialPeriod()
+    {
+        if (is_null($this->trial_day)) {
+            return null;
+        }
+        if ($this->trial_day % 30 == 0) {
+            return trans('Get') .' ' . $this->trial_day / 30 . ' ' . trans('Months Free');
+        }
+        return trans('Get') .' ' . $this->trial_day . ' ' . trans('Days Free');
+    }
+
     /**
      * Relation with PackageSubscription model
      *

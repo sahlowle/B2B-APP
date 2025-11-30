@@ -204,6 +204,11 @@ class User extends Authenticatable implements BatchDeletable
         return false;
     }
 
+    public function cards()
+    {
+        return $this->hasMany(PaymentCard::class);
+    }
+
     /**
      * Relation with Role model
      *
@@ -212,6 +217,16 @@ class User extends Authenticatable implements BatchDeletable
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_users');
+    }
+
+    public function hasActiveCard()
+    {
+        return $this->cards()->active()->exists();
+    }
+
+    public function doseNotHaveActiveCard()
+    {
+        return !$this->hasActiveCard();
     }
 
     /**

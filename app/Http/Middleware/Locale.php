@@ -18,7 +18,8 @@ class Locale
 
         // 2. Get all active languages and cache them. 
         // We fetch the language details to get the direction ('rtl' or 'ltr').
-        $activeLanguages = Cache::rememberForever('active_languages_list', function () {
+        // Cache::forget('active_languages_list');
+        $activeLanguages = Cache::remember('active_languages_list', 60*60*24, function () {
             // Use keyBy() to make it easy to look up a language by its short name.
             return Language::where('status', 'Active')->get()->keyBy('short_name');
         });
@@ -29,6 +30,7 @@ class Locale
             $locale = config('app.fallback_locale', 'en');
         }
 
+        // dd($locale);
         // 4. Set the application's locale for the current request.
         App::setLocale($locale);
 

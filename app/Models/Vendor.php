@@ -425,6 +425,16 @@ class Vendor extends Model implements BatchDeletable
     }
 
     /**
+     * vendor category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function categories()
+    {
+        return $this->hasMany('App\Models\VendorCategory', 'vendor_id', 'id');
+    }
+
+    /**
      * Route Notification For Mail
      */
     public function routeNotificationForMail(Notification $notification)

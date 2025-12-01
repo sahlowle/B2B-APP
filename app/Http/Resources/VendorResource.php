@@ -25,14 +25,20 @@ class VendorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            // 'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'formal_name' => $this->formal_name,
-            'total_review' => $this->shopReview()->count,
+            // 'formal_name' => $this->formal_name,
+            'factory_name' => $this->whenLoaded('shop', function () {
+                return $this->shop->name;
+            }),
+            'commercial_registration_number' => $this->whenLoaded('shop', function () {
+                return $this->shop->commercial_registration_number;
+            }),
+            // 'total_review' => $this->shopReview()->count,
             'description' => $this->description,
-            'rating' => $this->shopReview()->rating,
-            'status' => $this->status,
+            // 'rating' => $this->shopReview()->rating,
+            // 'status' => $this->status,
             'website' => $this->website,
             'created_at' => $this->format_created_at,
             'logo' => optional($this->logo)->fileUrl() ?? $this->fileUrl(),

@@ -26,13 +26,31 @@ trait ApiResponse
         }
 
         return response()->json([
-            'response' => [
-                'status' => [
-                    'code' => $statusCode,
-                    'message' => $message,
-                ],
-                'records' => $data,
-            ]], $statusCode);
+             'success' => true,
+            'message' => $message,
+            'data' => $data,
+        ], $statusCode);
+    }
+
+      public function paginatedResponse($paginator, string $message = 'Data retrieved successfully')
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $paginator->items(),
+            'meta' => [
+                'current_page' => $paginator->currentPage(),
+                'last_page' => $paginator->lastPage(),
+                'per_page' => $paginator->perPage(),
+                'total' => $paginator->total(),
+            ],
+            'links' => [
+                'first' => $paginator->url(1),
+                'last' => $paginator->url($paginator->lastPage()),
+                'prev' => $paginator->previousPageUrl(),
+                'next' => $paginator->nextPageUrl(),
+            ],
+        ], 200);
     }
 
     /**

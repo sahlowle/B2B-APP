@@ -47,7 +47,7 @@ class CheckApiAccess
             }
         }
         
-        $locale = $request->header('Accept-Language','en');
+        $locale = $request->header('lang','en');
         $locale = substr($locale,0,2);
         session()->put('locale', $locale);
         app()->setLocale($locale);

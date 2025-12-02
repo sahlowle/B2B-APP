@@ -12,8 +12,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VendorResource;
 use App\Models\Category;
+use App\Models\Quotation;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Modules\GeoLocale\Entities\Country;
 
 class HSCodeController extends Controller
 {
@@ -26,6 +29,7 @@ class HSCodeController extends Controller
     {
         $request->validate([
             'hs_code' => ['required','string','max:20'],
+            'page' => ['required','numeric','min:1'],
         ]);
 
         $data = Category::select('id', 'name','hs_code')
@@ -58,5 +62,43 @@ class HSCodeController extends Controller
         $vendors = VendorResource::collection($vendors);
 
         return $this->paginatedResponse($vendors, 'Factories List');
+    }
+
+    public function storeRFQs(Request $request)
+    {
+        $data = $request->validate([
+            'first_name' => 'required|max:100',
+            'last_name' => 'required',
+            'country_name' => 'required|exists:geolocale_countries,name',
+            'phone_number' => 'required|min:9|max:15',
+            'email' => 'required|email:rfc,dns',
+            'category_id' => 'required|exists:categories,id',
+            'notes' => 'nullable',
+            'pdf_file' => 'required|file|mimes:pdf|max:10240',
+        ]);
+  
+        DB::transaction(function () use ($request, $data) {
+
+            $quotation = Quotation::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'country_id' => Country::where('name', $data['country_name'])->first()->id,
+                'phone_number' => $data['phone_number'],
+                'email' => $data['email'],
+                'category_id' => $data['category_id'],
+                'notes' => $request->notes,
+                'pdf_file' => null,
+            ]);
+
+            if ($request->hasFile('pdf_file')) {
+                $quotation->uploadFiles(['isUploaded' => false, 'isSavedInObjectFiles' => true, 'isOriginalNameRequired' => true, 'thumbnail' => false]);
+                
+                $quotation->pdf_file = $quotation->fileUrl();
+                $quotation->save();
+            }
+
+        });
+
+        return $this->response( message:'RFQs created successfully');
     }
 }

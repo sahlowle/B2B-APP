@@ -26,7 +26,7 @@ trait ApiResponse
         }
 
         return response()->json([
-             'success' => true,
+            'success' => $statusCode == Response::HTTP_OK,
             'message' => $message,
             'data' => $data,
         ], $statusCode);

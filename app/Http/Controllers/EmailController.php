@@ -87,21 +87,25 @@ class EmailController extends Controller
                 'content' => $messageBody,
             ];
         }
-        $emailInfo = EmailConfiguration::getAll()->first();
-        if ($emailInfo && $emailInfo->protocol == 'smtp') {
+        // $emailInfo = EmailConfiguration::getAll()->first();
 
-            try {
-                $this->setupEmailConfig($companyName);
-                $mail->send($dataMail, 'admin.emails.content');
-            } catch (\Exception $e) {
-                $this->response = $this->failResponse;
-            }
-        } else {
-            $return = $this->sendPhpEmail($to, $subject, $messageBody, $emailInfo, '');
-            if (empty($return)) {
-                $this->response = $this->failResponse;
-            }
-        }
+         $this->setupEmailConfig($companyName);
+        $mail->send($dataMail, 'admin.emails.content');
+
+        // if ($emailInfo && $emailInfo->protocol == 'smtp') {
+
+        //     try {
+        //         $this->setupEmailConfig($companyName);
+        //         $mail->send($dataMail, 'admin.emails.content');
+        //     } catch (\Exception $e) {
+        //         $this->response = $this->failResponse;
+        //     }
+        // } else {
+        //     $return = $this->sendPhpEmail($to, $subject, $messageBody, $emailInfo, '');
+        //     if (empty($return)) {
+        //         $this->response = $this->failResponse;
+        //     }
+        // }
 
         return $this->response;
     }
@@ -149,23 +153,25 @@ class EmailController extends Controller
      */
     public function setupEmailConfig($companyName = null)
     {
-        $result = EmailConfiguration::getAll()->first();
-        $value = ['address' => isset($result->from_address) ? $result->from_address : '', 'name' => isset($result->from_name) ? $result->from_name : ''];
+        // dd($companyName);
 
-        if (! empty($companyName)) {
-            $value = ['address' => isset($result->from_address) ? $result->from_address : '', 'name' => $companyName];
-        }
+        // $result = EmailConfiguration::getAll()->first();
+        // $value = ['address' => isset($result->from_address) ? $result->from_address : '', 'name' => isset($result->from_name) ? $result->from_name : ''];
 
-        Config::set([
-            'mail.driver'     => isset($result->protocol) ? $result->protocol : '',
-            'mail.host'       => isset($result->smtp_host) ? $result->smtp_host : '',
-            'mail.port'       => isset($result->smtp_port) ? $result->smtp_port : '',
-            'mail.from'       => $value,
-            'mail.encryption' => isset($result->encryption) ? $result->encryption : '',
-            'mail.username'   => isset($result->smtp_username) ? $result->smtp_username : '',
-            'mail.password'   => isset($result->smtp_password) ? $result->smtp_password : '',
+        // if (! empty($companyName)) {
+        //     $value = ['address' => isset($result->from_address) ? $result->from_address : '', 'name' => $companyName];
+        // }
 
-        ]);
+        // Config::set([
+        //     'mail.driver'     => isset($result->protocol) ? $result->protocol : '',
+        //     'mail.host'       => isset($result->smtp_host) ? $result->smtp_host : '',
+        //     'mail.port'       => isset($result->smtp_port) ? $result->smtp_port : '',
+        //     'mail.from'       => $value,
+        //     'mail.encryption' => isset($result->encryption) ? $result->encryption : '',
+        //     'mail.username'   => isset($result->smtp_username) ? $result->smtp_username : '',
+        //     'mail.password'   => isset($result->smtp_password) ? $result->smtp_password : '',
+
+        // ]);
     }
 
     /**

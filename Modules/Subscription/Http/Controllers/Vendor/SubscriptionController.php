@@ -107,10 +107,10 @@ class SubscriptionController extends Controller
 
                 if ($subscriptionDetails->is_trial ||  $subscriptionDetails->billing_price == 0) {
 
-                    if($user->doseNotHaveActiveCard()) {
-                        $subscriptionDetails->delete();
-                        return redirect()->route('vendor.subscription.index')->withErrors(__('Please add a payment method.'));
-                    }
+                    // if($user->doseNotHaveActiveCard()) {
+                    //     $subscriptionDetails->delete();
+                    //     return redirect()->route('vendor.subscription.index')->withErrors(__('Please add a payment method.'));
+                    // }
 
                     $this->subscriptionService->activatedSubscription($subscriptionDetails->id);
                     return redirect()->route('vendor.subscription.index')->withSuccess($response['message']);

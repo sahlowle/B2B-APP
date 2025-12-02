@@ -37,10 +37,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row" stylw>
                                         <label for="user" class="col-2 control-label">{{ __('Email') }}</label>
                                         <div class="col-6">
-                                            <input name="email" type="email" placeholder="{{ __('Email') }}"
+                                            <input style="cursor:not-allowed" name="email" readonly type="email" placeholder="{{ __('Email') }}"
                                                 class="form-control form-width inputFieldDesign" id="user_email">
                                         </div>
                                     </div>

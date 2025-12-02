@@ -28,8 +28,7 @@ class HSCodeController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'hs_code' => ['required','string','max:20'],
-            'page' => ['required','numeric','min:1'],
+            'hs_code' => ['required','string','max:20']
         ]);
 
         $data = Category::select('id', 'name','hs_code')
@@ -45,6 +44,7 @@ class HSCodeController extends Controller
     {
         $request->validate([
             'hs_code' => ['required','string','max:20','exists:categories,hs_code'],
+            'page' => ['required','numeric','min:1'],
         ]);
 
         $category = Category::select('id', 'name','hs_code')

@@ -33,7 +33,8 @@ class PackageDataTable extends DataTable
                 return wrapIt(__('Guest'), 25);
             })
             ->editColumn('name', function ($package) {
-                return trimWords($package->name, 30);
+                $icon = $package->is_private ? '<i class="feather icon-settings"></i>' : '<i class="feather icon-package"></i>';
+                return $icon . ' ' . trimWords($package->name, 30);
             })
             ->editColumn('is_private', function ($package) {
                 return $package->is_private ? __('No') : __('Yes');
@@ -118,7 +119,7 @@ class PackageDataTable extends DataTable
             ->addColumn(['data' => 'id', 'name' => 'id', 'title' => __('Id'), 'visible' => false])
             ->addColumn(['data' => 'name', 'name' => 'name', 'title' => __('Name'), 'className' => 'align-middle'])
             ->addColumn(['data' => 'user', 'name' => 'user.name', 'title' => __('Author'), 'className' => 'align-middle'])
-            ->addColumn(['data' => 'is_private', 'name' => 'is_private', 'title' => __('Is Visible?'), 'className' => 'align-middle'])
+            ->addColumn(['data' => 'is_private', 'name' => 'is_private', 'title' => __('Is Private?'), 'className' => 'align-middle'])
             ->addColumn(['data' => 'sale_price', 'name' => 'sale_price', 'title' => __('Sale Price'), 'className' => 'align-middle'])
             ->addColumn(['data' => 'discount_price', 'name' => 'discount_price', 'title' => __('Discount Price')])
             ->addColumn(['data' => 'billing_cycle', 'name' => 'billing_cycle', 'title' => __('Billing Cycle')])

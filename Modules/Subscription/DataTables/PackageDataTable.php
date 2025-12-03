@@ -37,7 +37,7 @@ class PackageDataTable extends DataTable
                 return $icon . ' ' . trimWords($package->name, 30);
             })
             ->editColumn('is_private', function ($package) {
-                return $package->is_private ? __('No') : __('Yes');
+                return $package->is_private ? __('Yes') : __('No');
             })->editColumn('sale_price', function ($package) {
                 $price = '<div>';
                 foreach ($package->sale_price as $key => $value) {

@@ -29,12 +29,13 @@ class SellerController extends Controller
         $totalProducts = \App\Models\Product::where('status', 'Active')->count();
         $avgRating = \App\Models\Review::avg('rating') ?? 0;
 
-
+        $main_title = trans('Saudi Factories');
+        $title = trans('Exports Valley') . ' ' . trans('Saudi Exports Services');
         $seo = [
-            // 'main_title' => trans('Factories'),
-            'title' => trans('Factories'),
-            'meta_title' => trans('Factories'),
-            'meta_description' => trans('Factories'),
+            'main_title' => $main_title,
+            'title' => $title,
+            'meta_title' => $main_title .' '.$title,
+            'meta_description' => trans('All Saudi factory products available at Exports Valley are included in the Saudi Exports Directory, offering ready-made export solutions, reliable quality, and opportunities to access diverse global markets.'),
             'image' => asset('public/frontend/img/logo.png'),
        ];
 

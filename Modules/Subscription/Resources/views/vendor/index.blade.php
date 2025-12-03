@@ -174,7 +174,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="row plan-root">
+                            <div class="row justify-content-center">
                                 <!-- Pricing Block -->
                                 @foreach ($packages as $package)
                                     @foreach ($package['billing_cycle'] as $billing_cycle => $value)

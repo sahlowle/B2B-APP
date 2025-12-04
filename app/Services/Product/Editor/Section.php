@@ -41,10 +41,10 @@ class Section
                 'content' => 'admin.products.sections.product-details',
             ],
             'product-data' => [
-                'is_main' => true,
+                'is_main' => false,
                 'is_draggable' => false,
                 'position' => '30',
-                'visibility' => true,
+                'visibility' => false,
                 'content' => 'admin.products.sections.product-data',
             ],
             'product-media' => [

@@ -32,6 +32,22 @@ trait ApiResponse
         ], $statusCode);
     }
 
+    public function oldResponse($data = [], int $statusCode = Response::HTTP_OK, string $message = ''): JsonResponse
+    {
+        if (empty($message)) {
+            $message = Response::$statusTexts[$statusCode];
+        }
+
+        return response()->json([
+            'response' => [
+                'status' => [
+                    'code' => $statusCode,
+                    'message' => $message,
+                ],
+                'records' => $data,
+            ]], $statusCode);
+    }
+
       public function paginatedResponse($paginator, string $message = 'Data retrieved successfully')
     {
         return response()->json([

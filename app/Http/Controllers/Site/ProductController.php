@@ -83,7 +83,7 @@ class ProductController extends Controller
             }
         }
 
-        $response = $this->response([
+        $response = $this->oldResponse([
             'data' => ProductSearchResource::collection($productResource->query()->paginate($rowPerPage)),
             'filterable' => $productResource->getFilters(),
             'filter_applied' => $productResource->getAppliedFilters(),

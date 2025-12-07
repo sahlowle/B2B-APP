@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\ProductStatus;
 use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class DeleteTrashedProducts extends Command
             return Command::SUCCESS;
         }
 
-        Product::onlyTrashed()->chunkById(100, function ($products) {
+        Product::onlyTrashed()->orWhere('status', '!=', ProductStatus::$Published)->chunkById(100, function ($products) {
             foreach ($products as $product) {
                 DB::transaction(function () use ($product) {
                     $product->metadata()->forceDelete();

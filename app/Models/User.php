@@ -383,6 +383,11 @@ class User extends Authenticatable implements BatchDeletable
         Mail::to($this->email)->send(new SendOtp($this,$this->activation_otp));
     }
 
+    public function hasActiveSubscription($feature = null)
+    {
+        return hasActiveSubscription($this->id,$feature);
+    }
+
     /**
      * Relation with RefundProcess model
      *

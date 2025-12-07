@@ -92,7 +92,7 @@ if (!function_exists('hasActiveSubscription')) {
          * → Consider enabled
          * -------------------------------------
          */
-        return true;
+        return false;
     }
 }
 

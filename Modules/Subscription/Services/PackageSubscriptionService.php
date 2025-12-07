@@ -35,7 +35,7 @@ use Modules\Gateway\Facades\GatewayHandler;
 use Modules\Inventory\Entities\Location;
 use Modules\Pos\Entities\Terminal;
 use Modules\Subscription\Console\Commands\Subscription;
-
+ 
  class PackageSubscriptionService
  {
     use SubscriptionTrait;

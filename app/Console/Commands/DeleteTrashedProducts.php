@@ -6,6 +6,7 @@ use App\Enums\ProductStatus;
 use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Modules\Subscription\Entities\PackageSubscription;
 
 class DeleteTrashedProducts extends Command
 {
@@ -14,6 +15,17 @@ class DeleteTrashedProducts extends Command
 
     public function handle()
     {
+
+        $subscription = PackageSubscription::activePackage()
+            ->with('metadata')
+            ->first();
+            $feature = 'import_product';
+        $subFeature = $subscription->metadata()
+            ->where('type', 'feature_' . $feature)
+            ->pluck('value', 'key')
+            ->toArray();
+
+            dd($subFeature['type']);
         $query = Product::onlyTrashed();
 
         $count = $query->count();

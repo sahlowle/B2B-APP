@@ -5,6 +5,7 @@ use App\Models\VendorUser;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Modules\MenuBuilder\Http\Models\MenuItems;
 use Modules\MenuBuilder\Http\Models\Menus;
+use Modules\Subscription\Entities\PackageSubscription;
 use Modules\Subscription\Services\PackageSubscriptionService;
 
 if (!function_exists('subscription')) {
@@ -22,6 +23,79 @@ if (!function_exists('subscription')) {
         return $subscription->$methodName(...$args);
     }
 }
+
+if (!function_exists('hasActiveSubscription')) {
+    function hasActiveSubscription($userId, $feature = null): bool
+    {
+        // Get active subscription
+        $subscription = PackageSubscription::activePackage()
+            ->where('user_id', $userId)
+            ->with('metadata')
+            ->first();
+        
+        // No subscription → false
+        if (!$subscription) {
+            return false;
+        }
+
+        // Feature is null → subscription exists → true
+        if (is_null($feature)) {
+            return true;
+        }
+
+        // Fetch ALL metadata rows for this feature
+        $meta = $subscription->metadata()
+            ->where('type', 'feature_' . $feature)
+            ->pluck('value', 'key')
+            ->toArray();
+
+        // Feature not found → false
+        if (!$meta) {
+            return false;
+        }
+
+        // Get type
+        $type = $meta['type'] ?? null;
+
+        /**
+         * -------------------------------------
+         * 1. BOOLEAN FEATURE (type = bool)
+         * -------------------------------------
+         */
+        if ($type === 'bool') {
+            return true;
+        }
+
+        /**
+         * -------------------------------------
+         * 2. UNLIMITED FEATURE
+         * -------------------------------------
+         */
+        if ($type === 'number' && isset($meta['value']) && $meta['value'] == -1) {
+            return true;
+        }
+
+        /**
+         * -------------------------------------
+         * 3. COUNTABLE FEATURE
+         * -------------------------------------
+         */
+        if ($type === 'number') {
+            $value = (int) ($meta['value'] ?? 0);
+            $usage = (int) ($meta['usage'] ?? 0);
+            return ($value - $usage) > 0;
+        }
+
+        /**
+         * -------------------------------------
+         * 4. OTHER TYPES (multi-select, etc.)
+         * → Consider enabled
+         * -------------------------------------
+         */
+        return true;
+    }
+}
+
 
 if (!function_exists('subscriptionAlertDates')) {
     /**

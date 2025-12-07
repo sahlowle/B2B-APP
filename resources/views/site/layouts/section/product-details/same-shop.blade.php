@@ -90,7 +90,7 @@
                             <a href="{{ route('site.productDetails', ['slug' => $item->slug]) }}">
                              <p class="text-xs md:text-sm text-gray-12 dm-sans my-1 md:hidden">{{ trimWords($item->name, 40) }}</p>
                              <p class="text-sm text-gray-12 dm-sans md:block hidden">{{ trimWords($item->name, 50) }}</p></a>
-                            @if($item->isVariableProduct())
+                            {{-- @if($item->isVariableProduct())
                                 @php
                                     $variationSalePrice = $item->getVariationSalePrice();
                                 @endphp
@@ -100,7 +100,7 @@
                                 <p class="text-xs md:text-sm text-gray-10 dm-sans mt-0.5">{{ multiCurrencyFormatNumber($groupProductPrice['min']) }} - {{ multiCurrencyFormatNumber($groupProductPrice['max']) }}</p>
                             @else
                                 <p class="text-xs md:text-sm text-gray-10 dm-sans mt-0.5">{{ $offerFlag ? multiCurrencyFormatNumber($item->sale_price) : multiCurrencyFormatNumber($item->regular_price) }}</p>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </div>

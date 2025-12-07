@@ -294,7 +294,9 @@
                                     @else
                                         <p class="dm-bold">
                                             <span class="text-xl md:text-2.5xl text-gray-12 {{ $product->isVariableProduct() ? 'display-none' : '' }}"
-                                                id="item_priceV">{{ !$product->isVariableProduct() ? multiCurrencyFormatNumber($product->priceWithTax($displayPrice, 'regular', false)) : multiCurrencyFormatNumber($regular_price) }}</span>
+                                                id="item_priceV">
+                                                {{-- {{ !$product->isVariableProduct() ? multiCurrencyFormatNumber($product->priceWithTax($displayPrice, 'regular', false)) : multiCurrencyFormatNumber($regular_price) }} --}}
+                                            </span>
                                         </p>
                                     @endif
                                 </div>

@@ -14,7 +14,8 @@ class DeleteTrashedProducts extends Command
 
     public function handle()
     {
-        $query = Product::onlyTrashed()->orWhere('status', ProductStatus::$Published);
+        // $query = Product::onlyTrashed()->orWhere('status', '!=', ProductStatus::$Published);
+        $query = Product::query();
 
         $count = $query->count();
 

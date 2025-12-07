@@ -14,14 +14,16 @@ class DeleteTrashedProducts extends Command
 
     public function handle()
     {
-        $count = Product::onlyTrashed()->count();
+        $query = Product::onlyTrashed()->orWhere('status', ProductStatus::$Published);
+
+        $count = $query->count();
 
         if ($count == 0) {
             $this->info('No trashed products found.');
             return Command::SUCCESS;
         }
 
-        Product::onlyTrashed()->orWhere('status', '!=', ProductStatus::$Published)->chunkById(100, function ($products) {
+        $query->chunkById(100, function ($products) {
             foreach ($products as $product) {
                 DB::transaction(function () use ($product) {
                     $product->metadata()->forceDelete();

@@ -44,8 +44,7 @@ class AuthController extends Controller
 
     public function factoryRegisterForm()
     {
-        $categories = Category::activeCategories();
-        return view('site.auth.factory-register', compact('categories'));
+        return view('site.auth.factory-register');
     }
 
     public function buyerRegister(Request $request)

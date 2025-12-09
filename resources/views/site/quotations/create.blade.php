@@ -933,8 +933,10 @@
 
         $(document).ready(function() {
                 $('#category').select2({
+                    theme: 'tailwindcss-3',
                     placeholder: '{{ __("Type to search for a category using HS codes") }}',
                     allowClear: true,
+                    dir:'{{ languageDirection() }}',
                     width: '100%',
                     minimumInputLength: 2,
                     ajax: {

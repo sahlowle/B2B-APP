@@ -67,6 +67,11 @@
         }
   </style>
 
+  <style>
+    [dir="ltr"] .password-toggle { right: 0; left: auto; }
+    [dir="rtl"] .password-toggle { left: 0; right: auto; }
+</style>
+
   
     
     <!-- Tailwind CSS CDN -->
@@ -141,6 +146,25 @@
  
 
     @yield('js')
+
+
+    <script>
+        function initPasswordToggles() {
+            document.querySelectorAll('.password-toggle').forEach(toggle => {
+            const input = toggle.closest('.password-wrapper')?.querySelector('.password-input');
+            if (!input) return;
+
+            toggle.addEventListener('click', () => {
+                const isPassword = input.type === "password";
+                input.type = isPassword ? "text" : "password";
+                toggle.textContent = isPassword ? "🙈" : "👁️";
+            });
+        });
+    }
+
+    // auto-init
+    document.addEventListener('DOMContentLoaded', initPasswordToggles);
+    </script>
 </body>
 </html>
 

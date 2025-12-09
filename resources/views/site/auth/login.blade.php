@@ -59,7 +59,7 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
         
-                    <div class="relative flex items-center mt-4">
+                    <div class="relative flex items-center mt-4 password-wrapper">
                         <span class="absolute">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -69,11 +69,17 @@
                         <input 
                             type="password" 
                             name="password"
-                            class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-opacity-40" 
+                            class="block password-input w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-opacity-40" 
                             placeholder="{{ __("Password") }}" 
                             style="focus:border-color: var(--primary-color); focus:ring-color: var(--primary-color);"
                             required
                             />
+                             <button 
+                                type="button"
+                                class="password-toggle absolute inset-y-0 px-3 flex items-center text-gray-500"
+                                >
+                                👁️
+                            </button>
                     </div>
         
                     <div class="mt-6">

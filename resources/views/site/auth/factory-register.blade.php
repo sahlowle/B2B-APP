@@ -5,7 +5,10 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('public/datta-able/plugins/select2/css/select2.min.css') }}">
+     {{-- Select2  --}}
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/erimicel/select2-tailwindcss-theme/dist/select2-tailwindcss-theme-plain.min.css">
+
     <link href="https://cdn.jsdelivr.net/gh/priyashpatil/phone-input-by-country@0.0.1/cpi.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer">
         <!-- CSS -->
 <link href="https://unpkg.com/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
@@ -367,9 +370,7 @@
                                             required 
                                             class="w-full px-4 py-3 border border-gray-300 select2-input">
 
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -605,9 +606,28 @@
     <script>
         $(document).ready(function() {
             $('#category').select2({
-                 placeholder: '{{ __('Select Category') }}',
-                 allowClear: true,
-                 width: '100%',
+                theme: 'tailwindcss-3',
+                placeholder: '{{ __("Type to search for a category using HS codes") }}',
+                allowClear: true,
+                dir:"{{ languageDirection() }}",
+                width: '100%',
+                minimumInputLength: 2,
+                ajax: {
+                    url: '{{ route("categories.ajax") }}',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                        results:  $.map(data, function (item) {
+                                return {
+                                    text: item.text,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
             });
         });
     </script>

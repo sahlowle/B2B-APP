@@ -8,6 +8,8 @@ use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Modules\GeoLocale\Entities\Country;
 use App\Models\File;
+use App\Models\Vendor;
+use App\Models\VendorCategory;
 use App\Traits\HasCrmForm;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -78,7 +80,15 @@ class QuotationController extends Controller
         $data['country'] = Country::find($data['country'])?->name;
         $data['category'] = Category::find($data['category'])?->hs_code;
         $data['pdf_file'] = $quotation->pdf_file;
-        $this->sendToForm('rfq', $data);
+
+
+        defer(function () use ($data,$quotation) {
+            // run task in background
+            $this->sendToForm('rfq', $data);
+            $this->sendRfqToFactories($quotation);
+        });
+        
+        
 
         return redirect()->route('site.index')->with('success', __('Quotation submitted successfully'));
     }
@@ -91,4 +101,30 @@ class QuotationController extends Controller
 
         return $fileId[0];
     }
+
+
+        public function sendRfqToFactories(Quotation $quotation)
+        {
+            $baseData = [
+                'rfq_id' => $quotation->id,
+                'hs_code' => $quotation->category->hs_code,
+            ];
+
+            VendorCategory::query()->whereRelation('vendor','status','Active')
+                ->with('vendor:id,name,email,phone') // Only load needed fields
+                ->where('category_id', $quotation->category_id)
+                ->chunk(50, function ($vendorCategories) use ($baseData) {
+
+                    $rfq_with_factories_data = array_merge($baseData, [
+                        'factories' => $vendorCategories->pluck('vendor')
+                    ]);
+
+                    $rfq_distributed_data = array_merge($baseData, [
+                        'emails' => $vendorCategories->pluck('vendor.email')
+                    ]);
+
+                    $this->sendToForm('rfq_with_factories',$rfq_with_factories_data);
+                    $this->sendToForm('rfq_distributed',$rfq_distributed_data);
+                });
+        }
 }

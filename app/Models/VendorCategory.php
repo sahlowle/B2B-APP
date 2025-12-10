@@ -35,4 +35,9 @@ class VendorCategory extends Model
 
         return false;
     }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'vendor_id');
+    }
 }

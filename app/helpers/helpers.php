@@ -23,6 +23,29 @@ if (! function_exists('getJsonDataFromFile')) {
     }
 }
 
+
+
+if (! function_exists('defer')) {
+    /**
+     * Execute a callback after the response is sent to the browser.
+     */
+    function defer(callable $callback): void
+    {
+        // Make sure response is sent first
+        register_shutdown_function(function () use ($callback) {
+            try {
+                $callback();
+            } catch (\Throwable $e) {
+                // Log to avoid breaking shutdown
+                \Log::error('Deferred callback error: ' . $e->getMessage(), [
+                    'exception' => $e,
+                ]);
+            }
+        });
+    }
+}
+
+
 /**
  * [getUniqueAssocArray description]
  *

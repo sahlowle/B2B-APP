@@ -110,21 +110,38 @@ class QuotationController extends Controller
                 'hs_code' => $quotation->category->hs_code,
             ];
 
-            VendorCategory::query()->whereRelation('vendor','status','Active')
-                ->with('vendor:id,name,email,phone') // Only load needed fields
-                ->where('category_id', $quotation->category_id)
-                ->chunk(50, function ($vendorCategories) use ($baseData) {
+            Vendor::query()
+                ->select('vendor:id,name,email,phone','status')
+                ->where('','Active')
+                ->chunk(50, function ($vendors) use ($baseData) {
 
                     $rfq_with_factories_data = array_merge($baseData, [
-                        'factories' => $vendorCategories->pluck('vendor')
+                        'factories' => $vendors
                     ]);
 
                     $rfq_distributed_data = array_merge($baseData, [
-                        'emails' => $vendorCategories->pluck('vendor.email')
+                        'emails' => $vendors->pluck('vendor.email')
                     ]);
 
                     $this->sendToForm('rfq_with_factories',$rfq_with_factories_data);
                     $this->sendToForm('rfq_distributed',$rfq_distributed_data);
                 });
+
+            // VendorCategory::query()->whereRelation('vendor','status','Active')
+            //     ->with('vendor:id,name,email,phone') // Only load needed fields
+            //     ->where('category_id', $quotation->category_id)
+            //     ->chunk(50, function ($vendorCategories) use ($baseData) {
+
+            //         $rfq_with_factories_data = array_merge($baseData, [
+            //             'factories' => $vendorCategories->pluck('vendor')
+            //         ]);
+
+            //         $rfq_distributed_data = array_merge($baseData, [
+            //             'emails' => $vendorCategories->pluck('vendor.email')
+            //         ]);
+
+            //         $this->sendToForm('rfq_with_factories',$rfq_with_factories_data);
+            //         $this->sendToForm('rfq_distributed',$rfq_distributed_data);
+            //     });
         }
 }

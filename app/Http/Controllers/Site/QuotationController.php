@@ -111,8 +111,8 @@ class QuotationController extends Controller
             ];
 
             Vendor::query()
-                ->select('vendor:id,name,email,phone','status')
-                ->where('','Active')
+                ->select('id','name','email','phone','status')
+                ->where('status','Active')
                 ->chunk(50, function ($vendors) use ($baseData) {
 
                     $rfq_with_factories_data = array_merge($baseData, [

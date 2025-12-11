@@ -120,7 +120,7 @@ class QuotationController extends Controller
                     ]);
 
                     $rfq_distributed_data = array_merge($baseData, [
-                        'emails' => $vendors->pluck('vendor.email')
+                        'emails' => $vendors->pluck('email')
                     ]);
 
                     $this->sendToForm('rfq_with_factories',$rfq_with_factories_data);

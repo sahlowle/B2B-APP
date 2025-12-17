@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                @if(strlen(strip_tags($description)) > 1667 || strpos($description, '<img src') || substr_count($description,'<li>') > 18 || substr_count($description,'<p>') > 8)
+                @if(strlen(strip_tags($description)) > 1000 || strpos($description, '<img src') || substr_count($description,'<li>') > 10 || substr_count($description,'<p>') > 5)
                 <div id="view-more" class="absolute justify-center flex inset-x-0 bottom-0 add">
                     <div class="mb-2 mt-8 px-6 py-1 cursor-pointer rounded-sm">
                         <a class="flex justify-center">

@@ -20,7 +20,7 @@ trait HasCrmForm
             default => throw new \Exception('Invalid form name'),
         };
 
-        $response = Http::post($url, $data);
+        $response = Http::timeout(40)->post($url, $data);
 
         Log::info("{$name} Form Response", [
             'name' => $name,

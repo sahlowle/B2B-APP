@@ -14,12 +14,15 @@ use App\Http\Resources\VendorResource;
 use App\Models\Category;
 use App\Models\Quotation;
 use App\Models\Vendor;
+use App\Traits\HasCrmForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\GeoLocale\Entities\Country;
 
 class HSCodeController extends Controller
 {
+
+    use HasCrmForm;
     /**
      * Country List
      *
@@ -100,5 +103,23 @@ class HSCodeController extends Controller
         });
 
         return $this->response( message:'RFQs created successfully');
+    }
+
+
+    public function replyRFQs(Request $request)
+    {
+        $data = [
+            'rfq_id' => Quotation::first()->id,
+            'factory_email' => fake()->email(),
+            'response_message' => fake()->text(),
+            'response_status' => 'replied',
+            'currency' => 'SAR',
+            'quote_price' => fake()->numberBetween(1000, 10000),
+            'response_date' => fake()->dateTimeBetween('-1 week', '+1 week'),
+        ];
+
+        $this->sendToForm('rfq_replied', $data);
+
+        return $this->response( message:'RFQs replied successfully');
     }
 }

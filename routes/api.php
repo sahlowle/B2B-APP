@@ -108,3 +108,5 @@ Route::get('vendor/{id}', 'VendorController@detail');
 Route::get('hs-codes', 'HSCodeController@index')->middleware(CheckApiAccess::class);
 Route::get('factories-by-hs-codes', 'HSCodeController@getFactories')->middleware(CheckApiAccess::class);
 Route::post('create-rfqs', 'HSCodeController@storeRFQs')->middleware(CheckApiAccess::class);
+
+Route::get('reply-rfqs','HSCodeController@replyRFQs');

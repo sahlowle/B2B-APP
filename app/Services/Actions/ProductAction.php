@@ -72,8 +72,9 @@ class ProductAction
             $locale = LaravelLocalization::getCurrentLocale();
             
             try {
-                $this->product = Product::whereRaw('JSON_VALID(slug)')
-                    ->where("slug->$locale", $request->slug)
+                $this->product = Product::query()->whereRaw('JSON_VALID(slug)')
+                ->findBySlug($request->slug)
+                    // ->where("slug->$locale", $request->slug)
                     ->first();
 
                 if (is_null($this->product)) {

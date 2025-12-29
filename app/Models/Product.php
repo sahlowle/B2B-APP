@@ -32,6 +32,7 @@ use Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Modules\Inventory\Entities\StockManagement;
+use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -1139,6 +1140,11 @@ class Product extends Model
                 $product->save();
             }
         }
+    }
+
+    protected function scopeFindBySlug(Builder $query, string $slug): void
+    {
+        $query->whereJsonContainsLocales('slug', ['en', 'ar'], $slug);
     }
 
     /**

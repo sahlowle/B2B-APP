@@ -17,6 +17,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Shipping\Entities\ShippingClass;
 use Modules\Tax\Entities\TaxClass;
 
@@ -68,8 +69,8 @@ class ProductAction
         } elseif (isset($request->slug)) {
 
             // $locale = config('app.locale');
-            $locale = 'en';
-
+            $locale = LaravelLocalization::getCurrentLocale();
+            
             try {
                 $this->product = Product::whereRaw('JSON_VALID(slug)')
                     ->where("slug->$locale", $request->slug)

@@ -8,7 +8,7 @@
             <div class="hero-image w-full md:w-1/2 md:order-1">
                 <div class="image-container relative aspect-square max-w-lg mx-auto">
                     <img 
-                        src="{{ asset('public/new-landing/img/hero5.png') }}" 
+                        src="{{ asset('public/new-landing/img/hero.webp') }}" 
                         alt="Shipping Containers" 
                         style="width: 100%; height: 100%;"
                         class="hero-img absolute inset-0  rounded-2xl shadow-2xl bg-gradient-to-br from-orange-400 to-orange-600">

@@ -19,7 +19,7 @@
 
     @yield('seo')
 
-    <meta name="google-site-verification" content="p9KulfNqluiDeDGxC5DLHya46P_BNvD12TilaoFxm3I" />
+    <meta name="google-site-verification" content="k88fe0xacXhDzuIIZuMNFfEyzuHPf2EBjncH1LO_eDI" />
     
     @php
         $themeOption = \Modules\CMS\Http\Models\ThemeOption::getAll();

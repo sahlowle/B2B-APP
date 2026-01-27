@@ -13,15 +13,15 @@ class FaqController extends Controller
     public function index(): View
     {
 
-        Schema::create('faqs', function (Blueprint $table) {
-            $table->id();
-            $table->longText('question');
-            $table->longText('answer');
-            $table->integer('order')->default(0);
-            $table->timestamps();
-        });
+        // Schema::create('faqs', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->longText('question');
+        //     $table->longText('answer');
+        //     $table->integer('order')->default(0);
+        //     $table->timestamps();
+        // });
 
-        $faqs = Faq::query()
+        $data['faqs'] = Faq::query()
             ->paginate(24);
 
             $data['seo'] = [
@@ -31,6 +31,6 @@ class FaqController extends Controller
             'image' => asset('public/frontend/img/logo.png'),
        ];
 
-        return view('site.faqs.index', compact('faqs'));
+        return view('site.faqs.index', $data);
     }
 }

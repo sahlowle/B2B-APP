@@ -46,45 +46,38 @@
         </div>
 
         @if($faqs->count() > 0)
-            <div id="faqs-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300">
-                @foreach($faqs as $faq) 
-                    <div class="faq-item bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md h-fit">
-                        <button 
-                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-start focus:outline-none"
-                        >
-                            <span class="font-semibold text-gray-800 pr-4 leading-relaxed">{{ $faq->question }}</span>
-                            <svg 
-                                class="w-5 h-5 text-gray-500 transform transition-transform duration-200 flex-shrink-0 mt-1" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                viewBox="0 0 24 24" 
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div 
-                            class="faq-content px-6 text-gray-600 border-t border-gray-100 hidden"
-                        >
-                            <div class="py-4 prose prose-sm max-w-none">
-                                {!! $faq->answer !!}
-                            </div>
+                <div class="space-y-4" id="faqs-list">
+                    @foreach($faqs as $faq)
+                        <div class="faq-item group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+                            <details class="w-full">
+                                <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none">
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors pr-8">
+                                        {{ $faq->question }}
+                                    </h3>
+                                    <div class="flex-shrink-0 ml-4">
+                                        <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-orange-500 transition-transform duration-300 group-open:rotate-180">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </summary>
+                                <div class="px-6 pb-6 pt-2 text-gray-600 leading-relaxed border-t border-gray-50/50">
+                                    <div class="prose prose-orange max-w-none">
+                                        {!! $faq->answer !!}
+                                    </div>
+                                </div>
+                            </details>
                         </div>
+                    @endforeach
+                </div>
+
+                {{-- Pagination --}}
+                <div class="mt-12 flex justify-center">
+                    <div class="bg-white rounded-full shadow-lg border border-gray-100 px-6 py-2">
+                        {{ $faqs->links() }}
                     </div>
-                @endforeach
-            </div>
-
-            <div id="no-results" class="hidden text-center py-12">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('No questions found') }}</h3>
-                <p class="mt-1 text-sm text-gray-500">{{ __('Try adjusting your search terms.') }}</p>
-            </div>
-
-            <div class="mt-8">
-                {{ $faqs->links() }}
-            </div>
+                </div>
         @endif
     </div>
 

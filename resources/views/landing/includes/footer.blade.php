@@ -54,6 +54,12 @@
                             </a>
                         </li>
 
+                        <li>
+                            <a href="{{ route('site.faqs') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:translate-x-1 inline-block">
+                                @lang('Faqs')
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
                 
@@ -138,6 +144,7 @@
                         <li><a href="{{ route('site.privacy-policy') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">سياسة الخصوصية</a></li>
                         <li><a href="{{ route('site.terms-and-conditions-of-seller') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الشروط والأحكام (المصانع)</a></li>
                         <li><a href="{{ route('site.terms-and-conditions-of-buyer') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الشروط والأحكام (المستوردين)</a></li>
+                        <li><a href="{{ route('site.faqs') }}" class="text-gray-400 text-base no-underline transition hover:text-orange-500 hover:-translate-x-1 inline-block text-right">الأسئلة الشائعة</a></li>
                     </ul>
                 </div>
                 

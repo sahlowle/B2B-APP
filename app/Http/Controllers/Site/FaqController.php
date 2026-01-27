@@ -5,12 +5,21 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use Illuminate\Contracts\View\View;
-use Spatie\SchemaOrg\Schema;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class FaqController extends Controller
 {
     public function index(): View
     {
+
+        Schema::create('faqs', function (Blueprint $table) {
+            $table->id();
+            $table->longText('question');
+            $table->longText('answer');
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
 
         $faqs = Faq::query()
             ->paginate(24);

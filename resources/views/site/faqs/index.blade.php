@@ -23,7 +23,7 @@
 <x-seo :seo="$seo" />
 
 @section('content')
-    <div class="mt-8">
+    <div class="py-4 container mx-auto px-4 max-w-4xl">
             <nav class="text-gray-600 text-sm" aria-label="Breadcrumb">
                 <ol
                     class="list-none p-0 flex flex-wrap md:inline-flex text-xs md:text-sm roboto-medium font-medium text-gray-10 leading-5">

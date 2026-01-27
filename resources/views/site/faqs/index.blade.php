@@ -1,5 +1,25 @@
 @extends('site.layouts.app')
 
+
+@push('styles')
+    <style>
+        .animate-fade-in-down { animation: fadeInDown 0.8s ease-out forwards; opacity: 0; transform: translateY(-20px); }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        
+        /* Smooth Rotate for Icon */
+        details[open] summary .group-open\:rotate-180 { transform: rotate(180deg); }
+
+        @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+@endpush
+
 <x-seo :seo="$seo" />
 
 @section('content')
@@ -27,25 +47,11 @@
             </nav>
     </div>
         
-    <div class="mt-8 mb-8">
-        <!-- Search Input -->
-        <div class="max-w-xl mx-auto mb-10">
-            <div class="relative">
-                <input 
-                    type="text" 
-                    id="faq-search" 
-                    class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 shadow-sm"
-                    placeholder="{{ __('Search for questions...') }}"
-                >
-                <div class="absolute left-0 top-0 pl-4 h-full flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        @if($faqs->count() > 0)
+    {{-- 2. FAQ List --}}
+    <div class="bg-gray-50 min-h-screen py-12">
+        <div class="container mx-auto px-4 max-w-4xl">
+            
+            @if($faqs->count() > 0)
                 <div class="space-y-4" id="faqs-list">
                     @foreach($faqs as $faq)
                         <div class="faq-item group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
@@ -78,72 +84,99 @@
                         {{ $faqs->links() }}
                     </div>
                 </div>
-        @endif
+
+            @else
+                {{-- Empty State --}}
+                <div class="text-center py-20">
+                    <div class="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ trans('No questions found') }}</h3>
+                </div>
+            @endif
+            
+            {{-- No Results Message (Hidden by default) --}}
+            <div id="no-results" class="hidden text-center py-20">
+                 <div class="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{ trans('No matching questions found') }}</h3>
+                <p class="text-gray-500 mb-6">{{ trans('Try adjusting your search terms.') }}</p>
+                <button onclick="document.getElementById('faq-search').value = ''; document.getElementById('faq-search').dispatchEvent(new Event('input'));" 
+                        class="px-6 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:border-orange-500 hover:text-orange-600 transition-colors">
+                    {{ trans('Clear Search') }}
+                </button>
+            </div>
+        </div>
     </div>
 
     @section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Search Functionality
-            const searchInput = document.getElementById('faq-search');
-            const faqsList = document.getElementById('faqs-list');
-            const noResults = document.getElementById('no-results');
-            
-            if (searchInput && faqsList) {
-                searchInput.addEventListener('input', function(e) {
-                    const searchTerm = e.target.value.toLowerCase();
-                    const faqItems = faqsList.querySelectorAll('.faq-item');
-                    let visibleCount = 0;
-                    
-                    faqItems.forEach(item => {
-                        const question = item.querySelector('button span').textContent.toLowerCase();
-                        const answer = item.querySelector('.prose').textContent.toLowerCase();
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Search Functionality
+                const searchInput = document.getElementById('faq-search');
+                const faqsList = document.getElementById('faqs-list');
+                const noResults = document.getElementById('no-results');
+                
+                if (searchInput && faqsList) {
+                    searchInput.addEventListener('input', function(e) {
+                        const searchTerm = e.target.value.toLowerCase();
+                        const faqItems = faqsList.querySelectorAll('.faq-item');
+                        let visibleCount = 0;
                         
-                        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                            item.style.display = '';
-                            visibleCount++;
+                        faqItems.forEach(item => {
+                            const question = item.querySelector('button span').textContent.toLowerCase();
+                            const answer = item.querySelector('.prose').textContent.toLowerCase();
+                            
+                            if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                                item.style.display = '';
+                                visibleCount++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+
+                        if (visibleCount === 0) {
+                            faqsList.classList.add('hidden');
+                            noResults.classList.remove('hidden');
                         } else {
-                            item.style.display = 'none';
+                            faqsList.classList.remove('hidden');
+                            noResults.classList.add('hidden');
                         }
                     });
+                }
 
-                    if (visibleCount === 0) {
-                        faqsList.classList.add('hidden');
-                        noResults.classList.remove('hidden');
-                    } else {
-                        faqsList.classList.remove('hidden');
-                        noResults.classList.add('hidden');
-                    }
-                });
-            }
+                // Accordion Functionality
+                const faqToggles = document.querySelectorAll('.faq-toggle');
 
-            // Accordion Functionality
-            const faqToggles = document.querySelectorAll('.faq-toggle');
-
-            faqToggles.forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    const content = this.nextElementSibling;
-                    const icon = this.querySelector('svg');
-                    
-                    // Toggle current
-                    content.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-180');
-                    
-                    // Optional: Close others? 
-                    // To behave like independent cards, we don't need to close others.
-                    // If accordion behavior (only one open) is desired, uncomment below:
-                    /*
-                    faqToggles.forEach(otherToggle => {
-                        if (otherToggle !== toggle) {
-                            otherToggle.nextElementSibling.classList.add('hidden');
-                            otherToggle.querySelector('svg').classList.remove('rotate-180');
-                        }
+                faqToggles.forEach(toggle => {
+                    toggle.addEventListener('click', function() {
+                        const content = this.nextElementSibling;
+                        const icon = this.querySelector('svg');
+                        
+                        // Toggle current
+                        content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-180');
+                        
+                        // Optional: Close others? 
+                        // To behave like independent cards, we don't need to close others.
+                        // If accordion behavior (only one open) is desired, uncomment below:
+                        /*
+                        faqToggles.forEach(otherToggle => {
+                            if (otherToggle !== toggle) {
+                                otherToggle.nextElementSibling.classList.add('hidden');
+                                otherToggle.querySelector('svg').classList.remove('rotate-180');
+                            }
+                        });
+                        */
                     });
-                    */
                 });
             });
-        });
-    </script>
+        </script>
     @endsection
 
 @endsection

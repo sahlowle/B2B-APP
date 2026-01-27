@@ -21,25 +21,40 @@
                         <p class="px-2 text-gray-12">/</p>
                     </li>
                     <li class="flex items-center text-gray-12">
-                        <a href="javascript: void(0)">{{ __('All Categories') }}</a>
+                        <a href="javascript: void(0)">{{ __('Frequently Asked Questions') }}</a>
                     </li>
                 </ol>
             </nav>
     </div>
         
-    @if($faqs->count() > 0)
-        <div class="mt-8 mb-8">
-           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                 @foreach($faqs as $faq) 
-                    <div x-data="{ open: false }" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md">
+    <div class="mt-8 mb-8">
+        <!-- Search Input -->
+        <div class="max-w-xl mx-auto mb-10">
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="faq-search" 
+                    class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 shadow-sm"
+                    placeholder="{{ __('Search for questions...') }}"
+                >
+                <div class="absolute left-0 top-0 pl-4 h-full flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        @if($faqs->count() > 0)
+            <div id="faqs-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300">
+                @foreach($faqs as $faq) 
+                    <div class="faq-item bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md h-fit">
                         <button 
-                            @click="open = !open" 
-                            class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none"
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-start focus:outline-none"
                         >
-                            <span class="font-semibold text-gray-800">{{ $faq->question }}</span>
+                            <span class="font-semibold text-gray-800 pr-4 leading-relaxed">{{ $faq->question }}</span>
                             <svg 
-                                class="w-5 h-5 text-gray-500 transform transition-transform duration-200" 
-                                :class="{'rotate-180': open}" 
+                                class="w-5 h-5 text-gray-500 transform transition-transform duration-200 flex-shrink-0 mt-1" 
                                 fill="none" 
                                 stroke="currentColor" 
                                 viewBox="0 0 24 24" 
@@ -49,22 +64,93 @@
                             </svg>
                         </button>
                         <div 
-                            x-show="open" 
-                            x-collapse 
-                            class="px-6 pb-4 text-gray-600 border-t border-gray-100"
-                            style="display: none;"
+                            class="faq-content px-6 text-gray-600 border-t border-gray-100 hidden"
                         >
-                            <div class="pt-4 prose prose-sm max-w-none">
+                            <div class="py-4 prose prose-sm max-w-none">
                                 {!! $faq->answer !!}
                             </div>
                         </div>
                     </div>
-                 @endforeach
-           </div>
-           <div class="mt-8">
+                @endforeach
+            </div>
+
+            <div id="no-results" class="hidden text-center py-12">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('No questions found') }}</h3>
+                <p class="mt-1 text-sm text-gray-500">{{ __('Try adjusting your search terms.') }}</p>
+            </div>
+
+            <div class="mt-8">
                 {{ $faqs->links() }}
-           </div>
-        </div>
-    @endif
+            </div>
+        @endif
+    </div>
+
+    @section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search Functionality
+            const searchInput = document.getElementById('faq-search');
+            const faqsList = document.getElementById('faqs-list');
+            const noResults = document.getElementById('no-results');
+            
+            if (searchInput && faqsList) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const faqItems = faqsList.querySelectorAll('.faq-item');
+                    let visibleCount = 0;
+                    
+                    faqItems.forEach(item => {
+                        const question = item.querySelector('button span').textContent.toLowerCase();
+                        const answer = item.querySelector('.prose').textContent.toLowerCase();
+                        
+                        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                            item.style.display = '';
+                            visibleCount++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    if (visibleCount === 0) {
+                        faqsList.classList.add('hidden');
+                        noResults.classList.remove('hidden');
+                    } else {
+                        faqsList.classList.remove('hidden');
+                        noResults.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Accordion Functionality
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('svg');
+                    
+                    // Toggle current
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                    
+                    // Optional: Close others? 
+                    // To behave like independent cards, we don't need to close others.
+                    // If accordion behavior (only one open) is desired, uncomment below:
+                    /*
+                    faqToggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.nextElementSibling.classList.add('hidden');
+                            otherToggle.querySelector('svg').classList.remove('rotate-180');
+                        }
+                    });
+                    */
+                });
+            });
+        });
+    </script>
+    @endsection
 
 @endsection

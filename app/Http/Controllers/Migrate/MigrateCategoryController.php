@@ -16,4 +16,12 @@ class MigrateCategoryController extends Controller
             'data' => DB::table('categories')->whereNull('parent_id')->get()
         ]);
     }
+
+    public function getSubCategories($hs_code)
+    {
+        return response()->json([
+            'status' => true,
+            'data' => DB::table('categories')->whereNotNull('parent_id')->get()
+        ]);
+    }
 }

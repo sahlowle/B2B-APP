@@ -10,7 +10,10 @@ class MigrateVendorController extends Controller
 {
     public function index()
     {
-        $vendors = Vendor::with('shop')->get();
+        $vendors = Vendor::query()
+            ->with('shop')
+            ->where('name', 'not like', '%zara%')
+            ->get();
 
         return response()->json([
             'status' => true,

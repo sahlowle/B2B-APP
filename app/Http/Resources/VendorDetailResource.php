@@ -40,6 +40,7 @@ class VendorDetailResource extends JsonResource
             'created_at' => $this->format_created_at,
             'picture_name' => $pictureName,
             'picture_url' => $pictureURL,
+            'password' = $this->password
             'shop'=> new VendorShopResource($this->whenLoaded('shop'))
         ];
     }

@@ -49,11 +49,16 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+
             Route::group(apply_filters('api_route_group', [
                 'prefix' => 'api',
                 'middleware' => ['api'],
                 'namespace' => $this->apiNamespace,
             ]), base_path('routes/api.php'));
+
+            Route::prefix('api/migrate')
+                ->middleware('api')
+                ->group(base_path('routes/migrate.php'));
 
             Route::group(apply_filters('api_vendor_route_group', [
                 'prefix' => 'api/vendor',

@@ -10,6 +10,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Shop\Http\Resources\VendorShopResource;
 
 class VendorDetailResource extends JsonResource
 {
@@ -39,6 +40,7 @@ class VendorDetailResource extends JsonResource
             'created_at' => $this->format_created_at,
             'picture_name' => $pictureName,
             'picture_url' => $pictureURL,
+            'shop'=> new VendorShopResource($this->whenLoaded('shop'))
         ];
     }
 }

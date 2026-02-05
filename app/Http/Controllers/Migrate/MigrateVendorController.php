@@ -22,8 +22,6 @@ class MigrateVendorController extends Controller
         })
         ->get();
 
-        return $vendors;
-
         return response()->json([
             'status' => true,
             'count' => $vendors->count(),

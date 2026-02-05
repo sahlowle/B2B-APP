@@ -19,7 +19,9 @@ class MigrateCategoryController extends Controller
 
     public function getSubCategories($hs_code)
     {
-        $category = DB::table('categories')->where('hs_code', $hs_code)->firstOrFail();
+        $category = DB::table('categories')->where('hs_code', $hs_code)->first();
+
+        abort_if(!$category, 404, 'Category not found');
 
         return response()->json([
             'status' => true,

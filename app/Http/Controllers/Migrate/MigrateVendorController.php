@@ -11,7 +11,7 @@ class MigrateVendorController extends Controller
     public function index()
     {
         $vendors = Vendor::query()
-        ->with('shop')
+        ->with('shop', 'user.user')
         ->where(function($query) {
             $query->where('name', 'not like', '%zara%')
                   ->where('email', 'not like', '%zara%');

@@ -134,6 +134,11 @@ class Vendor extends Model implements BatchDeletable
     {
         return $this->hasMany('App\Models\VendorUser', 'vendor_id', 'id');
     }
+    
+    public function user()
+    {
+        return $this->hasOne('App\Models\VendorUser', 'vendor_id', 'id')->latestOfMany();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

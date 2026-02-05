@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\CheckApiAccess;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::prefix('api/migrate')
                 ->middleware('api')
+                ->withoutMiddleware(CheckApiAccess::class)
                 ->group(base_path('routes/migrate.php'));
 
             Route::group(apply_filters('api_vendor_route_group', [

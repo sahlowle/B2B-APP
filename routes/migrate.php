@@ -8,3 +8,4 @@ Route::get('get-main-categories',[MigrateCategoryController::class,'getMainCateg
 Route::get('get-sub-categories/{hs_code}',[MigrateCategoryController::class,'getSubCategories']);
 
 Route::get('get-vendors',[MigrateVendorController::class,'index']);
+Route::get('get-products/{email}',[MigrateVendorController::class,'getProducts']);

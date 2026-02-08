@@ -41,7 +41,8 @@ class VendorDetailResource extends JsonResource
             'picture_name' => $pictureName,
             'picture_url' => $pictureURL,
             'password' => $this->user?->user?->password,
-            'shop'=> new VendorShopResource($this->whenLoaded('shop'))
+            'shop'=> new VendorShopResource($this->whenLoaded('shop')),
+            'categories' => CategoryResource::collection($this->whenLoaded('allCategories')),
         ];
     }
 }

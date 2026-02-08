@@ -439,6 +439,11 @@ class Vendor extends Model implements BatchDeletable
         return $this->hasMany('App\Models\VendorCategory', 'vendor_id', 'id');
     }
 
+    public function allCategories()
+    {
+        return $this->belongsToMany('App\Models\Category', 'vendor_categories');
+    }
+
     /**
      * Route Notification For Mail
      */

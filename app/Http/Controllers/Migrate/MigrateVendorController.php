@@ -41,14 +41,12 @@ class MigrateVendorController extends Controller
         $products = Product::query()
         ->with('category')
         ->where('vendor_id', $vendor->id)
-        ->paginate(10);
-
-        return ProductResource::collection($products);
+        ->get();
 
         return response()->json([
             'status' => true,
             'count' => $products->count(),
-            'data' => $products
+            'data' => ProductResource::collection($products)
         ]);
     }
 }

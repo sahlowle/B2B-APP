@@ -39,14 +39,11 @@ class MigrateVendorController extends Controller
         abort_if(!$vendor, 404, 'Vendor not found');
 
         $products = Product::query()
-        ->select('id', 'name', 'slug', 'summary', 'description','shop_id','vendor_id')
         ->with('category')
         ->where('vendor_id', $vendor->id)
         ->paginate(10);
 
-        // return ProductResource::collection($products);
-
-        return $products;
+        return ProductResource::collection($products);
 
         return response()->json([
             'status' => true,

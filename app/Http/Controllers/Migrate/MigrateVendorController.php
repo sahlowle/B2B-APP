@@ -20,6 +20,7 @@ class MigrateVendorController extends Controller
             $query->where('name', 'not like', '%test%')
                   ->where('email', 'not like', '%test%');
         })
+        ->whereNotIn('id', [1, 2, 3, 21,22,23])
         ->get();
 
         return response()->json([
